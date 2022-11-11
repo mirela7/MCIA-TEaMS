@@ -2,7 +2,7 @@
 #include <sqlite_orm/sqlite_orm.h>
 using namespace sqlite_orm;
 
-User::User(uint16_t id, std::string name, std::string password)
+User::User(const uint16_t& id, const std::string& name, const std::string& password)
 	: m_id(id),
 	  m_name(name),
 	  m_password(password)
@@ -27,12 +27,19 @@ User& User::operator=(const User& user)
 	return *this;
 }
 
-User::User(User&& other)
+User& User::operator=(User&& other) noexcept
+{
+	m_id = other.m_id;
+	m_name = other.m_name;
+	m_password = other.m_password;		
+	new(&other) User;
+	return *this;
+}
+
+User::User(User&& other) noexcept
 {
 	*this = std::move(other);
 }
 
 User::~User()
-{
-	delete[] this;
-}
+{}

@@ -1,16 +1,16 @@
 #pragma once
 #include <string>
-#include <sqlite_orm/sqlite_orm.h>
 #include <cstdint>
 
 class User
 {
 public:
 	User() = default;
-	User(uint16_t id,std::string name, std::string password);
+	User(const uint16_t& id,const std::string& name, const std::string& password);
 	User(const User& other);
 	User& operator=(const User& user);
-	User(User&& other);
+	User& operator=(User&& other) noexcept;
+	User(User&& other) noexcept;
 	~User();
 
 private:
