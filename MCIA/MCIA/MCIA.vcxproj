@@ -127,12 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DatabaseManagement.cpp" />
+    <ClCompile Include="Movie.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="User.cpp" />
     <ClCompile Include="Validation.cpp" />
     <ClCompile Include="ValidationCode.cpp" />
     <ClCompile Include="ValidationException.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DatabaseManagement.h" />
+    <ClInclude Include="Movie.h" />
+    <ClInclude Include="User.h" />
     <ClInclude Include="Validation.h" />
     <ClInclude Include="ValidationCode.h" />
     <ClInclude Include="ValidationException.h" />
