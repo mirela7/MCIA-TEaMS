@@ -1,6 +1,8 @@
 #pragma once
 #include <string>	
+#include <iostream>
 #include "ValidationCode.h"
+#include "ValidationException.h"
 
 class Validation
 {
@@ -10,6 +12,9 @@ public:
 	static bool IsAlphaNumericOrSpecial(const std::string& string);
 	static bool IsBlank(const std::string& string);
 	static bool IsNotBlank(const char c);
+public:
+	/* WILL BE DELETED */
+	static void dummyUserValidation();
 
 private:
 	Validation() = default;

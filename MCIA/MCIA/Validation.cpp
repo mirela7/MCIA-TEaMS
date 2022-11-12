@@ -45,3 +45,32 @@ bool Validation::IsNotAlphaNumericOrSpecial(const char c)
 }
 
 
+/* WILL BE DELETED */
+void Validation::dummyUserValidation()
+{
+    std::string name, pw;
+    std::cout << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n";
+    std::cout << "Validations applied: \n \
+Username: longer than 3 characters, not blank, only letters, digits or _ and ., first letter must be alpha\n \
+Password: not blank, longer than 3 characters.\n";
+    std::cout << "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\nUsername: ";
+    std::cin >> name;
+    std::cout << "Password: ";
+    std::cin >> pw;
+    std::cout << "\n";
+
+    try {
+        auto validn = Validation::IsUsernameValid(name);
+        auto validp = Validation::IsPasswordValid(pw);
+        if (!validn)
+            throw ValidationException(validn, "Username is invalid.");
+        if (!validp)
+            throw ValidationException(validp, "Password is invalid.");
+        std::cout << "User valid.";
+    }
+    catch (ValidationException e) {
+        std::cout << "Exception thrown with:\n[CODE] $MESSAGE$\n";
+        std::cout << e.what();
+    }
+
+}
