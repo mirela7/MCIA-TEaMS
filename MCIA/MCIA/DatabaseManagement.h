@@ -11,15 +11,15 @@ public:
     static DatabaseManagement& GetInstance();
 
     template<typename T>
-    int insertElement(const T& el);
+    int32_t InsertElement(const T& el);
 
     template<typename T>
-    T getElementById(const int32_t id);
+    T GetElementById(const int32_t id);
 
-    User GetUserNamed(const std::string& name);
+    User GetUserByName(const std::string& name);
     bool IsRegistered(const std::string& name);
 
-    bool PasswordCheck(const std::string& name, const std::string &password);
+    bool CheckPassword(const std::string& name, const std::string &password);
     
 protected:
     DatabaseManagement() = default;
@@ -35,12 +35,13 @@ protected:
                 make_column("name", &MovieDummy::name))*/
         return storage;
     }
+
 protected:
     static DatabaseManagement* m_database;
 };
 
 template<typename T>
-int DatabaseManagement::insertElement(const T& el)
+int32_t DatabaseManagement::InsertElement(const T& el)
 {
     auto& st = getStorage();
     // TODO CHECK INSERT
@@ -48,7 +49,7 @@ int DatabaseManagement::insertElement(const T& el)
 }
 
 template<typename T>
-inline T DatabaseManagement::getElementById(const int32_t id)
+inline T DatabaseManagement::GetElementById(const int32_t id)
 {
     auto& st = getStorage();
     // TODO FAIL PROOF GET
