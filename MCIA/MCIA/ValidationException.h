@@ -6,7 +6,7 @@ class ValidationException : public std::exception
 {
 public:
 	explicit ValidationException(const char* code, const char* message);
-	explicit ValidationException(const std::string& field, const std::string& message);
+	explicit ValidationException(const std::string& code, const std::string& message);
 
 	virtual ~ValidationException() noexcept;
 	virtual const char* what() const noexcept;
