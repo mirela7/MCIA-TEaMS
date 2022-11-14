@@ -29,5 +29,6 @@ bool DatabaseManagement::IsRegistered(const std::string& name)
 bool DatabaseManagement::CheckPassword(const std::string& name, const std::string& password)
 {
     auto user = GetUserByName(name);
-    return user.m_password == password;
+    return user.GetPassword() == password;
 }
+

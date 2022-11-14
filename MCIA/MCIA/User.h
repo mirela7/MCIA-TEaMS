@@ -8,12 +8,18 @@ public:
 	User() = default;
 	User(const uint16_t& id,const std::string& name, const std::string& password);
 	User(const User& other);
+	User(User&& other) noexcept;
+	
+	std::string GetName();
+	std::string GetPassword();
+
 	User& operator=(const User& user);
 	User& operator=(User&& other) noexcept;
-	User(User&& other) noexcept;
+	
 	~User();
-
 private:
+	friend class DatabaseManagement;
+
 	uint16_t m_id;
 	std::string m_name;
 	std::string m_password;

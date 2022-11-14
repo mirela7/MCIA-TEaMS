@@ -43,3 +43,13 @@ User::User(User&& other) noexcept
 
 User::~User()
 {}
+
+std::string User::GetPassword()
+{
+	return m_password;
+}
+
+std::string User::GetName()
+{
+	return m_name;
+}
