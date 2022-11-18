@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Answer.cpp" />
     <ClCompile Include="DatabaseManagement.cpp" />
     <ClCompile Include="Movie.cpp" />
     <ClCompile Include="Question.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="ValidationException.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Answer.h" />
     <ClInclude Include="DatabaseManagement.h" />
     <ClInclude Include="Movie.h" />
     <ClInclude Include="Question.h" />
