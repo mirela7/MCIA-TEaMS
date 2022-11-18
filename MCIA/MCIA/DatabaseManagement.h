@@ -1,20 +1,9 @@
 #pragma once
-#pragma warning(disable : 4996)
 #include "User.h"
 #include <sqlite_orm/sqlite_orm.h>
 
 using namespace sqlite_orm;
 
-namespace DB{
-    static auto getStorage() {
-        static auto storage = make_storage("DBtest.db",
-            make_user_table());
-
-        return storage;
-    };
-    
-    using storage_type = decltype(getStorage());
-};
 
 class DatabaseManagement
 {
@@ -32,28 +21,49 @@ public:
 
     bool CheckPassword(const std::string& name, const std::string &password);
     
-private:
+protected:
+    friend class User;
+
     DatabaseManagement() = default;
-    DatabaseManagement(DatabaseManagement&) = delete;
-    void operator=(DatabaseManagement&) = delete;
+    static auto& getStorage() {
+        static auto storage = make_storage("testdb.db",
+            make_table("User",
+                make_column("Id", &User::m_id, primary_key()),
+                make_column("name", &User::m_name),
+                make_column("password", &User::m_password))
+
+           /* make_table("Question",
+                make_column("Id", , primary_key()),
+                make_column("question", ))
+
+            make_table("Answer",
+                make_column("Id", , prima_key()),
+                make_column("question_id", , foreign_key()),
+                make_column("answer", )
+           */
+        
+        );
+        return storage;
+    }
 
 protected:
-    static inline DB::storage_type storage = DB::getStorage();
+     
+
     static DatabaseManagement* m_database;
 };
-
 
 template<typename T>
 int32_t DatabaseManagement::InsertElement(const T& el)
 {
+    auto& st = getStorage();
     // TODO CHECK INSERT
-    return storage.insert(el);
+    return st.insert(el);
 }
 
 template<typename T>
 inline T DatabaseManagement::GetElementById(const int32_t id)
 {
-    // auto& st = getStorage();
+    auto& st = getStorage();
     // TODO FAIL PROOF GET
-    return storage.get<T>(id);
+    return st.get<T>(id);
 }

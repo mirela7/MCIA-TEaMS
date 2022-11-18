@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="DatabaseManagement.cpp" />
     <ClCompile Include="Movie.cpp" />
+    <ClCompile Include="Question.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Validation.cpp" />
@@ -142,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="DatabaseManagement.h" />
     <ClInclude Include="Movie.h" />
+    <ClInclude Include="Question.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="Validation.h" />
     <ClInclude Include="ValidationCode.h" />
