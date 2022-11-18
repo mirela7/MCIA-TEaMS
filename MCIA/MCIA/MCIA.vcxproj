@@ -137,6 +137,7 @@
     <ClCompile Include="Question.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="User.cpp" />
+    <ClCompile Include="UserAnswerQuestion.cpp" />
     <ClCompile Include="Validation.cpp" />
     <ClCompile Include="ValidationCode.cpp" />
     <ClCompile Include="ValidationException.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Movie.h" />
     <ClInclude Include="Question.h" />
     <ClInclude Include="User.h" />
+    <ClInclude Include="UserAnswerQuestion.h" />
     <ClInclude Include="Validation.h" />
     <ClInclude Include="ValidationCode.h" />
     <ClInclude Include="ValidationException.h" />

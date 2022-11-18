@@ -6,9 +6,9 @@ class Question
 {
 public:
 	
-	Question(const uint8_t& id, const std::string question);
-	uint8_t GetId();
-	std::string GetQuestion();
+	Question(const uint8_t id, const std::string& question);
+	uint8_t GetId() const;
+	std::string GetQuestion() const;
 
 private:
 
