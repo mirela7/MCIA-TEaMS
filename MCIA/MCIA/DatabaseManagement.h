@@ -26,12 +26,23 @@ protected:
 
     DatabaseManagement() = default;
     static auto& getStorage() {
-        static auto storage = make_storage("DBtest.db",
-           make_table("user",
+        static auto storage = make_storage("testdb.db",
+            make_table("User",
                 make_column("Id", &User::m_id, primary_key()),
                 make_column("name", &User::m_name),
-                make_column("password", &User::m_password)));
+                make_column("password", &User::m_password))
 
+           /* make_table("Question",
+                make_column("Id", , primary_key()),
+                make_column("question", ))
+
+            make_table("Answer",
+                make_column("Id", , prima_key()),
+                make_column("question_id", , foreign_key()),
+                make_column("answer", )
+           */
+        
+        );
         return storage;
     }
 
