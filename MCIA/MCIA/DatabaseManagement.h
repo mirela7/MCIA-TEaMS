@@ -2,7 +2,6 @@
 #pragma warning(disable : 4996)
 #include "User.h"
 #include <sqlite_orm/sqlite_orm.h>
-#include <any>
 
 using namespace sqlite_orm;
 
@@ -16,9 +15,10 @@ namespace {
 
         return storage;
     }
-}
 
-using storage_type = decltype(getStorage());
+    using storage_type = decltype(getStorage());
+};
+
 
 class DatabaseManagement
 {
@@ -37,8 +37,6 @@ public:
     bool CheckPassword(const std::string& name, const std::string &password);
     
 protected:
-    friend class User;
-
     DatabaseManagement() = default;
     
 
@@ -51,9 +49,8 @@ protected:
 template<typename T>
 int32_t DatabaseManagement::InsertElement(const T& el)
 {
-    auto& st = getStorage();
     // TODO CHECK INSERT
-    return st.insert(el);
+    return storage.insert(el);
 }
 
 template<typename T>
