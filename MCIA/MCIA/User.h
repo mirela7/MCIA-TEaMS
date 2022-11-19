@@ -1,6 +1,8 @@
 #pragma once
+#pragma warning(disable : 4996)
 #include <string>
 #include <cstdint>
+#include <fstream>
 
 class User
 {
@@ -17,9 +19,14 @@ public:
 	User& operator=(User&& other) noexcept;
 	
 	~User();
+
+	friend std::ostream& operator<<(std::ostream& g, const User& u) {
+		return g << u.m_id << " " << u.m_name;
+	}
 private:
 	friend class DatabaseManagement;
 
+public:
 	uint16_t m_id;
 	std::string m_name;
 	std::string m_password;

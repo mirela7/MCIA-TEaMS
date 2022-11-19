@@ -5,14 +5,14 @@ DatabaseManagement* DatabaseManagement::m_database = nullptr;
 
 DatabaseManagement& DatabaseManagement::GetInstance()
 {
-    if (m_database == nullptr)
+    if (m_database == nullptr) 
         m_database = new DatabaseManagement();
     return *m_database;
 }
 
 User DatabaseManagement::GetUserByName(const std::string& name)
 {
-    auto& st = getStorage();
+    auto st = getStorage();
     auto el = st.get_all<User>(where(c(&User::m_name) == name));
     //TODO: Tratare eroare caz inexistent
     return el[0];
@@ -20,7 +20,7 @@ User DatabaseManagement::GetUserByName(const std::string& name)
     
 bool DatabaseManagement::IsRegistered(const std::string& name)
 {
-    auto& st = getStorage();
+    auto st = getStorage();
     auto el = st.get_all<User>(where(c(&User::m_name) == name));
 
     return !el.empty();
@@ -31,4 +31,3 @@ bool DatabaseManagement::CheckPassword(const std::string& name, const std::strin
     auto user = GetUserByName(name);
     return user.GetPassword() == password;
 }
-
