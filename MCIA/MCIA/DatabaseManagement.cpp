@@ -12,16 +12,14 @@ DatabaseManagement& DatabaseManagement::GetInstance()
 
 User DatabaseManagement::GetUserByName(const std::string& name)
 {
-    auto st = getStorage();
-    auto el = st.get_all<User>(where(c(&User::m_name) == name));
+    auto el = storage.get_all<User>(where(c(&User::m_name) == name));
     //TODO: Tratare eroare caz inexistent
     return el[0];
 }
     
 bool DatabaseManagement::IsRegistered(const std::string& name)
 {
-    auto st = getStorage();
-    auto el = st.get_all<User>(where(c(&User::m_name) == name));
+    auto el = storage.get_all<User>(where(c(&User::m_name) == name));
 
     return !el.empty();
 }
