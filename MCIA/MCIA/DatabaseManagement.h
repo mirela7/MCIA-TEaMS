@@ -5,20 +5,16 @@
 
 using namespace sqlite_orm;
 
-namespace {
-    auto getStorage() {
+namespace DB{
+    static auto getStorage() {
         static auto storage = make_storage("DBtest.db",
-            make_table("user",
-                make_column("Id", &User::m_id, primary_key()),
-                make_column("name", &User::m_name),
-                make_column("password", &User::m_password)));
+            make_user_table());
 
         return storage;
-    }
-
+    };
+    
     using storage_type = decltype(getStorage());
 };
-
 
 class DatabaseManagement
 {
@@ -41,7 +37,7 @@ protected:
     
 
 protected:
-    static inline storage_type storage = getStorage();
+    static inline DB::storage_type storage = DB::getStorage();
     static DatabaseManagement* m_database;
 };
 

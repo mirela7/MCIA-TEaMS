@@ -3,6 +3,14 @@
 #include <string>
 #include <cstdint>
 #include <fstream>
+#include <sqlite_orm/sqlite_orm.h>
+
+namespace DB {
+	using namespace sqlite_orm;
+	static auto make_user_table();
+}
+
+class DatabaseManagement;
 
 class User
 {
@@ -23,10 +31,10 @@ public:
 	friend std::ostream& operator<<(std::ostream& g, const User& u) {
 		return g << u.m_id << " " << u.m_name;
 	}
-private:
-	friend class DatabaseManagement;
 
-public:
+	friend auto DB::make_user_table();
+	friend class DatabaseManagement;
+private:
 	uint16_t m_id;
 	std::string m_name;
 	std::string m_password;
@@ -34,3 +42,10 @@ public:
 	
 };
 
+static auto DB::make_user_table() {
+	static auto el = make_table("user",
+		make_column("Id", &User::m_id, primary_key()),
+		make_column("name", &User::m_name),
+		make_column("password", &User::m_password));
+	return el;
+}
