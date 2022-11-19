@@ -9,8 +9,9 @@ int main()
 	std::string name, pw;
 
 	std::cin >> name;
-	auto dbm = DatabaseManagement::GetInstance();
+	auto& dbm = DatabaseManagement::GetInstance();
 	//std::cout << dbm.GetUserByName(name).GetPassword();
 	std::cout << dbm.GetElementById<User>(1);
+
 	return 0;
 }

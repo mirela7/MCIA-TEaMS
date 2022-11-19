@@ -32,9 +32,10 @@ public:
 
     bool CheckPassword(const std::string& name, const std::string &password);
     
-protected:
+private:
     DatabaseManagement() = default;
-    
+    DatabaseManagement(DatabaseManagement&) = delete;
+    void operator=(DatabaseManagement&) = delete;
 
 protected:
     static inline DB::storage_type storage = DB::getStorage();
