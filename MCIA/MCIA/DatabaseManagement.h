@@ -1,5 +1,7 @@
 #pragma once
 #include "User.h"
+#include "CodedException.h"
+#include "OperationStatus.h"
 #include <sqlite_orm/sqlite_orm.h>
 
 using namespace sqlite_orm;
@@ -15,6 +17,7 @@ public:
 
     template<typename T>
     T GetElementById(const int32_t id);
+
 
     User GetUserByName(const std::string& name);
     bool IsRegistered(const std::string& name);
