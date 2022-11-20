@@ -6,7 +6,6 @@
 #include <vector>
 #include <sstream>
 #include <sqlite_orm/sqlite_orm.h>
-#include "MovieIntermediary.h"
 
 using namespace sqlite_orm;
 
@@ -23,7 +22,7 @@ public:
 
 	static void parse()
 	{
-		static auto storage = make_storage("DBtest.db",
+		/*static auto storage = make_storage("DBtest.db",
 			make_table("movietable",
 				make_column("movieId", &MovieIntermediary::m_id, primary_key()),
 				make_column("title", &MovieIntermediary::m_title),
@@ -41,7 +40,7 @@ public:
 		for (auto& tpl : allMovies) {
 			Movie m(std::get<0>(tpl), std::get<1>(tpl), std::get<2>(tpl), 0, 0);
 			storage.insert(m);
-		}
+		}*/
 	}
 
 private:
