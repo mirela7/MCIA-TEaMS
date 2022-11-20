@@ -12,6 +12,14 @@ void AuthService::RegisterUser(User& user)
 	if(!pw_valid)
 		throw CodedException(username_valid, "Invalid password.");
 	DatabaseManagement::GetInstance().InsertElement(user);
+
+	/* 
+	TODO: Quizz questions 
+		- select questions & answers (+ display them -> handle exceptions)
+			+ add Code in OperationStatus::Code
+		- save answers to db
+	*/
+
 	m_connectedUser = new User(user);
 }
 
