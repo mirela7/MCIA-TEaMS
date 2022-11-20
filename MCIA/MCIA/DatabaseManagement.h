@@ -1,6 +1,8 @@
 #pragma once
 #pragma warning(disable : 4996)
 #include "User.h"
+#include "Question.h"
+#include "Answer.h"
 #include <sqlite_orm/sqlite_orm.h>
 
 using namespace sqlite_orm;
@@ -8,7 +10,10 @@ using namespace sqlite_orm;
 namespace DB{
     static auto getStorage() {
         static auto storage = make_storage("DBtest.db",
-            make_user_table());
+            make_user_table(),
+            make_question_table(),
+            make_answer_table()
+        );
 
         return storage;
     };
