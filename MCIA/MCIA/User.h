@@ -7,6 +7,7 @@ class User
 public:
 	User() = default;
 	User(const uint16_t& id,const std::string& name, const std::string& password);
+	User(const std::string& name, const std::string& password);
 	User(const User& other);
 	User(User&& other) noexcept;
 	
