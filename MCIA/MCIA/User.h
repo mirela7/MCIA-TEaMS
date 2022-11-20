@@ -1,6 +1,16 @@
 #pragma once
+#pragma warning(disable : 4996)
 #include <string>
 #include <cstdint>
+#include <fstream>
+#include <sqlite_orm/sqlite_orm.h>
+
+namespace DB {
+	using namespace sqlite_orm;
+	static auto make_user_table();
+}
+
+class DatabaseManagement;
 
 class User
 {
@@ -18,9 +28,14 @@ public:
 	User& operator=(User&& other) noexcept;
 	
 	~User();
-private:
-	friend class DatabaseManagement;
 
+	friend std::ostream& operator<<(std::ostream& g, const User& u) {
+		return g << u.m_id << " " << u.m_name;
+	}
+
+	friend auto DB::make_user_table();
+	friend class DatabaseManagement;
+private:
 	uint16_t m_id;
 	std::string m_name;
 	std::string m_password;
@@ -28,3 +43,10 @@ private:
 	
 };
 
+static auto DB::make_user_table() {
+	static auto el = make_table("user",
+		make_column("Id", &User::m_id, primary_key()),
+		make_column("name", &User::m_name),
+		make_column("password", &User::m_password));
+	return el;
+}

@@ -5,7 +5,7 @@ DatabaseManagement* DatabaseManagement::m_database = nullptr;
 
 DatabaseManagement& DatabaseManagement::GetInstance()
 {
-    if (m_database == nullptr)
+    if (m_database == nullptr) 
         m_database = new DatabaseManagement();
     return *m_database;
 }
@@ -13,8 +13,7 @@ DatabaseManagement& DatabaseManagement::GetInstance()
 
 User DatabaseManagement::GetUserByName(const std::string& name)
 {
-    auto& st = getStorage();
-    auto el = st.get_all<User>(where(c(&User::m_name) == name));
+    auto el = storage.get_all<User>(where(c(&User::m_name) == name));
     if (el.empty())
         throw CodedException(OperationStatus::DB_ENTITY_NOT_FOUND, "Entity with name \"" + name + "\" not found.");
     return el[0];
@@ -22,8 +21,7 @@ User DatabaseManagement::GetUserByName(const std::string& name)
     
 bool DatabaseManagement::IsRegistered(const std::string& name)
 {
-    auto& st = getStorage();
-    auto el = st.get_all<User>(where(c(&User::m_name) == name));
+    auto el = storage.get_all<User>(where(c(&User::m_name) == name));
 
     return !el.empty();
 }
@@ -33,4 +31,3 @@ bool DatabaseManagement::CheckPassword(const std::string& name, const std::strin
     auto user = GetUserByName(name);
     return user.GetPassword() == password;
 }
-
