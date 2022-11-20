@@ -36,7 +36,7 @@ User AuthService::StartAuthProcess()
 	char c;
 	bool isRegistering = false;
 	std::string name, pw;
-	auto dbm = DatabaseManagement::GetInstance();
+	auto& dbm = DatabaseManagement::GetInstance();
 
 	std::cout << "Please login before entering the application.\n";
 

@@ -1,5 +1,5 @@
 #pragma once
-#pragma warning(disable : 4996)
+#pragma warning(disable : 4996) /* To suppress warnings regarding deprecated C++17 functions. */
 #include "User.h"
 #include "CodedException.h"
 #include "OperationStatus.h"
