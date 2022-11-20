@@ -16,7 +16,7 @@ namespace DB{
         );
 
         return storage;
-    };
+    }
     
     using storage_type = decltype(getStorage());
 };
