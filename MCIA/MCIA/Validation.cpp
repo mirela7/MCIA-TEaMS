@@ -1,27 +1,27 @@
 #include "Validation.h"
 
-ValidationCode Validation::IsUsernameValid(const std::string& username)
+OperationStatus Validation::IsUsernameValid(const std::string& username)
 {
 
     if (Validation::IsBlank(username))
-        return ValidationCode(ValidationCode::Code::F_BLANK);
+        return OperationStatus(OperationStatus::Code::F_BLANK);
     if (isspace(username[0]) || isspace(username[username.size() - 1]))
-        return ValidationCode(ValidationCode::Code::F_TRIM);
+        return OperationStatus(OperationStatus::Code::F_TRIM);
     if (username.size() < kMinUsernameLength)
-        return ValidationCode(ValidationCode::Code::F_SIZE);
+        return OperationStatus(OperationStatus::Code::F_SIZE);
     if (!isalpha(username[0]) || !Validation::IsAlphaNumericOrSpecial(username))
-        return ValidationCode(ValidationCode::Code::F_ALPHA_NUMERIC);
-    return ValidationCode(ValidationCode::Code::VALID);
+        return OperationStatus(OperationStatus::Code::F_ALPHA_NUMERIC);
+    return OperationStatus(OperationStatus::Code::SUCCESS);
 }
 
 
-ValidationCode Validation::IsPasswordValid(const std::string& password)
+OperationStatus Validation::IsPasswordValid(const std::string& password)
 {
     if (Validation::IsBlank(password))
-        return ValidationCode(ValidationCode::Code::F_BLANK);
+        return OperationStatus(OperationStatus::Code::F_BLANK);
     if (password.size() < kMinPasswordLength)
-        return ValidationCode(ValidationCode::Code::F_SIZE);
-    return ValidationCode(ValidationCode::Code::VALID);
+        return OperationStatus(OperationStatus::Code::F_SIZE);
+    return OperationStatus(OperationStatus::Code::SUCCESS);
 }
 
 bool Validation::IsAlphaNumericOrSpecial(const std::string& string)
@@ -63,12 +63,12 @@ Password: not blank, longer than 3 characters.\n";
         auto validn = Validation::IsUsernameValid(name);
         auto validp = Validation::IsPasswordValid(pw);
         if (!validn)
-            throw ValidationException(validn, "Username is invalid.");
+            throw CodedException(validn, "Username is invalid.");
         if (!validp)
-            throw ValidationException(validp, "Password is invalid.");
+            throw CodedException(validp, "Password is invalid.");
         std::cout << "User valid.";
     }
-    catch (ValidationException e) {
+    catch (CodedException e) {
         std::cout << "Exception thrown with:\n[CODE] $MESSAGE$\n";
         std::cout << e.what();
     }

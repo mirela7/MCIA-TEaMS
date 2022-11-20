@@ -15,6 +15,13 @@ User::User(const User & other)
 	m_password = other.m_password;
 }
 
+User::User(const std::string& name, const std::string& password)
+{
+	m_id = 0;
+	m_name = name;
+	m_password = password;
+}
+
 User& User::operator=(const User& user)
 {
 	if (this != &user) {  

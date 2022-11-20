@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{45c4ae6b-bc0f-4045-bf3f-2c086ba2ccff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{5480a088-42ed-4a11-b9bd-55588cef03b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DB Services">
+      <UniqueIdentifier>{bf154194-7dcb-4bf0-99ee-0a4ca4a45e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DB Services">
+      <UniqueIdentifier>{d22200ce-7f67-45e3-a2e3-2998e297e3b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Validation.cpp">
@@ -21,20 +33,23 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ValidationException.cpp">
+    <ClCompile Include="CodedException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ValidationCode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DatabaseManagement.cpp">
+    <ClCompile Include="OperationStatus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Movie.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="User.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthService.cpp">
+      <Filter>Source Files\DB Services</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseManagement.cpp">
+      <Filter>Source Files\DB Services</Filter>
     </ClCompile>
     <ClCompile Include="Answer.cpp">
       <Filter>Source Files</Filter>
@@ -50,20 +65,23 @@
     <ClInclude Include="Validation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ValidationException.h">
+    <ClInclude Include="CodedException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ValidationCode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DatabaseManagement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Movie.h">
+    <ClInclude Include="OperationStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="User.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Movie.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseManagement.h">
+      <Filter>Header Files\DB Services</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthService.h">
+      <Filter>Header Files\DB Services</Filter>
     </ClInclude>
     <ClInclude Include="Answer.h">
       <Filter>Header Files</Filter>

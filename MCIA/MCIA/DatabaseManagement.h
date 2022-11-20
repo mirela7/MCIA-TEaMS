@@ -1,6 +1,8 @@
 #pragma once
-#pragma warning(disable : 4996)
+#pragma warning(disable : 4996) /* To suppress warnings regarding deprecated C++17 functions. */
 #include "User.h"
+#include "CodedException.h"
+#include "OperationStatus.h"
 #include "Question.h"
 #include "Answer.h"
 #include <sqlite_orm/sqlite_orm.h>
@@ -31,6 +33,7 @@ public:
 
     template<typename T>
     T GetElementById(const int32_t id);
+
 
     User GetUserByName(const std::string& name);
     bool IsRegistered(const std::string& name);

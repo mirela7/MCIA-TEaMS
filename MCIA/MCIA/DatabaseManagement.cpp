@@ -10,10 +10,12 @@ DatabaseManagement& DatabaseManagement::GetInstance()
     return *m_database;
 }
 
+
 User DatabaseManagement::GetUserByName(const std::string& name)
 {
     auto el = storage.get_all<User>(where(c(&User::m_name) == name));
-    //TODO: Tratare eroare caz inexistent
+    if (el.empty())
+        throw CodedException(OperationStatus::DB_ENTITY_NOT_FOUND, "Entity with name \"" + name + "\" not found.");
     return el[0];
 }
     

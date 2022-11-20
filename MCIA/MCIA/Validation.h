@@ -1,14 +1,14 @@
 #pragma once
 #include <string>	
 #include <iostream>
-#include "ValidationCode.h"
-#include "ValidationException.h"
+#include "OperationStatus.h"
+#include "CodedException.h"
 
 class Validation
 {
 public:
-	static ValidationCode IsUsernameValid(const std::string& username);
-	static ValidationCode IsPasswordValid(const std::string& password);
+	static OperationStatus IsUsernameValid(const std::string& username);
+	static OperationStatus IsPasswordValid(const std::string& password);
 	static bool IsAlphaNumericOrSpecial(const std::string& string);
 	static bool IsBlank(const std::string& string);
 	static bool IsNotBlank(const char c);
