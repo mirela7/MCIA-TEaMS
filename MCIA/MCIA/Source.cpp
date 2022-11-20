@@ -1,13 +1,10 @@
 #include <iostream>
 #include "DatabaseManagement.h"
+#include "AuthService.h"
 
 int main()
 {
-	std::cout << "Username:";
-	std::string name, pw;
-
-	std::cin >> name;
-	auto dbm = DatabaseManagement::GetInstance();
-	std::cout << dbm.GetUserByName(name).GetPassword();
+	auto connectedUser = AuthService::StartAuthProcess();
+	std::cout << connectedUser.GetName();
 	return 0;
 }

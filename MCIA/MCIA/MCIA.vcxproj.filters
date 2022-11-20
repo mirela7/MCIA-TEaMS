@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{45c4ae6b-bc0f-4045-bf3f-2c086ba2ccff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{5480a088-42ed-4a11-b9bd-55588cef03b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Validation.cpp">
@@ -21,40 +27,46 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ValidationException.cpp">
+    <ClCompile Include="CodedException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ValidationCode.cpp">
+    <ClCompile Include="OperationStatus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DatabaseManagement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Movie.cpp">
+    <ClCompile Include="AuthService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Movie.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
     <ClCompile Include="User.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Validation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ValidationException.h">
+    <ClInclude Include="CodedException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ValidationCode.h">
+    <ClInclude Include="OperationStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DatabaseManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Movie.h">
+    <ClInclude Include="AuthService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="User.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Movie.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
