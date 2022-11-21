@@ -5,15 +5,17 @@ DatabaseManagement* DatabaseManagement::m_database = nullptr;
 
 DatabaseManagement& DatabaseManagement::GetInstance()
 {
-    if (m_database == nullptr) 
+    if (m_database == nullptr) {
         m_database = new DatabaseManagement();
+        // m_database->m_storage.sync_schema();
+    }
     return *m_database;
 }
 
 
 User DatabaseManagement::GetUserByName(const std::string& name)
 {
-    auto el = storage.get_all<User>(where(c(&User::m_name) == name));
+    auto el = m_storage.get_all<User>(where(c(&User::GetName) == name));
     if (el.empty())
         throw CodedException(OperationStatus::DB_ENTITY_NOT_FOUND, "Entity with name \"" + name + "\" not found.");
     return el[0];
@@ -21,7 +23,7 @@ User DatabaseManagement::GetUserByName(const std::string& name)
     
 bool DatabaseManagement::IsRegistered(const std::string& name)
 {
-    auto el = storage.get_all<User>(where(c(&User::m_name) == name));
+    auto el = m_storage.get_all<User>(where(c(&User::GetName) == name));
 
     return !el.empty();
 }

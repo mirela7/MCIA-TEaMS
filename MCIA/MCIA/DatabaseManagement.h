@@ -9,17 +9,65 @@
 
 using namespace sqlite_orm;
 
-namespace DB{
-    static auto getStorage() {
-        static auto storage = make_storage("DBtest.db",
-            make_user_table(),
-            make_question_table(),
-            make_answer_table()
+namespace {
+
+    auto make_user_table() {
+        static auto el = make_table("user",
+            make_column("Id", 
+                &User::GetId,
+                &User::SetId,
+                primary_key()),
+            make_column("name",
+                &User::GetName,
+                &User::SetName),
+            make_column("password", 
+                &User::GetPassword,
+                &User::SetPassword));
+        return el;
+    }
+
+    auto make_question_table() {
+
+        static auto el = make_table("questions",
+            make_column("id", 
+                &Question::GetId,
+                &Question::SetId,
+                primary_key()),
+            make_column("question",
+                &Question::GetQuestion,
+                &Question::SetQuestion));
+
+        return el;
+    }
+
+    auto make_answer_table() {
+        static auto el = make_table("questions"
+            , make_column("id",
+                &Answer::GetId,
+                &Answer::SetId,
+                primary_key())
+            , make_column("question_id",
+                &Answer::GetQuestionID,
+                &Answer::SetQuestionId)
+            , make_column("answer",
+                &Answer::GetAnswer,
+                &Answer::SetAnswear)
+            , foreign_key(&Answer::GetAnswer).references(&Question::GetId)
+        );
+
+        return el;
+    }
+
+    auto getStorage() {
+        static auto storage = make_storage("DBtest.db"
+           , make_user_table()
+           , make_question_table()
+           , make_answer_table()
         );
 
         return storage;
     }
-    
+
     using storage_type = decltype(getStorage());
 };
 
@@ -46,7 +94,7 @@ private:
     void operator=(DatabaseManagement&) = delete;
 
 protected:
-    static inline DB::storage_type storage = DB::getStorage();
+    storage_type m_storage = getStorage();
     static DatabaseManagement* m_database;
 };
 
@@ -55,7 +103,7 @@ template<typename T>
 int32_t DatabaseManagement::InsertElement(const T& el)
 {
     // TODO CHECK INSERT
-    return storage.insert(el);
+    return m_storage.insert(el);
 }
 
 template<typename T>
@@ -63,5 +111,6 @@ inline T DatabaseManagement::GetElementById(const int32_t id)
 {
     // auto& st = getStorage();
     // TODO FAIL PROOF GET
-    return storage.get<T>(id);
+    return m_storage.get<T>(id);
 }
+

@@ -51,12 +51,32 @@ User::User(User&& other) noexcept
 User::~User()
 {}
 
-std::string User::GetPassword()
+std::string User::GetPassword() const
 {
 	return m_password;
 }
 
-std::string User::GetName()
+std::string User::GetName() const
 {
 	return m_name;
+}
+
+uint16_t User::GetId() const 
+{
+	return m_id;
+}
+
+void User::SetName(const std::string& name)
+{
+	m_name = name;
+}
+
+void User::SetPassword(const std::string& password)
+{
+	m_password = password;
+}
+
+void User::SetId(uint16_t id)
+{
+	m_id = id;
 }

@@ -16,7 +16,22 @@ uint16_t Answer::GetId() const
 	return m_id;
 }
 
-uint8_t Answer::GetQuestionID() const
+uint16_t Answer::GetQuestionID() const
 {
 	return m_questionId;
+}
+
+void Answer::SetId(uint16_t id)
+{
+	m_id = id;
+}
+
+void Answer::SetQuestionId(uint16_t questionId)
+{
+	m_questionId = questionId;
+}
+
+void Answer::SetAnswear(const std::string& answear)
+{
+	m_answer = answear;
 }
