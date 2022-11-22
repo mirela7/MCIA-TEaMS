@@ -5,7 +5,7 @@ Question::Question(const uint8_t id, const std::string& question)
 	  m_question(question)
 {}
 
-uint8_t Question::GetId() const
+uint16_t Question::GetId() const
 {
 	return m_id;
 }
@@ -13,4 +13,14 @@ uint8_t Question::GetId() const
 std::string Question::GetQuestion() const
 {
 	return m_question;
+}
+
+void Question::SetId(uint16_t id)
+{
+	m_id = id;
+}
+
+void Question::SetQuestion(const std::string& question)
+{
+	m_question = question;
 }

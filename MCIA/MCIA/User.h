@@ -5,10 +5,6 @@
 #include <fstream>
 #include <sqlite_orm/sqlite_orm.h>
 
-namespace DB {
-	using namespace sqlite_orm;
-	static auto make_user_table();
-}
 
 class DatabaseManagement;
 
@@ -21,8 +17,13 @@ public:
 	User(const User& other);
 	User(User&& other) noexcept;
 	
-	std::string GetName();
-	std::string GetPassword();
+	std::string GetName() const;
+	std::string GetPassword() const;
+	uint16_t GetId() const;
+
+	void SetName(const std::string& name);
+	void SetPassword(const std::string& password);
+	void SetId(uint16_t id);
 
 	User& operator=(const User& user);
 	User& operator=(User&& other) noexcept;
@@ -33,7 +34,6 @@ public:
 		return g << u.m_id << " " << u.m_name;
 	}
 
-	friend auto DB::make_user_table();
 	friend class DatabaseManagement;
 private:
 	uint16_t m_id;
@@ -43,10 +43,3 @@ private:
 	
 };
 
-static auto DB::make_user_table() {
-	static auto el = make_table("user",
-		make_column("Id", &User::m_id, primary_key()),
-		make_column("name", &User::m_name),
-		make_column("password", &User::m_password));
-	return el;
-}
