@@ -1,13 +1,13 @@
 #include "Movie.h"
 
-Movie::Movie(const uint16_t& id, const std::string& title, const std::string& genre, const uint16_t& releaseYear)
+Movie::Movie(const uint16_t id, const std::string& title, const std::string& genre, const uint16_t releaseYear)
 	: m_id(id)
 	, m_title(title)
 	, m_genre(genre)
 	, m_releaseYear(releaseYear)
 {}
 
-Movie::Movie(const Movie & movie)
+Movie::Movie(const Movie& movie)
 {
 	*this = movie;
 }

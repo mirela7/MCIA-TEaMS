@@ -13,7 +13,7 @@ class Movie
 {
 public:
 	Movie() = default;
-	Movie(const uint16_t& id, const std::string& title, const std::string& genre, const uint16_t& releaseYear);
+	Movie(const uint16_t id, const std::string& title, const std::string& genre, const uint16_t releaseYear);
 	Movie(const Movie& movie);
 	Movie(Movie&& movie) noexcept;
 
