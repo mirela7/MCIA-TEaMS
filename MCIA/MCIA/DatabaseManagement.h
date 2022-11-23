@@ -5,6 +5,7 @@
 #include "OperationStatus.h"
 #include "Question.h"
 #include "Answer.h"
+#include "Movie.h"
 #include "MovieIntermediary.h"
 #include <sqlite_orm/sqlite_orm.h>
 
@@ -24,6 +25,24 @@ namespace {
             make_column("genres",
                 &MovieIntermediary::GetGenre,
                 &MovieIntermediary::SetGenre));
+        return el;
+    }
+
+    auto make_movie_table() {
+        static auto el = make_table("movie",
+            make_column("Id",
+                &Movie::GetId,
+                &Movie::SetId,
+                primary_key()),
+            make_column("title",
+                &Movie::GetTitle,
+                &Movie::SetTitle),
+            make_column("genre",
+                &Movie::GetGenre,
+                &Movie::SetGenre),
+            make_column("release_year",
+                &Movie::GetReleaseYear,
+                &Movie::SetReleaseYear));
         return el;
     }
 
