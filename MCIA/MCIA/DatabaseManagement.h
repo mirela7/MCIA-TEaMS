@@ -113,4 +113,3 @@ inline T DatabaseManagement::GetElementById(const int32_t id)
     // TODO FAIL PROOF GET
     return m_storage.get<T>(id);
 }
-

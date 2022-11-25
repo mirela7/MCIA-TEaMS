@@ -134,7 +134,9 @@
     <ClCompile Include="AuthService.cpp" />
     <ClCompile Include="Answer.cpp" />
     <ClCompile Include="DatabaseManagement.cpp" />
+    <ClCompile Include="Filter.cpp" />
     <ClCompile Include="Movie.cpp" />
+    <ClCompile Include="PagedSelection.cpp" />
     <ClCompile Include="Question.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="User.cpp" />
@@ -147,7 +149,9 @@
     <ClInclude Include="AuthService.h" />
     <ClInclude Include="Answer.h" />
     <ClInclude Include="DatabaseManagement.h" />
+    <ClInclude Include="Filter.h" />
     <ClInclude Include="Movie.h" />
+    <ClInclude Include="PagedSelection.h" />
     <ClInclude Include="Question.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserAnswerQuestion.h" />
