@@ -21,7 +21,7 @@ User DatabaseManagement::GetUserByName(const std::string& name)
     return el[0];
 }
 
-storage_type DatabaseManagement::GetStorage()
+storage_type& DatabaseManagement::GetStorage()
 {
     return m_storage;
 }

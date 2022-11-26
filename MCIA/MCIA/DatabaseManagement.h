@@ -85,7 +85,7 @@ public:
 
     User GetUserByName(const std::string& name);
 
-    storage_type GetStorage();
+    storage_type& GetStorage();
     
 private:
     DatabaseManagement() = default;

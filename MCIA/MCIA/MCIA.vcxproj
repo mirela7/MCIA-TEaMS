@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="AuthService.cpp" />
     <ClCompile Include="Answer.cpp" />
+    <ClCompile Include="ConsoleChars.cpp" />
     <ClCompile Include="DatabaseManagement.cpp" />
     <ClCompile Include="Movie.cpp" />
     <ClCompile Include="PagedSelection.cpp" />
