@@ -3,7 +3,7 @@
 #include <iostream>
 #include "DatabaseManagement.h"
 #include "AuthService.h"
-#include "PagedSelection.h"
+#include "DBPage.h"
 #include "Filter.h"
 #include <sqlite_orm/sqlite_orm.h>
 
@@ -22,7 +22,7 @@ int main()
 
 	char ch;
 	int wantedPage = 0;
-	auto result = PagedSelection<User>::select(2, wantedPage, usernameContainingUsernmeFilter);
+	auto result = DatabaseManagement::GetInstance().PagedSelect<User>(wantedPage, 2, usernameContainingUsernmeFilter);
 	std::cout << result;
 	std::cout << "Navigate table: ";
 	while (std::cin >> ch)
@@ -32,7 +32,7 @@ int main()
 		else if (ch == 'n')
 			wantedPage = min(wantedPage + 1, result.nmbPages - 1);
 		else return 0;
-		auto result = PagedSelection<User>::select(2, wantedPage, allFilter);
+		auto result = DatabaseManagement::GetInstance().PagedSelect<User>(wantedPage, 2, usernameContainingUsernmeFilter);
 		std::cout << result;
 		std::cout << "Navigate table: ";
 	}
