@@ -50,7 +50,7 @@ User AuthService::StartAuthProcess()
 		User user(name, pw);
 		isRegistering = false;
 
-		if (!dbm.IsRegistered(name))
+		if (!ExistsUserWithUsername(name))
 		{
 			std::cout << "There is no account with username " + name + ":\n [r] register       [x] back to login\nPlease choose: ";
 			std::cin >> c;
@@ -73,10 +73,15 @@ User AuthService::StartAuthProcess()
 	return AuthService::GetConnectedUser();
 }
 
+bool AuthService::ExistsUserWithUsername(const std::string& username)
+{
+	auto result = DatabaseManagement::GetInstance().GetStorage().get_all<User>(where(c(&User::GetName) == username));
+	return !(result.empty());
+}
 
 void AuthService::AuthenticateUser(User& user)
 {
-	if (DatabaseManagement::GetInstance().IsRegistered(user.GetName()))
+	if (ExistsUserWithUsername(user.GetName()))
 		LoginUser(user);
 	else RegisterUser(user);
 }

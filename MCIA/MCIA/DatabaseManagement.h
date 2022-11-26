@@ -84,9 +84,8 @@ public:
 
 
     User GetUserByName(const std::string& name);
-    bool IsRegistered(const std::string& name);
 
-    bool CheckPassword(const std::string& name, const std::string &password);
+    storage_type GetStorage();
     
 private:
     DatabaseManagement() = default;

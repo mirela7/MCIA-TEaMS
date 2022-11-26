@@ -5,12 +5,9 @@
 #include "AuthService.h"
 #include "PagedSelection.h"
 #include "Filter.h"
-#include <functional>
+#include <sqlite_orm/sqlite_orm.h>
 
-int a()
-{
-	return 1;
-}
+using namespace sqlite_orm;
 
 
 int main()
@@ -18,13 +15,7 @@ int main()
 	/*auto connectedUser = AuthService::StartAuthProcess();
 	std::cout << connectedUser.GetName();
 	*/
-	
-
-	//std::function<std::string()> str = User::GetName;
-	std::function<int(void)> fct = a;
-	
-	std::string str = "ac";
-	auto result = PagedSelection<User>::select( Filter<User>::columnIs(User::GetName, str, 6, 0);
-
+	auto result = PagedSelection<User>::select(6, 0, c(&User::GetName) == "Sorana" and c(&User::GetId) < 1);
+	std::cout << "No err?";
 	return 0;
 }

@@ -20,16 +20,8 @@ User DatabaseManagement::GetUserByName(const std::string& name)
         throw CodedException(OperationStatus::DB_ENTITY_NOT_FOUND, "Entity with name \"" + name + "\" not found.");
     return el[0];
 }
-    
-bool DatabaseManagement::IsRegistered(const std::string& name)
-{
-    auto el = m_storage.get_all<User>(where(c(&User::GetName) == name));
 
-    return !el.empty();
-}
-
-bool DatabaseManagement::CheckPassword(const std::string& name, const std::string& password)
+storage_type DatabaseManagement::GetStorage()
 {
-    auto user = GetUserByName(name);
-    return user.GetPassword() == password;
+    return m_storage;
 }

@@ -9,7 +9,7 @@ class PagedSelection
 public:
 
 	template<class sqlite_expression>
-	static bool select(const sqlite_expression filters, const int nmbRows, const int nmbPage);
+	static bool select(const int nmbRows, const int nmbPage, sqlite_expression filters);
 
 	
 
@@ -18,7 +18,7 @@ private:
 
 template<class TEntity>
 template<class sqlite_expression>
-inline bool PagedSelection<TEntity>::select(const sqlite_expression filters, const int nmbRows, const int nmbPage)
+bool PagedSelection<TEntity>::select(const int nmbRows, const int nmbPage, sqlite_expression filters)
 {
-	return false;
+
 }
