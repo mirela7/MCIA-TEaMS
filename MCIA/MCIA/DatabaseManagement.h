@@ -5,6 +5,7 @@
 #include "OperationStatus.h"
 #include "Question.h"
 #include "Answer.h"
+#include "UserAnswerQuestion.h"
 #include <sqlite_orm/sqlite_orm.h>
 
 using namespace sqlite_orm;
@@ -57,6 +58,29 @@ namespace {
 
         return el;
     }
+
+    auto make_answer_table() {
+        static auto el = make_table("user_answer_question"
+            , make_column("user_id",
+                &UserAnswerQuestion::GetUserId,
+                &UserAnswerQuestion::SetUser,
+                primary_key(),
+                foreign_key(&UserAnswerQuestion::GetUserId).references(&User::GetId)
+                )
+            , make_column("question_id",
+                &UserAnswerQuestion::GetQuestionId,
+                &UserAnswerQuestion::SetQuestion,
+                foreign_key(&UserAnswerQuestion::GetUserId).references(&User::GetId)
+            )
+            , make_column("answer_id",
+                &UserAnswerQuestion::GetAnswerId,
+                &UserAnswerQuestion::SetAnswer)
+            , foreign_key(&UserAnswerQuestion::GetAnswerId).references(&Answer::GetId)
+        );
+
+        return el;
+    }
+
 
     auto getStorage() {
         static auto storage = make_storage("DBtest.db"
