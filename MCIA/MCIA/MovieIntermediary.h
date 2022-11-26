@@ -1,7 +1,7 @@
 #pragma once
 #pragma warning(disable : 4996)
-#include <iostream>
-#include <sqlite_orm/sqlite_orm.h>
+#include <cstdint>
+#include <string>
 
 class MovieIntermediary
 {

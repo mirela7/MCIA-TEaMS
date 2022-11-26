@@ -1,13 +1,6 @@
 #pragma once
 #pragma warning(disable : 4996)
-#include <iostream>
 #include <string>
-#include <fstream>
-#include <vector>
-#include <sstream>
-#include <sqlite_orm/sqlite_orm.h>
-
-using namespace sqlite_orm;
 
 class Movie
 {
@@ -30,6 +23,7 @@ public:
 	Movie& operator=(const Movie& movie);
 	Movie& operator=(Movie&& movie) noexcept;
 
+	void parse();
 private:
 	uint16_t m_id;
 	std::string m_title;

@@ -1,4 +1,5 @@
 #include "Movie.h"
+#include "DatabaseManagement.h"
 
 Movie::Movie(const uint16_t id, const std::string& title, const std::string& genre, const uint16_t releaseYear)
 	: m_id(id)
@@ -73,4 +74,15 @@ Movie& Movie::operator=(Movie&& movie) noexcept
 	m_releaseYear = movie.m_releaseYear;
 	new(&movie) Movie;
 	return *this;
+}
+
+void Movie::parse()
+{
+	auto& storage = DatabaseManagement::GetInstance().GetStorage();
+		/*auto allMovies = storage.select(columns(&MovieIntermediary::GetId, &MovieIntermediary::GetTitle, &MovieIntermediary::GetGenre));
+
+		for (auto& tpl : allMovies) {
+			Movie m(std::get<0>(tpl), std::get<1>(tpl), std::get<2>(tpl), 0);
+			storage.insert(m);
+		}*/
 }
