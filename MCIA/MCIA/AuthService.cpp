@@ -12,6 +12,8 @@ void AuthService::RegisterUser(User& user)
 	if(!pw_valid)
 		throw CodedException(username_valid, "Invalid password.");
 	DatabaseManagement::GetInstance().InsertElement(user);
+	
+	auto validUser= DatabaseManagement::GetInstance().GetStorage().get_all<User>(where(c(&User::GetName)==user.GetName()));
 
 	/* 
 	TODO: Quizz questions 
@@ -41,8 +43,8 @@ void AuthService::RegisterUser(User& user)
 			//TODO: verify if string is good function
 			for (int index3 = 0; index3 < options.size(); index3=index3+2)
 			{
-				UserAnswerQuestion element(1, answer[options[index3]-'0'].GetId(), index+1);
-				DatabaseManagement::GetInstance().InsertElement(element);
+				UserAnswerQuestion element(validUser[0].GetId(), answer[options[index3] - '0'].GetId(), index + 1);
+				DatabaseManagement::GetInstance().GetStorage().replace(element);
 			}
 		}
 		else
@@ -52,8 +54,8 @@ void AuthService::RegisterUser(User& user)
 			std::cin >> option;
 
 			//TODO: verify option
-			UserAnswerQuestion element(user.GetId(), answer[option].GetId(), index);
-			DatabaseManagement::GetInstance().InsertElement(element);
+			UserAnswerQuestion element(validUser[0].GetId(), answer[option].GetId(), index);
+			DatabaseManagement::GetInstance().GetStorage().replace(element);
 		}
 		
 	}

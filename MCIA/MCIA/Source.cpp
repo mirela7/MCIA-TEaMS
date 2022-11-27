@@ -6,11 +6,9 @@
 
 int main()
 {
-	/*auto connectedUser = AuthService::StartAuthProcess();
-	std::cout << connectedUser.GetName();*/
+	auto connectedUser = AuthService::StartAuthProcess();
+	std::cout << connectedUser.GetName();
 
-    UserAnswerQuestion element(1, 1, 200);
-	DatabaseManagement::GetInstance().GetStorage().replace(element);
 
 	return 0;
 }
