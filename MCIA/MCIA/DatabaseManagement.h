@@ -1,17 +1,56 @@
 #pragma once
 #pragma warning(disable : 4996) /* To suppress warnings regarding deprecated C++17 functions. */
+
 #include <iostream>
+#include <sqlite_orm/sqlite_orm.h>
+#include <functional>
+
 #include "User.h"
 #include "CodedException.h"
 #include "OperationStatus.h"
 #include "Question.h"
 #include "Answer.h"
 #include "UserAnswerQuestion.h"
-#include <sqlite_orm/sqlite_orm.h>
+#include "DBPage.h"
+#include "Movie.h"
+#include "MovieIntermediary.h"
 
 using namespace sqlite_orm;
 
 namespace {
+
+    auto make_movieIntermediary_table() {
+        static auto el = make_table("movieIntermediary",
+            make_column("movieId",
+                &MovieIntermediary::GetId,
+                &MovieIntermediary::SetId,
+                primary_key()),
+            make_column("title",
+                &MovieIntermediary::GetTitle,
+                &MovieIntermediary::SetTitle),
+            make_column("genres",
+                &MovieIntermediary::GetGenre,
+                &MovieIntermediary::SetGenre));
+        return el;
+    }
+
+    auto make_movie_table() {
+        static auto el = make_table("movie",
+            make_column("Id",
+                &Movie::GetId,
+                &Movie::SetId,
+                primary_key()),
+            make_column("title",
+                &Movie::GetTitle,
+                &Movie::SetTitle),
+            make_column("release_year",
+                &Movie::GetReleaseYear,
+                &Movie::SetReleaseYear),
+            make_column("rating",
+                &Movie::GetRating,
+                &Movie::SetRating));
+        return el;
+    }
 
     auto make_user_table() {
         static auto el = make_table("user",
@@ -87,10 +126,12 @@ namespace {
 
     auto getStorage() {
         static auto storage = make_storage("DBtest.db"
-           , make_user_table()
-           , make_question_table()
-           , make_answer_table()
-           , make_user_answer_question_table()
+            , make_user_table()
+            , make_question_table()
+            , make_answer_table()
+            , make_movie_table()
+            , make_movieIntermediary_table()
+            , make_user_answer_question_table()
         );
 
         return storage;
@@ -103,20 +144,20 @@ class DatabaseManagement
 {
 public:
     static DatabaseManagement& GetInstance();
+    storage_type& GetStorage();
 
     template<typename T>
     int32_t InsertElement(const T& el);
 
     template<typename T>
-    T GetElementById(const int32_t id);
+    T GetElementById(const int32_t id, bool throwIfNotFound = false);
 
+    template<typename TEntity, typename TValue>
+    TEntity GetElementByColumnValue(TValue (TEntity::*getter)() const, TValue value, bool throwIfNotFound = true);
 
-    User GetUserByName(const std::string& name);    
-    bool IsRegistered(const std::string& name);
+    template<class TEntity, class sqlite_expression>
+    DBPage<TEntity> PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters);
 
-    bool CheckPassword(const std::string& name, const std::string &password);
-    storage_type& GetStorage();
-    
 private:
     DatabaseManagement() = default;
     DatabaseManagement(DatabaseManagement&) = delete;
@@ -138,16 +179,35 @@ int32_t DatabaseManagement::InsertElement(const T& el)
     }
     catch (std::exception e)
     {
-        std::cout<<e.what();
+        std::cout << e.what();
     }
-    
 }
 
 template<typename T>
-inline T DatabaseManagement::GetElementById(const int32_t id)
+inline T DatabaseManagement::GetElementById(const int32_t id, bool throwIfNotFound)
 {
-    // auto& st = getStorage();
-    // TODO FAIL PROOF GET
-    return m_storage.get<T>(id);
+    try {
+        return m_storage.get<T>(id);
+    }
+    catch (std::system_error e) {
+        if (throwIfNotFound) throw e;
+        return nullptr;
+    };
 }
 
+template<typename TEntity, typename TValue>
+inline TEntity DatabaseManagement::GetElementByColumnValue(TValue(TEntity::* getter)() const, TValue value, bool throwIfNotFound)
+{
+    auto result = m_storage.get_all<TEntity>(where(c(getter) == value));
+    if (throwIfNotFound && result.size() < 1)
+        throw CodedException(OperationStatus::Code::DB_ENTITY_NOT_FOUND, "No entity with wanted value found.");
+    return result[0];
+}
+
+template<class TEntity, class sqlite_expression>
+inline DBPage<TEntity> DatabaseManagement::PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters)
+{
+    int totalPages = ceil(m_storage.count<TEntity>(where(filters)) * 1.0 / nmbRowsPerPage);
+    auto result = m_storage.get_all<TEntity>(where(filters), limit(nmbRowsPerPage, offset(idxOfPage * nmbRowsPerPage)));
+    return DBPage(result, totalPages, idxOfPage);
+}

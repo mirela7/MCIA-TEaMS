@@ -3,10 +3,7 @@
 #include <string>
 #include <cstdint>
 #include <fstream>
-#include <sqlite_orm/sqlite_orm.h>
 
-
-class DatabaseManagement;
 
 class User
 {
@@ -30,11 +27,8 @@ public:
 	
 	~User();
 
-	friend std::ostream& operator<<(std::ostream& g, const User& u) {
-		return g << u.m_id << " " << u.m_name;
-	}
+	friend std::ostream& operator<<(std::ostream& g, const User& u);
 
-	friend class DatabaseManagement;
 private:
 	uint16_t m_id;
 	std::string m_name;

@@ -80,3 +80,8 @@ void User::SetId(uint16_t id)
 {
 	m_id = id;
 }
+
+std::ostream& operator<<(std::ostream& g, const User& u)
+{
+	return g << u.m_id << " " << u.m_name;
+}

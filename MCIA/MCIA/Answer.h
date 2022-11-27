@@ -3,7 +3,6 @@
 #include <cstdint>
 #include <string>
 #include "Question.h"
-class DatabaseManagement;
 
 class Answer
 {
@@ -17,8 +16,6 @@ public:
 	void SetId(uint16_t id);
 	void SetQuestionId(uint16_t questionId);
 	void SetAnswear(const std::string& answear);
-
-	friend class DatabaseManagement;
 
 private:
 	uint16_t m_id;

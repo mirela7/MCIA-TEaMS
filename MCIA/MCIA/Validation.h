@@ -13,8 +13,6 @@ public:
 	static bool IsBlank(const std::string& string);
 	static bool IsNotBlank(const char c);
 public:
-	/* WILL BE DELETED */
-	static void dummyUserValidation();
 
 private:
 	Validation() = default;

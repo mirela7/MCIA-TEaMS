@@ -1,55 +1,35 @@
 #pragma once
 #pragma warning(disable : 4996)
-#include <iostream>
 #include <string>
-#include <fstream>
-#include <vector>
-#include <sstream>
-#include <sqlite_orm/sqlite_orm.h>
-
-using namespace sqlite_orm;
+#include <iostream>
 
 class Movie
 {
 public:
 	Movie() = default;
-	Movie(const int id, const std::string& title, const std::string& genre, const uint16_t releaseYear, const uint16_t duration);
+	Movie(const uint16_t id, const std::string& title, const uint16_t releaseYear, const float rating);
 	Movie(const Movie& movie);
 	Movie(Movie&& movie) noexcept;
+
+	void SetId(const uint16_t id);
+	void SetTitle(const std::string& title);
+	void SetReleaseYear(const uint16_t releaseYear);
+	void SetRating(const float rating);
+
+	uint16_t GetId() const;
+	std::string GetTitle() const;
+	uint16_t GetReleaseYear() const;
+	float GetRating() const;
 
 	Movie& operator=(const Movie& movie);
 	Movie& operator=(Movie&& movie) noexcept;
 
-	static void parse()
-	{
-		/*static auto storage = make_storage("DBtest.db",
-			make_table("movietable",
-				make_column("movieId", &MovieIntermediary::m_id, primary_key()),
-				make_column("title", &MovieIntermediary::m_title),
-				make_column("genres", &MovieIntermediary::m_genre)),
-			make_table("movie",
-				make_column("Id", &Movie::m_id, primary_key()),
-				make_column("title", &Movie::m_title),
-				make_column("genre", &Movie::m_genre),
-				make_column("release_year", &Movie::m_title),
-				make_column("duration", &Movie::m_genre))
-		);
-		
-		auto allMovies = storage.select(columns(&MovieIntermediary::m_id, &MovieIntermediary::m_title, &MovieIntermediary::m_genre));
+	friend std::ostream& operator<<(std::ostream& out, const Movie& movie);
 
-		for (auto& tpl : allMovies) {
-			Movie m(std::get<0>(tpl), std::get<1>(tpl), std::get<2>(tpl), 0, 0);
-			storage.insert(m);
-		}*/
-	}
-
+	void parse();
 private:
-	//modified
-	friend class DatabaseManagement;
-
-	int m_id;
+	uint16_t m_id; 
 	std::string m_title;
-	std::string m_genre;
 	uint16_t m_releaseYear;
-	uint16_t m_duration;
+	float m_rating;
 };
