@@ -91,3 +91,8 @@ void Movie::parse()
 				std::cout << "Inserted 1000 values: " << i << '\n';
 		}
 }
+
+std::ostream& operator<<(std::ostream& out, const Movie& movie)
+{
+	return out << movie.GetId() << " " << movie.GetTitle() << " " << movie.GetReleaseYear();
+}

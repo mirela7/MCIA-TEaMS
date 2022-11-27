@@ -135,6 +135,7 @@
     <ClCompile Include="Answer.cpp" />
     <ClCompile Include="DatabaseManagement.cpp" />
     <ClCompile Include="Movie.cpp" />
+    <ClCompile Include="DBPage.cpp" />
     <ClCompile Include="MovieIntermediary.cpp" />
     <ClCompile Include="Question.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -149,10 +150,12 @@
     <ClInclude Include="Answer.h" />
     <ClInclude Include="DatabaseManagement.h" />
     <ClInclude Include="Movie.h" />
+    <ClInclude Include="DBPage.h" />
     <ClInclude Include="MovieIntermediary.h" />
     <ClInclude Include="Question.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserAnswerQuestion.h" />
+    <ClInclude Include="Utils\NamedAsciiChars.h" />
     <ClInclude Include="Validation.h" />
     <ClInclude Include="OperationStatus.h" />
     <ClInclude Include="CodedException.h" />

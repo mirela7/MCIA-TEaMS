@@ -13,6 +13,7 @@ public:
 	static void LoginUser(User& user);
 	static void AuthenticateUser(User& user);
 	static void LogOut();
+	static bool ExistsUserWithUsername(const std::string& username);
 	static User GetConnectedUser();
 
 	static User StartAuthProcess();

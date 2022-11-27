@@ -25,6 +25,9 @@
     <Filter Include="Source Files\DB Services">
       <UniqueIdentifier>{d22200ce-7f67-45e3-a2e3-2998e297e3b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{fa5f003d-ca07-46cb-88ed-a0edf2552a33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Validation.cpp">
@@ -52,12 +55,15 @@
       <Filter>Source Files\DB Services</Filter>
     </ClCompile>
     <ClCompile Include="Answer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Question.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="UserAnswerQuestion.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="DBPage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MovieIntermediary.cpp">
@@ -87,14 +93,20 @@
       <Filter>Header Files\DB Services</Filter>
     </ClInclude>
     <ClInclude Include="Answer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Question.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="UserAnswerQuestion.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="DBPage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\NamedAsciiChars.h">
+      <Filter>Utils</Filter>
+	</ClInclude> 
     <ClInclude Include="MovieIntermediary.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>

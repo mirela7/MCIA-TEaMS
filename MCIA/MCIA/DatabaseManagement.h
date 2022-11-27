@@ -1,13 +1,15 @@
 #pragma once
 #pragma warning(disable : 4996) /* To suppress warnings regarding deprecated C++17 functions. */
+#include <sqlite_orm/sqlite_orm.h>
+#include <functional>
 #include "User.h"
 #include "CodedException.h"
 #include "OperationStatus.h"
 #include "Question.h"
 #include "Answer.h"
+#include "DBPage.h"
 #include "Movie.h"
 #include "MovieIntermediary.h"
-#include <sqlite_orm/sqlite_orm.h>
 #include <iostream>
 
 using namespace sqlite_orm;
@@ -113,19 +115,21 @@ class DatabaseManagement
 {
 public:
     static DatabaseManagement& GetInstance();
+    storage_type& GetStorage();
 
     template<typename T>
     int32_t InsertElement(const T& el);
 
     template<typename T>
-    T GetElementById(const int32_t id);
+    T GetElementById(const int32_t id, bool throwIfNotFound = false);
 
 
-    User GetUserByName(const std::string& name);
-    bool IsRegistered(const std::string& name);
+    template<typename TEntity, typename TValue>
+    TEntity GetElementByColumnValue(TValue (TEntity::*getter)() const, TValue value, bool throwIfNotFound = true);
 
-    bool CheckPassword(const std::string& name, const std::string &password);
-    storage_type& GetStorage();
+    template<class TEntity, class sqlite_expression>
+    DBPage<TEntity> PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters);
+
 private:
     DatabaseManagement() = default;
     DatabaseManagement(DatabaseManagement&) = delete;
@@ -152,10 +156,30 @@ int32_t DatabaseManagement::InsertElement(const T& el)
 }
 
 template<typename T>
-inline T DatabaseManagement::GetElementById(const int32_t id)
+inline T DatabaseManagement::GetElementById(const int32_t id, bool throwIfNotFound)
 {
-    // auto& st = getStorage();
-    // TODO FAIL PROOF GET
-    return m_storage.get<T>(id);
+    try {
+        return m_storage.get<T>(id);
+    }
+    catch (std::system_error e) {
+        if (throwIfNotFound) throw e;
+        return nullptr;
+    };
 }
 
+template<typename TEntity, typename TValue>
+inline TEntity DatabaseManagement::GetElementByColumnValue(TValue(TEntity::* getter)() const, TValue value, bool throwIfNotFound)
+{
+    auto result = m_storage.get_all<TEntity>(where(c(getter) == value));
+    if (throwIfNotFound && result.size() < 1)
+        throw CodedException(OperationStatus::Code::DB_ENTITY_NOT_FOUND, "No entity with wanted value found.");
+    return result[0];
+}
+
+template<class TEntity, class sqlite_expression>
+inline DBPage<TEntity> DatabaseManagement::PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters)
+{
+    int totalPages = ceil(m_storage.count<TEntity>(where(filters)) * 1.0 / nmbRowsPerPage);
+    auto result = m_storage.get_all<TEntity>(where(filters), limit(nmbRowsPerPage, offset(idxOfPage * nmbRowsPerPage)));
+    return DBPage(result, totalPages, idxOfPage);
+}
