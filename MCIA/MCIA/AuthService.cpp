@@ -12,6 +12,8 @@ void AuthService::RegisterUser(User& user)
 	if(!pw_valid)
 		throw CodedException(username_valid, "Invalid password.");
 	DatabaseManagement::GetInstance().InsertElement(user);
+	
+	auto validUser= DatabaseManagement::GetInstance().GetStorage().get_all<User>(where(c(&User::GetName)==user.GetName()));
 
 	/* 
 	TODO: Quizz questions 
@@ -19,6 +21,46 @@ void AuthService::RegisterUser(User& user)
 			+ add Code in OperationStatus::Code
 		- save answers to db
 	*/
+
+	std::cout << "Welcome " << user.GetName() << " please answer some questions first: \n\n";
+	auto question =  DatabaseManagement::GetInstance().GetStorage().get_all<Question>();
+
+	for (uint16_t index = 0; index < question.size(); index++)
+	{
+		std::cout << "Question number " << index+1 << ":\n";
+		std::cout << question[index].GetQuestion() << "\n\n";
+		auto answer = DatabaseManagement::GetInstance().GetStorage().get_all<Answer>(where(c(&Answer::GetQuestionID) == index+1));
+		for (uint16_t index2 = 0; index2 < answer.size(); index2++)
+			std::cout << "[" << index2 << "]" << answer[index2].GetAnswer() << '\n';
+		std::cout << '\n';
+
+		if (question[index].GetChoice())
+		{
+			std::cout << "Please enter a string with the numbers of the genres you like separated by a space\n";
+			std::string options;
+			std::getline(std::cin>>std::ws,options); 
+
+			//TODO: verify if string is good function
+			for (int index3 = 0; index3 < options.size(); index3=index3+2)
+			{
+				UserAnswerQuestion element(validUser[0].GetId(), answer[options[index3] - '0'].GetId(), index + 1);
+				DatabaseManagement::GetInstance().GetStorage().replace(element);
+			}
+		}
+		else
+		{
+			std::cout << "Please choose one option:\n";
+			uint16_t option;
+			std::cin >> option;
+
+			//TODO: verify option
+			UserAnswerQuestion element(validUser[0].GetId(), answer[option].GetId(), index);
+			DatabaseManagement::GetInstance().GetStorage().replace(element);
+		}
+		
+	}
+
+	
 
 	m_connectedUser = new User(user);
 }

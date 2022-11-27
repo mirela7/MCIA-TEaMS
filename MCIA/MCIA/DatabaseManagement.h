@@ -1,16 +1,19 @@
 #pragma once
 #pragma warning(disable : 4996) /* To suppress warnings regarding deprecated C++17 functions. */
+
+#include <iostream>
 #include <sqlite_orm/sqlite_orm.h>
 #include <functional>
+
 #include "User.h"
 #include "CodedException.h"
 #include "OperationStatus.h"
 #include "Question.h"
 #include "Answer.h"
+#include "UserAnswerQuestion.h"
 #include "DBPage.h"
 #include "Movie.h"
 #include "MovieIntermediary.h"
-#include <iostream>
 
 using namespace sqlite_orm;
 
@@ -54,11 +57,11 @@ namespace {
             make_column("Id", 
                 &User::GetId,
                 &User::SetId,
-                primary_key()),
-            make_column("name",
+                primary_key())
+            , make_column("name",
                 &User::GetName,
-                &User::SetName),
-            make_column("password", 
+                &User::SetName)
+            , make_column("password", 
                 &User::GetPassword,
                 &User::SetPassword));
         return el;
@@ -66,20 +69,24 @@ namespace {
 
     auto make_question_table() {
 
-        static auto el = make_table("questions",
-            make_column("id", 
+        static auto el = make_table("questions"
+            , make_column("id", 
                 &Question::GetId,
                 &Question::SetId,
-                primary_key()),
-            make_column("question",
+                primary_key())
+            , make_column("question",
                 &Question::GetQuestion,
-                &Question::SetQuestion));
+                &Question::SetQuestion)
+            , make_column("mschoice",
+                &Question::GetChoice,
+                &Question::SetChoice)
+        );
 
         return el;
     }
 
     auto make_answer_table() {
-        static auto el = make_table("questions"
+        static auto el = make_table("answers"
             , make_column("id",
                 &Answer::GetId,
                 &Answer::SetId,
@@ -96,6 +103,27 @@ namespace {
         return el;
     }
 
+    auto make_user_answer_question_table() {
+        static auto el = make_table("user_answer_question"
+            , make_column("user_id",
+                &UserAnswerQuestion::GetUserId,
+                &UserAnswerQuestion::SetUserId,
+                foreign_key(&UserAnswerQuestion::GetUserId).references(&User::GetId))
+            , make_column("answer_id",
+                &UserAnswerQuestion::GetAnswerId,
+                &UserAnswerQuestion::SetAnswerId,
+              foreign_key(&UserAnswerQuestion::GetAnswerId).references(&Answer::GetId))
+            ,  make_column("question_id",
+                &UserAnswerQuestion::GetQuestionId,
+                &UserAnswerQuestion::SetQuestionId,
+                foreign_key(&UserAnswerQuestion::GetQuestionId).references(&Question::GetId))
+            , primary_key(&UserAnswerQuestion::GetUserId, &UserAnswerQuestion::GetAnswerId, &UserAnswerQuestion::GetQuestionId)
+        );
+
+        return el;
+    }
+
+
     auto getStorage() {
         static auto storage = make_storage("DBtest.db"
             , make_user_table()
@@ -103,6 +131,7 @@ namespace {
             , make_answer_table()
             , make_movie_table()
             , make_movieIntermediary_table()
+            , make_user_answer_question_table()
         );
 
         return storage;
@@ -122,7 +151,6 @@ public:
 
     template<typename T>
     T GetElementById(const int32_t id, bool throwIfNotFound = false);
-
 
     template<typename TEntity, typename TValue>
     TEntity GetElementByColumnValue(TValue (TEntity::*getter)() const, TValue value, bool throwIfNotFound = true);

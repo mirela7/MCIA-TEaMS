@@ -7,8 +7,8 @@
 class Answer
 {
 public:
-
-	Answer(const uint16_t id, const uint8_t question, const std::string answer);
+	Answer() = default;
+	Answer(const uint16_t id, const uint16_t question, const std::string answer);
 	std::string GetAnswer() const;
 	uint16_t GetId() const;
 	uint16_t GetQuestionID() const;
