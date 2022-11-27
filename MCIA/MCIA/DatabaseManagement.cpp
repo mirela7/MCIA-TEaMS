@@ -33,3 +33,8 @@ bool DatabaseManagement::CheckPassword(const std::string& name, const std::strin
     auto user = GetUserByName(name);
     return user.GetPassword() == password;
 }
+
+storage_type& DatabaseManagement::GetStorage()
+{ 
+    return m_storage;
+}

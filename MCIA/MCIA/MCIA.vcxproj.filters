@@ -60,6 +60,9 @@
     <ClCompile Include="UserAnswerQuestion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MovieIntermediary.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Validation.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="UserAnswerQuestion.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovieIntermediary.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

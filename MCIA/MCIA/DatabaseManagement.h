@@ -5,11 +5,47 @@
 #include "OperationStatus.h"
 #include "Question.h"
 #include "Answer.h"
+#include "Movie.h"
+#include "MovieIntermediary.h"
 #include <sqlite_orm/sqlite_orm.h>
+#include <iostream>
 
 using namespace sqlite_orm;
 
 namespace {
+
+    auto make_movieIntermediary_table() {
+        static auto el = make_table("movieIntermediary",
+            make_column("movieId",
+                &MovieIntermediary::GetId,
+                &MovieIntermediary::SetId,
+                primary_key()),
+            make_column("title",
+                &MovieIntermediary::GetTitle,
+                &MovieIntermediary::SetTitle),
+            make_column("genres",
+                &MovieIntermediary::GetGenre,
+                &MovieIntermediary::SetGenre));
+        return el;
+    }
+
+    auto make_movie_table() {
+        static auto el = make_table("movie",
+            make_column("Id",
+                &Movie::GetId,
+                &Movie::SetId,
+                primary_key()),
+            make_column("title",
+                &Movie::GetTitle,
+                &Movie::SetTitle),
+            make_column("release_year",
+                &Movie::GetReleaseYear,
+                &Movie::SetReleaseYear),
+            make_column("rating",
+                &Movie::GetRating,
+                &Movie::SetRating));
+        return el;
+    }
 
     auto make_user_table() {
         static auto el = make_table("user",
@@ -60,9 +96,11 @@ namespace {
 
     auto getStorage() {
         static auto storage = make_storage("DBtest.db"
-           , make_user_table()
-           , make_question_table()
-           , make_answer_table()
+            , make_user_table()
+            , make_question_table()
+            , make_answer_table()
+            , make_movie_table()
+            , make_movieIntermediary_table()
         );
 
         return storage;
@@ -87,7 +125,7 @@ public:
     bool IsRegistered(const std::string& name);
 
     bool CheckPassword(const std::string& name, const std::string &password);
-    
+    storage_type& GetStorage();
 private:
     DatabaseManagement() = default;
     DatabaseManagement(DatabaseManagement&) = delete;
@@ -103,7 +141,14 @@ template<typename T>
 int32_t DatabaseManagement::InsertElement(const T& el)
 {
     // TODO CHECK INSERT
-    return m_storage.insert(el);
+    try
+    {
+        return m_storage.insert(el);
+    }
+    catch (std::exception e)
+    {
+        std::cout << e.what();
+    }
 }
 
 template<typename T>
