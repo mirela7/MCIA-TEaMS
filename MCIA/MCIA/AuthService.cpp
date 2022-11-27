@@ -23,7 +23,7 @@ void AuthService::RegisterUser(User& user)
 	*/
 
 	std::cout << "Welcome " << user.GetName() << " please answer some questions first: \n\n";
-	auto question =  DatabaseManagement::GetInstance().GetStorage().get_all<Question>();
+    auto question = DatabaseManagement::GetInstance().GetStorage().get_all<Question>();
 
 	for (uint16_t index = 0; index < question.size(); index++)
 	{

@@ -13,12 +13,12 @@ using namespace sqlite_orm;
 
 int main()
 {
-	/*auto connectedUser = AuthService::StartAuthProcess();
+	auto connectedUser = AuthService::StartAuthProcess();
 	std::cout << connectedUser.GetName();
-	*/
+	
 	
 
-	auto allFilter = c(&Movie::GetId) >= 0;
+	/*auto allFilter = c(&Movie::GetId) >= 0;
 
 	char ch;
 	int wantedPage = 0;
@@ -36,5 +36,5 @@ int main()
 		std::cout << result;
 		std::cout << "Navigate table: ";
 	}
-	return 0;
+	return 0;*/
 }
