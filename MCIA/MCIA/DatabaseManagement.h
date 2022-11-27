@@ -18,11 +18,11 @@ namespace {
             make_column("Id", 
                 &User::GetId,
                 &User::SetId,
-                primary_key()),
-            make_column("name",
+                primary_key())
+            , make_column("name",
                 &User::GetName,
-                &User::SetName),
-            make_column("password", 
+                &User::SetName)
+            , make_column("password", 
                 &User::GetPassword,
                 &User::SetPassword));
         return el;
@@ -30,15 +30,15 @@ namespace {
 
     auto make_question_table() {
 
-        static auto el = make_table("questions",
-            make_column("id", 
+        static auto el = make_table("questions"
+            , make_column("id", 
                 &Question::GetId,
                 &Question::SetId,
-                primary_key()),
-            make_column("question",
+                primary_key())
+            , make_column("question",
                 &Question::GetQuestion,
-                &Question::SetQuestion),
-            make_column("mschoice",
+                &Question::SetQuestion)
+            , make_column("mschoice",
                 &Question::GetChoice,
                 &Question::SetChoice)
         );
@@ -69,20 +69,16 @@ namespace {
             , make_column("user_id",
                 &UserAnswerQuestion::GetUserId,
                 &UserAnswerQuestion::SetUserId,
-             
-                foreign_key(&UserAnswerQuestion::GetUserId).references(&User::GetId)
-            )
+                foreign_key(&UserAnswerQuestion::GetUserId).references(&User::GetId))
             , make_column("answer_id",
                 &UserAnswerQuestion::GetAnswerId,
                 &UserAnswerQuestion::SetAnswerId,
-              foreign_key(&UserAnswerQuestion::GetAnswerId).references(&Answer::GetId)
-            )
+              foreign_key(&UserAnswerQuestion::GetAnswerId).references(&Answer::GetId))
             ,  make_column("question_id",
                 &UserAnswerQuestion::GetQuestionId,
                 &UserAnswerQuestion::SetQuestionId,
-                foreign_key(&UserAnswerQuestion::GetQuestionId).references(&Question::GetId)
-            ),
-            primary_key(&UserAnswerQuestion::GetUserId, &UserAnswerQuestion::GetAnswerId, &UserAnswerQuestion::GetQuestionId)
+                foreign_key(&UserAnswerQuestion::GetQuestionId).references(&Question::GetId))
+            , primary_key(&UserAnswerQuestion::GetUserId, &UserAnswerQuestion::GetAnswerId, &UserAnswerQuestion::GetQuestionId)
         );
 
         return el;
