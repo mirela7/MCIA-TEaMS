@@ -8,6 +8,7 @@
 #include "Movie.h"
 #include "MovieIntermediary.h"
 #include <sqlite_orm/sqlite_orm.h>
+#include <iostream>
 
 using namespace sqlite_orm;
 
@@ -37,12 +38,12 @@ namespace {
             make_column("title",
                 &Movie::GetTitle,
                 &Movie::SetTitle),
-            make_column("genre",
-                &Movie::GetGenre,
-                &Movie::SetGenre),
             make_column("release_year",
                 &Movie::GetReleaseYear,
-                &Movie::SetReleaseYear));
+                &Movie::SetReleaseYear),
+            make_column("rating",
+                &Movie::GetRating,
+                &Movie::SetRating));
         return el;
     }
 
@@ -95,9 +96,11 @@ namespace {
 
     auto getStorage() {
         static auto storage = make_storage("DBtest.db"
-           , make_user_table()
-           , make_question_table()
-           , make_answer_table()
+            , make_user_table()
+            , make_question_table()
+            , make_answer_table()
+            , make_movie_table()
+            , make_movieIntermediary_table()
         );
 
         return storage;
@@ -138,7 +141,14 @@ template<typename T>
 int32_t DatabaseManagement::InsertElement(const T& el)
 {
     // TODO CHECK INSERT
-    return m_storage.insert(el);
+    try
+    {
+        return m_storage.insert(el);
+    }
+    catch (std::exception e)
+    {
+        std::cout << e.what();
+    }
 }
 
 template<typename T>
