@@ -1,6 +1,7 @@
 #pragma once
 #pragma warning(disable : 4996)
 #include <string>
+#include <iostream>
 
 class Movie
 {
@@ -22,6 +23,8 @@ public:
 
 	Movie& operator=(const Movie& movie);
 	Movie& operator=(Movie&& movie) noexcept;
+
+	friend std::ostream& operator<<(std::ostream& out, const Movie& movie);
 
 	void parse();
 private:
