@@ -1,6 +1,7 @@
 #pragma once
 #pragma warning(disable : 4996) /* To suppress warnings regarding deprecated C++17 functions. */
 #include <sqlite_orm/sqlite_orm.h>
+#include <functional>
 #include "User.h"
 #include "CodedException.h"
 #include "OperationStatus.h"
@@ -76,21 +77,21 @@ class DatabaseManagement
 {
 public:
     static DatabaseManagement& GetInstance();
+    storage_type& GetStorage();
 
     template<typename T>
     int32_t InsertElement(const T& el);
 
     template<typename T>
-    T GetElementById(const int32_t id);
+    T GetElementById(const int32_t id, bool throwIfNotFound = false);
 
 
-    // TODO: REFACTOR
-    User GetUserByName(const std::string& name);
+    template<typename TEntity, typename TValue>
+    TEntity GetElementByColumnValue(TValue (TEntity::*getter)() const, TValue value, bool throwIfNotFound = true);
 
     template<class TEntity, class sqlite_expression>
     DBPage<TEntity> PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters);
 
-    storage_type& GetStorage();
     
 private:
     DatabaseManagement() = default;
@@ -111,10 +112,24 @@ int32_t DatabaseManagement::InsertElement(const T& el)
 }
 
 template<typename T>
-inline T DatabaseManagement::GetElementById(const int32_t id)
+inline T DatabaseManagement::GetElementById(const int32_t id, bool throwIfNotFound)
 {
-    // TODO FAIL PROOF GET
-    return m_storage.get<T>(id);
+    try {
+        return m_storage.get<T>(id);
+    }
+    catch (std::system_error e) {
+        if (throwIfNotFound) throw e;
+        return nullptr;
+    };
+}
+
+template<typename TEntity, typename TValue>
+inline TEntity DatabaseManagement::GetElementByColumnValue(TValue(TEntity::* getter)() const, TValue value, bool throwIfNotFound)
+{
+    auto result = m_storage.get_all<TEntity>(where(c(getter) == value));
+    if (throwIfNotFound && result.size() < 1)
+        throw CodedException(OperationStatus::Code::DB_ENTITY_NOT_FOUND, "No entity with wanted value found.");
+    return result[0];
 }
 
 template<class TEntity, class sqlite_expression>

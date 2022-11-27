@@ -25,10 +25,10 @@ void AuthService::RegisterUser(User& user)
 
 void AuthService::LoginUser(User& user)
 {
-	if (user.GetPassword() != DatabaseManagement::GetInstance().GetUserByName(user.GetName()).GetPassword())
+	if (user.GetPassword() != DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()).GetPassword())
 		throw CodedException(OperationStatus::Code::DB_USER_INVALID_PASSWORD, "Incorrect password.");
 
-	m_connectedUser = new User(DatabaseManagement::GetInstance().GetUserByName(user.GetName()));
+	m_connectedUser = new User(DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()));
 }
 
 User AuthService::StartAuthProcess()

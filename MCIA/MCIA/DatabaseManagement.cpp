@@ -13,14 +13,6 @@ DatabaseManagement& DatabaseManagement::GetInstance()
 }
 
 
-User DatabaseManagement::GetUserByName(const std::string& name)
-{
-    auto el = m_storage.get_all<User>(where(c(&User::GetName) == name));
-    if (el.empty())
-        throw CodedException(OperationStatus::DB_ENTITY_NOT_FOUND, "Entity with name \"" + name + "\" not found.");
-    return el[0];
-}
-
 storage_type& DatabaseManagement::GetStorage()
 {
     return m_storage;
