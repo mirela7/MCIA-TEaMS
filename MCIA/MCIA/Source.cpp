@@ -10,19 +10,14 @@
 
 using namespace sqlite_orm;
 
+const int kNmbRows = 10;
 
-int main()
+template<typename T>
+void displayTable(T filter) 
 {
-	auto connectedUser = AuthService::StartAuthProcess();
-	std::cout << connectedUser.GetName();
-	
-	
-
-	/*auto allFilter = c(&Movie::GetId) >= 0;
-
 	char ch;
 	int wantedPage = 0;
-	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, 10, allFilter);
+	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
 	std::cout << result;
 	std::cout << "Navigate table: ";
 	while (std::cin >> ch)
@@ -31,10 +26,38 @@ int main()
 			wantedPage = max(wantedPage - 1, 0);
 		else if (ch == 'n')
 			wantedPage = min(wantedPage + 1, result.nmbPages - 1);
-		else return 0;
-		auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, 10, allFilter);
+		else return;
+		auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
 		std::cout << result;
 		std::cout << "Navigate table: ";
 	}
-	return 0;*/
+}
+
+
+int main()
+{
+	char ch;
+	bool isSearching = false;
+	std::string movieName;
+	
+	auto connectedUser = AuthService::StartAuthProcess();
+	std::cout << "Now logged in. Please choose where to go:\n[a] all movies browising    [s] search movie by name\nEnter option: ";
+	std::cin >> ch;
+	if (ch == 'a') {
+		isSearching = false;
+	}
+	else {
+		isSearching = true;
+		std::cout << "Please enter a movie name: ";
+		std::cin >> movieName;
+	}
+	std::string query = "%" + movieName + "%";
+	auto allFilter = c(&Movie::GetId) >= 0;
+	auto movieNameFilter = like(&Movie::GetTitle, query);
+
+	if (isSearching)
+		displayTable(movieNameFilter);
+	else displayTable(allFilter);
+	
+	return 0;
 }

@@ -11,10 +11,9 @@ void AuthService::RegisterUser(User& user)
 		throw CodedException(username_valid, "Invalid name.");
 	if(!pw_valid)
 		throw CodedException(username_valid, "Invalid password.");
-	DatabaseManagement::GetInstance().InsertElement(user);
-	
-	auto validUser= DatabaseManagement::GetInstance().GetStorage().get_all<User>(where(c(&User::GetName)==user.GetName()));
-
+	int insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
+	m_connectedUser = new User(user);
+	m_connectedUser->SetId(insertedUserId);
 	/* 
 	TODO: Quizz questions 
 		- select questions & answers (+ display them -> handle exceptions)
@@ -41,11 +40,20 @@ void AuthService::RegisterUser(User& user)
 			std::getline(std::cin>>std::ws,options); 
 
 			//TODO: verify if string is good function
+			/*
+				- in Validation.h&cpp [digits] [digits] [digits] => regex
+			auto answer_indices = options.substr(' ');
+
+			string invalid_indices;
+			*/
 			for (int index3 = 0; index3 < options.size(); index3=index3+2)
 			{
-				UserAnswerQuestion element(validUser[0].GetId(), answer[options[index3] - '0'].GetId(), index + 1);
+				// if(string_to_int(answer_indices) > ... <0) { invalid_indices = invalid_indices + int() + " "; continue;} 
+
+				UserAnswerQuestion element(m_connectedUser->GetId(), answer[options[index3] - '0'].GetId(), index + 1);
 				DatabaseManagement::GetInstance().GetStorage().replace(element);
 			}
+			// Answers [invalid_indices] not saved: invalid.
 		}
 		else
 		{
@@ -54,15 +62,11 @@ void AuthService::RegisterUser(User& user)
 			std::cin >> option;
 
 			//TODO: verify option
-			UserAnswerQuestion element(validUser[0].GetId(), answer[option].GetId(), index);
+			UserAnswerQuestion element(m_connectedUser->GetId(), answer[option].GetId(), index);
 			DatabaseManagement::GetInstance().GetStorage().replace(element);
 		}
 		
 	}
-
-	
-
-	m_connectedUser = new User(user);
 }
 
 void AuthService::LoginUser(User& user)

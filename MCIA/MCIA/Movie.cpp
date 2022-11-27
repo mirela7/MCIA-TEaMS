@@ -94,5 +94,5 @@ void Movie::parse()
 
 std::ostream& operator<<(std::ostream& out, const Movie& movie)
 {
-	return out << movie.GetId() << " " << movie.GetTitle() << " " << movie.GetReleaseYear();
+	return out << movie.GetId() << " " << movie.GetTitle();
 }
