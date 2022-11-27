@@ -1,7 +1,11 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include<string.h>
 #include "User.h"
+#include "Answer.h""
+#include "Question.h"
+#include "UserAnswerQuestion.h"
 #include "DatabaseManagement.h"
 #include "Validation.h"
 

@@ -4,19 +4,20 @@
 class UserAnswerQuestion
 {
 public:
-	UserAnswerQuestion(const uint16_t userId, const uint16_t answerId, const uint8_t questionId);
+	UserAnswerQuestion(const uint16_t userId, const uint16_t answerId, const uint16_t questionId);
 
-	uint8_t GetQuestionId()const;
+	uint16_t GetQuestionId()const;
 	uint16_t GetAnswerId()const;
 	uint16_t GetUserId()const;
 
 	void SetUserId(uint16_t userId);
-	void SetQuestion(uint16_t answerId);
-	void SetAnswer(uint8_t questionId);
+	void SetQuestionId(uint16_t questionId);
+	void SetAnswerId(uint16_t answerId);
 
 private:
-	uint8_t m_questionId;
-	uint16_t m_answerId;
 	uint16_t m_userId;
+	uint16_t m_questionId;
+	uint16_t m_answerId;
+	
 };
 

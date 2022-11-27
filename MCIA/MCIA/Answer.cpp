@@ -1,6 +1,6 @@
 #include "Answer.h"
 
-Answer::Answer(const uint16_t id, const uint8_t question, const std::string answer)
+Answer::Answer(const uint16_t id, const uint16_t question, const std::string answer)
 	: m_id(id),
 	  m_questionId(question),
 	  m_answer(answer)

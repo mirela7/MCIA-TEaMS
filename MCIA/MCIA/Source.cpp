@@ -6,7 +6,10 @@
 
 int main()
 {
-	auto connectedUser = AuthService::StartAuthProcess();
-	std::cout << connectedUser.GetName();
+	/*auto connectedUser = AuthService::StartAuthProcess();
+	std::cout << connectedUser.GetName();*/
+
+    UserAnswerQuestion element(1, 1, 1);
+    DatabaseManagement::GetInstance().InsertElement(element);
 	return 0;
 }

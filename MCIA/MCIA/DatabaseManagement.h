@@ -1,5 +1,6 @@
 #pragma once
 #pragma warning(disable : 4996) /* To suppress warnings regarding deprecated C++17 functions. */
+#include <iostream>
 #include "User.h"
 #include "CodedException.h"
 #include "OperationStatus.h"
@@ -36,13 +37,17 @@ namespace {
                 primary_key()),
             make_column("question",
                 &Question::GetQuestion,
-                &Question::SetQuestion));
+                &Question::SetQuestion),
+            make_column("mschoice",
+                &Question::GetChoice,
+                &Question::SetChoice)
+        );
 
         return el;
     }
 
     auto make_answer_table() {
-        static auto el = make_table("questions"
+        static auto el = make_table("answers"
             , make_column("id",
                 &Answer::GetId,
                 &Answer::SetId,
@@ -59,23 +64,25 @@ namespace {
         return el;
     }
 
-    auto make_answer_table() {
+    auto make_user_answer_question_table() {
         static auto el = make_table("user_answer_question"
             , make_column("user_id",
                 &UserAnswerQuestion::GetUserId,
-                &UserAnswerQuestion::SetUser,
-                primary_key(),
-                foreign_key(&UserAnswerQuestion::GetUserId).references(&User::GetId)
-                )
-            , make_column("question_id",
-                &UserAnswerQuestion::GetQuestionId,
-                &UserAnswerQuestion::SetQuestion,
+                &UserAnswerQuestion::SetUserId,
+             
                 foreign_key(&UserAnswerQuestion::GetUserId).references(&User::GetId)
             )
             , make_column("answer_id",
                 &UserAnswerQuestion::GetAnswerId,
-                &UserAnswerQuestion::SetAnswer)
-            , foreign_key(&UserAnswerQuestion::GetAnswerId).references(&Answer::GetId)
+                &UserAnswerQuestion::SetAnswerId,
+              foreign_key(&UserAnswerQuestion::GetAnswerId).references(&Answer::GetId)
+            )
+            ,  make_column("question_id",
+                &UserAnswerQuestion::GetQuestionId,
+                &UserAnswerQuestion::SetQuestionId,
+                foreign_key(&UserAnswerQuestion::GetQuestionId).references(&Question::GetId)
+            ),
+            primary_key(&UserAnswerQuestion::GetUserId, &UserAnswerQuestion::GetAnswerId, &UserAnswerQuestion::GetQuestionId)
         );
 
         return el;
@@ -87,6 +94,7 @@ namespace {
            , make_user_table()
            , make_question_table()
            , make_answer_table()
+           , make_user_answer_question_table()
         );
 
         return storage;
@@ -107,10 +115,11 @@ public:
     T GetElementById(const int32_t id);
 
 
-    User GetUserByName(const std::string& name);
+    User GetUserByName(const std::string& name);    
     bool IsRegistered(const std::string& name);
 
     bool CheckPassword(const std::string& name, const std::string &password);
+    storage_type& GetStorage();
     
 private:
     DatabaseManagement() = default;
@@ -127,7 +136,15 @@ template<typename T>
 int32_t DatabaseManagement::InsertElement(const T& el)
 {
     // TODO CHECK INSERT
-    return m_storage.insert(el);
+    try
+    {
+        return m_storage.insert(el);
+    }
+    catch (std::exception e)
+    {
+        std::cout<<e.what();
+    }
+    
 }
 
 template<typename T>
