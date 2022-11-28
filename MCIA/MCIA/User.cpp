@@ -4,7 +4,6 @@ User::User(const uint16_t& id, const std::string& name, const std::string& passw
 	: m_id(id)
 	, m_name(name)
 	, m_password(password)
-	, m_isOnline(false)
 {}
 
 User::User(const User & other)

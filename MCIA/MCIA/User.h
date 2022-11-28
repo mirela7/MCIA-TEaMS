@@ -33,7 +33,7 @@ private:
 	uint16_t m_id;
 	std::string m_name;
 	std::string m_password;
-	bool m_isOnline;
+	
 	
 };
 
