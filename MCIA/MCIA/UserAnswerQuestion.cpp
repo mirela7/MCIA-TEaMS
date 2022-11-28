@@ -1,9 +1,9 @@
 #include "UserAnswerQuestion.h"
 
 UserAnswerQuestion::UserAnswerQuestion(const uint16_t userId, const uint16_t answerId, const uint16_t questionId)
-	:m_questionId(questionId),
-	 m_answerId(answerId),
-	 m_userId(userId)
+	: m_questionId(questionId)
+	, m_answerId(answerId)
+	, m_userId(userId)
 {}
 
 uint16_t UserAnswerQuestion::GetQuestionId() const

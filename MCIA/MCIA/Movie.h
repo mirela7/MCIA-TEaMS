@@ -21,12 +21,12 @@ public:
 	uint16_t GetReleaseYear() const;
 	float GetRating() const;
 
+	void parse();
+	
 	Movie& operator=(const Movie& movie);
 	Movie& operator=(Movie&& movie) noexcept;
-
 	friend std::ostream& operator<<(std::ostream& out, const Movie& movie);
 
-	void parse();
 private:
 	uint16_t m_id; 
 	std::string m_title;
