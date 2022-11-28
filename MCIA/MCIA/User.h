@@ -24,10 +24,10 @@ public:
 
 	User& operator=(const User& user);
 	User& operator=(User&& other) noexcept;
-	
-	~User();
 
 	friend std::ostream& operator<<(std::ostream& g, const User& u);
+	
+	~User();
 
 private:
 	uint16_t m_id;

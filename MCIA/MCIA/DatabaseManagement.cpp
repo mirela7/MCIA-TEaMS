@@ -1,5 +1,4 @@
 #include "DatabaseManagement.h"
-#include <iostream>
 
 DatabaseManagement* DatabaseManagement::m_database = nullptr;
 
@@ -11,7 +10,6 @@ DatabaseManagement& DatabaseManagement::GetInstance()
     }
     return *m_database;
 }
-
 
 storage_type& DatabaseManagement::GetStorage()
 {

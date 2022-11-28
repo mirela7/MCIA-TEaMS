@@ -5,15 +5,18 @@
 #include <sqlite_orm/sqlite_orm.h>
 #include <functional>
 
+/* Entities */
 #include "User.h"
-#include "CodedException.h"
-#include "OperationStatus.h"
 #include "Question.h"
 #include "Answer.h"
-#include "UserAnswerQuestion.h"
-#include "DBPage.h"
 #include "Movie.h"
 #include "MovieIntermediary.h"
+#include "UserAnswerQuestion.h"
+
+/* Others */
+#include "DBPage.h"
+#include "OperationStatus.h"
+#include "CodedException.h"
 
 using namespace sqlite_orm;
 
@@ -24,11 +27,11 @@ namespace {
             make_column("movieId",
                 &MovieIntermediary::GetId,
                 &MovieIntermediary::SetId,
-                primary_key()),
-            make_column("title",
+                primary_key())
+            , make_column("title",
                 &MovieIntermediary::GetTitle,
-                &MovieIntermediary::SetTitle),
-            make_column("genres",
+                &MovieIntermediary::SetTitle)
+            , make_column("genres",
                 &MovieIntermediary::GetGenre,
                 &MovieIntermediary::SetGenre));
         return el;
@@ -39,14 +42,14 @@ namespace {
             make_column("Id",
                 &Movie::GetId,
                 &Movie::SetId,
-                primary_key()),
-            make_column("title",
+                primary_key())
+            , make_column("title",
                 &Movie::GetTitle,
-                &Movie::SetTitle),
-            make_column("release_year",
+                &Movie::SetTitle)
+            , make_column("release_year",
                 &Movie::GetReleaseYear,
-                &Movie::SetReleaseYear),
-            make_column("rating",
+                &Movie::SetReleaseYear)
+            , make_column("rating",
                 &Movie::GetRating,
                 &Movie::SetRating));
         return el;
@@ -172,13 +175,10 @@ protected:
 template<typename T>
 int32_t DatabaseManagement::InsertElement(const T& el)
 {
-    // TODO CHECK INSERT
-    try
-    {
+    try {
         return m_storage.insert(el);
     }
-    catch (std::exception e)
-    {
+    catch (std::exception e) {
         std::cout << e.what();
     }
 }

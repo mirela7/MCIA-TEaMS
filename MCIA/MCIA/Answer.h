@@ -2,7 +2,6 @@
 #pragma warning(disable : 4996)
 #include <cstdint>
 #include <string>
-#include "Question.h"
 
 class Answer
 {

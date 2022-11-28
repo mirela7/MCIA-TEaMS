@@ -10,7 +10,7 @@ void AuthService::RegisterUser(User& user)
 	if (!username_valid)
 		throw CodedException(username_valid, "Invalid name.");
 	if(!pw_valid)
-		throw CodedException(username_valid, "Invalid password.");
+		throw CodedException(pw_valid, "Invalid password.");
 	int insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
 	m_connectedUser = new User(user);
 	m_connectedUser->SetId(insertedUserId);
@@ -73,7 +73,6 @@ void AuthService::LoginUser(User& user)
 {
 	if (user.GetPassword() != DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()).GetPassword())
 		throw CodedException(OperationStatus::Code::DB_USER_INVALID_PASSWORD, "Incorrect password.");
-
 	m_connectedUser = new User(DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()));
 }
 
