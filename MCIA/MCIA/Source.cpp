@@ -43,23 +43,53 @@ int main()
 	std::cout << "Now logged in.";
 	while (true)
 	{
-		std::cout << "Please choose where to go : \n[a] all movies browising  [s] search movie by name\nEnter option : ";
+		std::cout << "Please choose where to go : \n[a] all movies browising  [s] search movie by name [r] rate movie \nEnter option : ";
 		std::cin >> ch;
-		if (ch == 'a') {
-			isSearching = false;
-		}
-		else {
-			isSearching = true;
-			std::cout << "Please enter a movie name: ";
-			std::cin >> movieName;
-		}
-		std::string query = "%" + movieName + "%";
-		auto allFilter = c(&Movie::GetId) >= 0;
-		auto movieNameFilter = like(&Movie::GetTitle, query);
+		switch (ch) {
+		case 'a':
+		case 's':
+			{ //<-- temporary solution, this scope should be removed
+				if (ch == 'a') {
+					isSearching = false;
+				}
+				else {
+					isSearching = true;
+					std::cout << "Please enter a movie name: ";
+					std::cin >> movieName;
+				}
+				std::string query = "%" + movieName + "%";
+				auto allFilter = c(&Movie::GetId) >= 0;
+				auto movieNameFilter = like(&Movie::GetTitle, query);
 
-		if (isSearching)
-			displayTable(movieNameFilter);
-		else displayTable(allFilter);
+				if (isSearching)
+					displayTable(movieNameFilter);
+				else displayTable(allFilter);
+			}
+			break;
+		
+		case 'r':
+			{ // <--- same, this scope shouldn't be done like this
+				int user_id, movie_id;
+				float rating;
+				std::cout << "Please enter the id of the movie you want to rate:"; 
+				//TODO: CHECK MOVIE ID IS VALID
+				std::cin >> movie_id;
+
+				std::cout << "Please enter the rating:";
+				//TODO: CHECK RATING IS VALID
+				std::cin >> rating; // < this is int atm
+				user_id = AuthService::GetConnectedUser().GetId();
+				
+				auto& st = DatabaseManagement::GetInstance().GetStorage();
+				WatchedMovie watchedMovie(user_id, movie_id, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
+				try {
+					st.replace(watchedMovie);
+				}
+				catch (std::exception e) {
+					std::cout << e.what();
+				}
+			}
+		}
 	}
 	
 	return 0;
