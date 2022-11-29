@@ -69,6 +69,9 @@
     <ClCompile Include="MovieIntermediary.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="WatchedMovie.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Validation.h">
@@ -106,8 +109,11 @@
     </ClInclude>
     <ClInclude Include="Utils\NamedAsciiChars.h">
       <Filter>Utils</Filter>
-	</ClInclude> 
+    </ClInclude>
     <ClInclude Include="MovieIntermediary.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="WatchedMovie.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>

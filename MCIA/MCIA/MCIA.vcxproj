@@ -144,6 +144,7 @@
     <ClCompile Include="Validation.cpp" />
     <ClCompile Include="OperationStatus.cpp" />
     <ClCompile Include="CodedException.cpp" />
+    <ClCompile Include="WatchedMovie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AuthService.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Validation.h" />
     <ClInclude Include="OperationStatus.h" />
     <ClInclude Include="CodedException.h" />
+    <ClInclude Include="WatchedMovie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
