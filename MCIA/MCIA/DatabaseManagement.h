@@ -12,6 +12,7 @@
 #include "Movie.h"
 #include "MovieIntermediary.h"
 #include "UserAnswerQuestion.h"
+#include "WatchedMovie.h"
 
 /* Others */
 #include "DBPage.h"
@@ -126,6 +127,24 @@ namespace {
         return el;
     }
 
+    auto make_watched_movies_table() {
+        static auto el = make_table("watched_movies"
+            , make_column("user_id",
+                &WatchedMovie::GetUserId,
+                &WatchedMovie::SetUserId,
+                foreign_key(&WatchedMovie::GetUserId).references(&User::GetId))
+            , make_column("movie_id",
+                &WatchedMovie::GetMovieId,
+                &WatchedMovie::SetMovieId,
+                foreign_key(&WatchedMovie::GetMovieId).references(&Movie::GetId))
+            , make_column("rating",
+                &WatchedMovie::GetRating,
+                &WatchedMovie::SetRating)
+            , primary_key(&WatchedMovie::GetUserId, &WatchedMovie::GetMovieId)
+        );
+
+        return el;
+    }
 
     auto getStorage() {
         static auto storage = make_storage("DBtest.db"
@@ -135,6 +154,7 @@ namespace {
             , make_movie_table()
             , make_movieIntermediary_table()
             , make_user_answer_question_table()
+            , make_watched_movies_table()
         );
 
         return storage;
