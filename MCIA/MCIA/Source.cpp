@@ -69,18 +69,38 @@ int main()
 		
 		case 'r':
 			{ // <--- same, this scope shouldn't be done like this
-				int user_id, movie_id;
-				float rating;
-				std::cout << "Please enter the id of the movie you want to rate:"; 
+				int user_id; 
+				std::string smovie_id; int movie_id;
+				std::string srating; float rating;
+				std::cout << "Please enter the id of the movie you want to rate: "; 
 				//TODO: CHECK MOVIE ID IS VALID
-				std::cin >> movie_id;
-
+				auto& st = DatabaseManagement::GetInstance().GetStorage();
+				while (true)
+				{
+					std::cin >> smovie_id;
+					try
+					{
+						movie_id = std::stoi(smovie_id);
+						auto movies = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(where(c(&Movie::GetId) == movie_id));
+						if (!movies.size())
+						{
+							std::cout << "\nInvalid movie id.\n";
+							std::cout << "Please enter a valid movie id: ";
+						}
+						else
+							break;
+					}
+					catch(std::invalid_argument e)
+					{
+						std::cout << "Invalid movie id.\n";
+						std::cout << "Please enter a valid movie id: ";
+					}
+				}
 				std::cout << "Please enter the rating:";
 				//TODO: CHECK RATING IS VALID
-				std::cin >> rating; // < this is int atm
+				std::cin >> rating;
+				// std::cin >> rating; // < this is int atm
 				user_id = AuthService::GetConnectedUser().GetId();
-				
-				auto& st = DatabaseManagement::GetInstance().GetStorage();
 				WatchedMovie watchedMovie(user_id, movie_id, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
 				try {
 					st.replace(watchedMovie);
