@@ -72,19 +72,23 @@ int main()
 				int user_id; 
 				std::string smovie_id; int movie_id;
 				std::string srating; float rating;
-				std::cout << "Please enter the id of the movie you want to rate: "; 
-				//TODO: CHECK MOVIE ID IS VALID
 				auto& st = DatabaseManagement::GetInstance().GetStorage();
+
+				user_id = AuthService::GetConnectedUser().GetId();
+
+				std::cout << "Please enter the id of the movie you want to rate: ";
+				//This checks if the id of the movie to add in watched list exists or not)
 				while (true)
 				{
 					std::cin >> smovie_id;
 					try
 					{
-						if (smovie_id.size() <= 5)
+						size_t maximumIdLenght = 5;
+						if (smovie_id.size() <= maximumIdLenght)
 						{
 							movie_id = std::stoi(smovie_id);
-							auto movies = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(where(c(&Movie::GetId) == movie_id));
-							if (!movies.size())
+							auto search_movies = st.get_all<Movie>(where(c(&Movie::GetId) == movie_id));
+							if (!search_movies.size())
 							{
 								std::cout << "\nInvalid movie id.\n";
 								std::cout << "Please enter a valid movie id: ";
@@ -100,26 +104,25 @@ int main()
 					}
 					catch(std::invalid_argument e)
 					{
-						std::cout << "Invalid movie id.\n";
+						std::cout << "\nInvalid movie id.\n";
 						std::cout << "Please enter a valid movie id: ";
 					}
 				}
-				std::cout << "Please enter the rating: ";
-				//TODO: CHECK RATING IS VALID
-				// std::cin >> rating; // < this is int atm
-				user_id = AuthService::GetConnectedUser().GetId();
-				
+
+				std::cout << "Please enter the rating between 1 and 5: ";
+				//This checks if the rating for the movie to add in watched list table is valid or out of range.
 				while (true)
 				{
 					std::cin >> srating;
 					try
 					{
-						if (srating.size() <= 3)
+						size_t maximumRatingValueLenght = 3;
+						if (srating.size() <= maximumRatingValueLenght)
 						{
 							rating = std::stof(srating);
-							if (rating < 0.0f || rating > 5.0f)
+							if (rating < 1.0f || rating > 5.0f)
 							{
-								std::cout << "Out of range rating.\n";
+								std::cout << "\nOut of range rating.\n";
 								std::cout << "Please enter a valid rating value: ";
 							}
 							else
@@ -127,16 +130,17 @@ int main()
 						}
 						else
 						{
-							std::cout << "Out of range rating.\n";
+							std::cout << "\nOut of range rating.\n";
 							std::cout << "Please enter a valid rating value: ";
 						}
 					}
 					catch (std::invalid_argument e)
 					{
-						std::cout << "Out of range rating.\n";
+						std::cout << "\nOut of range rating.\n";
 						std::cout << "Please enter a valid rating value: ";
 					}
 				}
+
 				WatchedMovie watchedMovie(user_id, movie_id, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
 				try {
 					st.replace(watchedMovie);
