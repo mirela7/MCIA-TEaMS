@@ -16,13 +16,7 @@ void AuthService::RegisterUser(User& user)
 	int insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
 	m_connectedUser = new User(user);
 	m_connectedUser->SetId(insertedUserId);
-	/* 
-	TODO: Quizz questions 
-		- select questions & answers (+ display them -> handle exceptions)
-			+ add Code in OperationStatus::Code
-		- save answers to db
-	*/
-
+	
 	std::cout << "Welcome " << user.GetName() << " please answer some questions first: \n\n";
     auto question = DatabaseManagement::GetInstance().GetStorage().get_all<Question>();
 

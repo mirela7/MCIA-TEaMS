@@ -6,6 +6,7 @@
 #include "AuthService.h"
 #include "DBPage.h"
 #include "Movie.h"
+#include "Validation.h"
 
 using namespace sqlite_orm;
 
@@ -81,32 +82,10 @@ int main()
 				while (true)
 				{
 					std::cin >> smovie_id;
-					try
-					{
-						size_t maximumIdLenght = 5;
-						if (smovie_id.size() <= maximumIdLenght)
-						{
-							movie_id = std::stoi(smovie_id);
-							auto search_movies = st.get_all<Movie>(where(c(&Movie::GetId) == movie_id));
-							if (!search_movies.size())
-							{
-								std::cout << "\nInvalid movie id.\n";
-								std::cout << "Please enter a valid movie id: ";
-							}
-							else
-								break;
-						}
-						else
-						{
-							std::cout << "\nInvalid movie id.\n";
-							std::cout << "Please enter a valid movie id: ";
-						}
-					}
-					catch(std::invalid_argument e)
-					{
-						std::cout << "\nInvalid movie id.\n";
-						std::cout << "Please enter a valid movie id: ";
-					}
+					Movie element;
+					movie_id = Validation::IdExists(element, smovie_id);
+					if (movie_id)
+						break;
 				}
 
 				std::cout << "Please enter the rating between 1 and 5: ";

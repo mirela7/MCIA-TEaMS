@@ -15,7 +15,8 @@ public:
 		DB_INVALID_ENTITY,
 		DB_ENTITY_NOT_FOUND,
 
-		DB_USER_INVALID_PASSWORD
+		DB_USER_INVALID_PASSWORD,
+		DB_INVALID_ID
 	};
 public:
 	OperationStatus(const Code& c);
