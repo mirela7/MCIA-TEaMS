@@ -79,17 +79,23 @@ Movie& Movie::operator=(Movie&& movie) noexcept
 void Movie::parse()
 {
 	auto& storage = DatabaseManagement::GetInstance().GetStorage();
-		auto allMovies = storage.select(columns(&MovieIntermediary::GetId, &MovieIntermediary::GetTitle, &MovieIntermediary::GetGenre));
+	auto allMovies = storage.select(columns(&MovieIntermediary::GetId, &MovieIntermediary::GetTitle, &MovieIntermediary::GetGenre));
 
-		std::cout << allMovies.size();
-		int i = 0;
-		for (auto& tpl : allMovies) {
-			Movie m(std::get<0>(tpl), std::get<1>(tpl), 0, 0.0f);
-			DatabaseManagement::GetInstance().InsertElement(m);
-			i++;
-			if (i % 1000 == 0)
-				std::cout << "Inserted 1000 values: " << i << '\n';
-		}
+	std::cout << allMovies.size();
+	int i = 0;
+	for (auto& tpl : allMovies)
+	{
+		std::string title = get<1>(tpl);
+		std::string sreleaseYear = "";
+		for (int j = title.size() - 5; j <= title.size() - 2; j++)
+			sreleaseYear.push_back(title[j]);
+		int releaseYear = std::stoi(sreleaseYear);
+		Movie m(std::get<0>(tpl), std::get<1>(tpl), releaseYear, 0.0f);
+		DatabaseManagement::GetInstance().InsertElement(m);
+		i++;
+		if (i % 1000 == 0)
+			std::cout << "\nInserted " << i << " values: " << '\n';
+	}
 }
 
 std::ostream& operator<<(std::ostream& out, const Movie& movie)

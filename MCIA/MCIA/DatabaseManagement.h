@@ -12,6 +12,7 @@
 #include "Movie.h"
 #include "MovieIntermediary.h"
 #include "UserAnswerQuestion.h"
+#include "Genre.h"
 
 /* Others */
 #include "DBPage.h"
@@ -21,6 +22,19 @@
 using namespace sqlite_orm;
 
 namespace {
+
+    auto make_genre_table()
+    {
+        static auto el = make_table("genre",
+            make_column("Id",
+                &Genre::GetId,
+                &Genre::SetId,
+                primary_key())
+            , make_column("name",
+                &Genre::GetName,
+                &Genre::SetName));
+        return el;
+    }
 
     auto make_movieIntermediary_table() {
         static auto el = make_table("movieIntermediary",
