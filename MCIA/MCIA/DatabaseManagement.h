@@ -13,6 +13,8 @@
 #include "MovieIntermediary.h"
 #include "UserAnswerQuestion.h"
 #include "Genre.h"
+#include "WatchedMovie.h"
+#include "WishList.h"
 
 /* Others */
 #include "DBPage.h"
@@ -140,6 +142,41 @@ namespace {
         return el;
     }
 
+    auto make_watched_movies_table() {
+        static auto el = make_table("watched_movies"
+            , make_column("user_id",
+                &WatchedMovie::GetUserId,
+                &WatchedMovie::SetUserId,
+                foreign_key(&WatchedMovie::GetUserId).references(&User::GetId))
+            , make_column("movie_id",
+                &WatchedMovie::GetMovieId,
+                &WatchedMovie::SetMovieId,
+                foreign_key(&WatchedMovie::GetMovieId).references(&Movie::GetId))
+            , make_column("rating",
+                &WatchedMovie::GetRating,
+                &WatchedMovie::SetRating)
+            , primary_key(&WatchedMovie::GetUserId, &WatchedMovie::GetMovieId)
+        );
+
+        return el;
+    }
+
+    auto make_wishlist_table()
+    {
+        static auto el = make_table("wishlist"
+            , make_column("user_id",
+                &WishList::GetUserId,
+                &WishList::SetUserId,
+                foreign_key(&WishList::GetUserId).references(&User::GetId))
+            , make_column("movie_id",
+                &WishList::GetMovieId,
+                &WishList::SetMovieId,
+                foreign_key(&WishList::GetMovieId).references(&Movie::GetId))
+            , primary_key(&WishList::GetUserId, &WishList::GetMovieId)
+        );
+
+        return el;
+    }
 
     auto getStorage() {
         static auto storage = make_storage("DBtest.db"
@@ -149,6 +186,8 @@ namespace {
             , make_movie_table()
             , make_movieIntermediary_table()
             , make_user_answer_question_table()
+            , make_watched_movies_table()
+            , make_wishlist_table()
         );
 
         return storage;

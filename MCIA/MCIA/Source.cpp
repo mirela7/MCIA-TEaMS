@@ -6,6 +6,8 @@
 #include "AuthService.h"
 #include "DBPage.h"
 #include "Movie.h"
+#include "Validation.h"
+#include "WishList.h"
 
 using namespace sqlite_orm;
 
@@ -43,23 +45,119 @@ int main()
 	std::cout << "Now logged in.";
 	while (true)
 	{
-		std::cout << "Please choose where to go : \n[a] all movies browising  [s] search movie by name\nEnter option : ";
+		std::cout << "Please choose where to go : \n[a] all movies browising  [s] search movie by name [r] rate movie  [w] add movie to Wishlist\nEnter option : ";
 		std::cin >> ch;
-		if (ch == 'a') {
-			isSearching = false;
-		}
-		else {
-			isSearching = true;
-			std::cout << "Please enter a movie name: ";
-			std::cin >> movieName;
-		}
-		std::string query = "%" + movieName + "%";
-		auto allFilter = c(&Movie::GetId) >= 0;
-		auto movieNameFilter = like(&Movie::GetTitle, query);
+		switch (ch) {
+		case 'a':
+		case 's':
+			{ //<-- temporary solution, this scope should be removed
+				if (ch == 'a') {
+					isSearching = false;
+				}
+				else {
+					isSearching = true;
+					std::cout << "Please enter a movie name: ";
+					std::cin >> movieName;
+				}
+				std::string query = "%" + movieName + "%";
+				auto allFilter = c(&Movie::GetId) >= 0;
+				auto movieNameFilter = like(&Movie::GetTitle, query);
 
-		if (isSearching)
-			displayTable(movieNameFilter);
-		else displayTable(allFilter);
+				if (isSearching)
+					displayTable(movieNameFilter);
+				else displayTable(allFilter);
+			}
+			break;
+		
+		case 'r':
+			{ // <--- same, this scope shouldn't be done like this
+				int user_id; 
+				std::string smovie_id; int movie_id;
+				std::string srating; float rating;
+				auto& st = DatabaseManagement::GetInstance().GetStorage();
+
+				user_id = AuthService::GetConnectedUser().GetId();
+
+				std::cout << "Please enter the id of the movie you want to rate: ";
+				//This checks if the id of the movie to add in watched list exists or not)
+				while (true)
+				{
+					std::cin >> smovie_id;
+					Movie element;
+					movie_id = Validation::IdExists(element, smovie_id);
+					if (movie_id)
+						break;
+				}
+
+				std::cout << "Please enter the rating between 1 and 5: ";
+				//This checks if the rating for the movie to add in watched list table is valid or out of range.
+				while (true)
+				{
+					std::cin >> srating;
+					try
+					{
+						size_t maximumRatingValueLenght = 3;
+						if (srating.size() <= maximumRatingValueLenght)
+						{
+							rating = std::stof(srating);
+							if (rating < 1.0f || rating > 5.0f)
+							{
+								std::cout << "\nOut of range rating.\n";
+								std::cout << "Please enter a valid rating value: ";
+							}
+							else
+								break;
+						}
+						else
+						{
+							std::cout << "\nOut of range rating.\n";
+							std::cout << "Please enter a valid rating value: ";
+						}
+					}
+					catch (std::invalid_argument e)
+					{
+						std::cout << "\nOut of range rating.\n";
+						std::cout << "Please enter a valid rating value: ";
+					}
+				}
+
+				WatchedMovie watchedMovie(user_id, movie_id, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
+				try {
+					st.replace(watchedMovie);
+				}
+				catch (std::exception e) {
+					std::cout << e.what();
+				}
+			}
+		case 'w':
+			{
+				int user_id;
+				std::string smovie_id; int movie_id;
+				auto& st = DatabaseManagement::GetInstance().GetStorage();
+				user_id = AuthService::GetConnectedUser().GetId();
+
+				std::cout << "Please enter the id of the movie you want to add in wishlist: ";
+				//This checks if the id of the movie to add in watched list exists or not)
+				while (true)
+				{
+					std::cin >> smovie_id;
+					Movie element;
+					movie_id = Validation::IdExists(element, smovie_id);
+					if (movie_id)
+						break;
+				}
+
+				WishList wishlist(user_id, movie_id);
+				try {
+					st.replace(wishlist);
+				}
+				catch (std::exception e) {
+					std::cout << e.what();
+				}
+
+			}
+
+		}
 	}
 	
 	return 0;
