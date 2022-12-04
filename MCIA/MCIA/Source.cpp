@@ -7,6 +7,7 @@
 #include "DBPage.h"
 #include "Movie.h"
 #include "Validation.h"
+#include "WishList.h"
 
 using namespace sqlite_orm;
 
@@ -44,7 +45,7 @@ int main()
 	std::cout << "Now logged in.";
 	while (true)
 	{
-		std::cout << "Please choose where to go : \n[a] all movies browising  [s] search movie by name [r] rate movie \nEnter option : ";
+		std::cout << "Please choose where to go : \n[a] all movies browising  [s] search movie by name [r] rate movie  [w] add movie to Wishlist\nEnter option : ";
 		std::cin >> ch;
 		switch (ch) {
 		case 'a':
@@ -128,6 +129,34 @@ int main()
 					std::cout << e.what();
 				}
 			}
+		case 'w':
+			{
+				int user_id;
+				std::string smovie_id; int movie_id;
+				auto& st = DatabaseManagement::GetInstance().GetStorage();
+				user_id = AuthService::GetConnectedUser().GetId();
+
+				std::cout << "Please enter the id of the movie you want to add in wishlist: ";
+				//This checks if the id of the movie to add in watched list exists or not)
+				while (true)
+				{
+					std::cin >> smovie_id;
+					Movie element;
+					movie_id = Validation::IdExists(element, smovie_id);
+					if (movie_id)
+						break;
+				}
+
+				WishList wishlist(user_id, movie_id);
+				try {
+					st.replace(wishlist);
+				}
+				catch (std::exception e) {
+					std::cout << e.what();
+				}
+
+			}
+
 		}
 	}
 	
