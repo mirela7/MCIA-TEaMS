@@ -43,13 +43,24 @@ void AuthService::RegisterUser(User& user)
 				if (std::regex_match(options, integer_expr))
 				{
 					std::istringstream iss(options);
-					uint16_t val;
+					std::string valstr;
 					std::vector<uint16_t> values;
-					while(iss>>val)
+					while(iss>>valstr)
 					{	
-						if (val >= 0 && val < answer.size())
+						const uint8_t maxAnswerNumber = 4;
+						if(valstr.size() >= 0 && valstr.size() < maxAnswerNumber)
 						{
-							values.push_back(val);
+							uint16_t val = std::stoi(valstr);
+							if (val<answer.size())
+							{
+								values.push_back(val);
+							}
+							else
+							{
+								std::cout << "The text you have dialed is not good, please retry: ";
+								ok = true;
+								break;
+							}
 						}
 						else
 						{
@@ -64,6 +75,7 @@ void AuthService::RegisterUser(User& user)
 						UserAnswerQuestion element(m_connectedUser->GetId(), answer[it].GetId(), question[index].GetId());
 						DatabaseManagement::GetInstance().GetStorage().replace(element);
 					}
+					
 				}
 				else
 				{
