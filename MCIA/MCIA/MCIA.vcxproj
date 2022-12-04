@@ -134,6 +134,7 @@
     <ClCompile Include="AuthService.cpp" />
     <ClCompile Include="Answer.cpp" />
     <ClCompile Include="DatabaseManagement.cpp" />
+    <ClCompile Include="Genre.cpp" />
     <ClCompile Include="Movie.cpp" />
     <ClCompile Include="DBPage.cpp" />
     <ClCompile Include="MovieIntermediary.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="AuthService.h" />
     <ClInclude Include="Answer.h" />
     <ClInclude Include="DatabaseManagement.h" />
+    <ClInclude Include="Genre.h" />
     <ClInclude Include="Movie.h" />
     <ClInclude Include="DBPage.h" />
     <ClInclude Include="MovieIntermediary.h" />
