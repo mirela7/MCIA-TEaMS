@@ -18,7 +18,7 @@ public:
 	static bool IsBlank(const std::string& string);
 	static bool IsNotBlank(const char c);
 	template <class T> 
-	static uint16_t IdExists(T cl, const std::string& id);
+	static uint16_t IdExists(const std::string& id);
 public:
 
 private:
@@ -32,7 +32,7 @@ private:
 };
 
 template<class T>
-inline uint16_t Validation::IdExists(T element,const std::string& id)
+inline uint16_t Validation::IdExists(const std::string& id)
 {
 	int conv_id;
 	auto& st = DatabaseManagement::GetInstance().GetStorage();

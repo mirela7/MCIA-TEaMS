@@ -143,7 +143,7 @@ namespace {
     }
 
     auto make_watched_movies_table() {
-        static auto el = make_table("watched_movies"
+        static auto el = make_table("watched_movie"
             , make_column("user_id",
                 &WatchedMovie::GetUserId,
                 &WatchedMovie::SetUserId,

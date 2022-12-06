@@ -83,8 +83,7 @@ int main()
 				while (true)
 				{
 					std::cin >> smovie_id;
-					Movie element;
-					movie_id = Validation::IdExists(element, smovie_id);
+					movie_id = Validation::IdExists<Movie>(smovie_id);
 					if (movie_id)
 						break;
 				}
@@ -128,6 +127,7 @@ int main()
 				catch (std::exception e) {
 					std::cout << e.what();
 				}
+				break;
 			}
 		case 'w':
 			{
@@ -141,8 +141,7 @@ int main()
 				while (true)
 				{
 					std::cin >> smovie_id;
-					Movie element;
-					movie_id = Validation::IdExists(element, smovie_id);
+					movie_id = Validation::IdExists<Movie>(smovie_id);
 					if (movie_id)
 						break;
 				}
@@ -154,8 +153,9 @@ int main()
 				catch (std::exception e) {
 					std::cout << e.what();
 				}
-
+				break;
 			}
+			
 
 		}
 	}
