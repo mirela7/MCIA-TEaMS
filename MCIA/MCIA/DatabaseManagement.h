@@ -28,7 +28,7 @@ namespace {
     auto make_genre_table()
     {
         static auto el = make_table("genre",
-            make_column("Id",
+            make_column("id",
                 &Genre::GetId,
                 &Genre::SetId,
                 primary_key())
@@ -55,7 +55,7 @@ namespace {
 
     auto make_movie_table() {
         static auto el = make_table("movie",
-            make_column("Id",
+            make_column("id",
                 &Movie::GetId,
                 &Movie::SetId,
                 primary_key())
@@ -73,7 +73,7 @@ namespace {
 
     auto make_user_table() {
         static auto el = make_table("user",
-            make_column("Id", 
+            make_column("id", 
                 &User::GetId,
                 &User::SetId,
                 primary_key())
