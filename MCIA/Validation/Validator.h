@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
-#ifdef VALIDATION_EXPORT
+#ifdef VALIDATION_EXPORTS
 #define VALIDATION_API _declspec(dllexport)
 #else
 #define VALIDATION_API _declspec(dllimport)
 #endif
 
-class Validator
+class VALIDATION_API Validator
 {
 public:
 	bool IsAlphaNumericOrSpecial(const std::string& string);

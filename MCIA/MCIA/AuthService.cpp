@@ -7,8 +7,9 @@ User* AuthService::m_connectedUser = nullptr;
 
 void AuthService::RegisterUser(User& user)
 {
-	OperationStatus username_valid = Validation::IsUsernameValid(user.GetName());
-	OperationStatus pw_valid = Validation::IsPasswordValid(user.GetPassword());
+	Validation validate;
+	OperationStatus username_valid = validate.IsUsernameValid(user.GetName());
+	OperationStatus pw_valid = validate.IsPasswordValid(user.GetPassword());
 	if (!username_valid)
 		throw CodedException(username_valid, "Invalid name.");
 	if(!pw_valid)

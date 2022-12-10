@@ -2,12 +2,14 @@
 
 bool Validator::IsAlphaNumericOrSpecial(const std::string& string)
 {
-    return find_if(string.begin(), string.end(), IsNotAlphaNumericOrSpecial) == string.end();
+    auto isNotAlphaNumericCaller = [&](char c) { return this->IsNotAlphaNumericOrSpecial(c); };
+    return find_if(string.begin(), string.end(), isNotAlphaNumericCaller) == string.end();
 }
 
 bool Validator::IsBlank(const std::string& string)
 {
-    return string.size() == 0 || find_if(string.begin(), string.end(), IsNotBlank) == string.end();
+    auto isNotBlankCaller = [&](char c) { return this->IsNotBlank(c); };
+    return string.size() == 0 || find_if(string.begin(), string.end(), isNotBlankCaller) == string.end();
 }
 
 bool Validator::IsNotBlank(const char c)
