@@ -12,7 +12,7 @@ public:
 	OperationStatus IsUsernameValid(const std::string& username);
 	OperationStatus IsPasswordValid(const std::string& password);
 	template <class T> 
-	static uint16_t IdExists(const std::string& id);
+	OperationStatus IdExists(const int id);
 
 private:
 	Validator m_validator;
@@ -21,37 +21,11 @@ private:
 };
 
 template<class T>
-inline uint16_t Validation::IdExists(const std::string& id)
+inline OperationStatus Validation::IdExists(const int id)
 {
-	int conv_id;
 	auto& st = DatabaseManagement::GetInstance().GetStorage();
-
-	try
-	{
-		size_t maximumIdLenght = 5;
-		if (id.size() <= maximumIdLenght)
-		{
-			conv_id = std::stoi(id);
-			auto search_movies = st.get_all<T>(where(c(&T::GetId) == id));
-			if (!search_movies.size())
-			{
-				throw CodedException(OperationStatus::DB_INVALID_ID, "The id does not exist");
-			}
-		}
-		else
-		{
-			throw CodedException(OperationStatus::DB_INVALID_ID, "The id does not exist");
-		}
-	}
-	catch (CodedException e)
-	{
-		std::cout << "Please enter a valid id: ";
-		return 0;
-	}
-	catch (std::invalid_argument e)
-	{
-		std::cout << "Please enter a valid id: ";
-		return 0;
-	}
-	return conv_id;
+	auto search_element = st.get_all<T>(where(c(&T::GetId) == id));
+	if (!search_element.size())
+		return OperationStatus::DB_INVALID_ID;
+	return OperationStatus::SUCCESS;
 }

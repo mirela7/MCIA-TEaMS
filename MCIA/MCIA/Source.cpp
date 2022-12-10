@@ -40,7 +40,7 @@ int main()
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
-	
+	Validation validate;
 	auto connectedUser = AuthService::StartAuthProcess();
 	std::cout << "Now logged in.";
 	while (true)
@@ -72,8 +72,10 @@ int main()
 		case 'r':
 			{ // <--- same, this scope shouldn't be done like this
 				int user_id; 
-				std::string smovie_id; int movie_id;
-				std::string srating; float rating;
+				std::string smovie_id; 
+				int movie_id;
+				std::string srating; 
+				float rating;
 				auto& st = DatabaseManagement::GetInstance().GetStorage();
 
 				user_id = AuthService::GetConnectedUser().GetId();
@@ -83,9 +85,22 @@ int main()
 				while (true)
 				{
 					std::cin >> smovie_id;
-					movie_id = Validation::IdExists<Movie>(smovie_id);
-					if (movie_id)
-						break;
+					if (smovie_id.size() > 9) {
+						std::cout << "Please enter a valid id: ";
+						continue;
+					}
+					try {
+						movie_id = std::stoi(smovie_id); // TODO: solve for smovie_id = "12/2"
+					}
+					catch (std::invalid_argument e) {
+						std::cout << "Please enter a valid id: ";
+						continue;
+					}
+					if (!validate.IdExists<Movie>(movie_id)) {
+						std::cout << "Please enter a valid id: ";
+						continue;
+					}
+					break;
 				}
 
 				std::cout << "Please enter the rating between 1 and 5: ";
@@ -132,7 +147,8 @@ int main()
 		case 'w':
 			{
 				int user_id;
-				std::string smovie_id; int movie_id;
+				std::string smovie_id; 
+				int movie_id;
 				auto& st = DatabaseManagement::GetInstance().GetStorage();
 				user_id = AuthService::GetConnectedUser().GetId();
 
@@ -141,9 +157,22 @@ int main()
 				while (true)
 				{
 					std::cin >> smovie_id;
-					movie_id = Validation::IdExists<Movie>(smovie_id);
-					if (movie_id)
-						break;
+					if (smovie_id.size() > 9) {
+						std::cout << "Please enter a valid id: ";
+						continue;
+					}
+					try {
+						movie_id = std::stoi(smovie_id);
+					}
+					catch (std::invalid_argument e) {
+						std::cout << "Please enter a valid id: ";
+						continue;
+					}
+					if (!validate.IdExists<Movie>(movie_id)) {
+						std::cout << "Please enter a valid id: ";
+						continue;
+					}
+					break;
 				}
 
 				WishList wishlist(user_id, movie_id);
