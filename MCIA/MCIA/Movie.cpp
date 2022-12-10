@@ -91,7 +91,7 @@ void Movie::parse()
 			sreleaseYear.push_back(title[j]);
 		int releaseYear = std::stoi(sreleaseYear);
 		Movie m(std::get<0>(tpl), std::get<1>(tpl), releaseYear, 0.0f);
-		DatabaseManagement::GetInstance().InsertElement(m);
+		DatabaseManagement::GetInstance().InsertElement(m); 
 		i++;
 		if (i % 1000 == 0)
 			std::cout << "\nInserted " << i << " values: " << '\n';
