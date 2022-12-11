@@ -16,6 +16,8 @@
 # ipycheckpoint
 .ipynb_checkpoints
 
+RecomSystem/data
+
 # Mono auto generated files
 mono_crash.*
 
