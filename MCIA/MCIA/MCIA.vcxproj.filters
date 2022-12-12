@@ -78,6 +78,9 @@
     <ClCompile Include="Genre.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MovieGenre.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Validation.h">
@@ -127,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="Genre.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovieGenre.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
