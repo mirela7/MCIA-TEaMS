@@ -1,0 +1,9 @@
+# ninja log v5
+1	342	6929766059168907	QT_autogen/timestamp	78e7d3b9899aa8e7
+1	342	6929766059168907	QT_autogen/mocs_compilation.cpp	78e7d3b9899aa8e7
+1	342	6929766059168907	C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/QT_autogen/timestamp	78e7d3b9899aa8e7
+1	342	6929766059168907	C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/QT_autogen/mocs_compilation.cpp	78e7d3b9899aa8e7
+348	1667	6929766073573056	CMakeFiles/QT.dir/main.cpp.obj	2650223451d9b7f5
+354	1670	6929766073583055	CMakeFiles/QT.dir/QT_autogen/mocs_compilation.cpp.obj	d79e39d67d3ae3bf
+343	1673	6929766073643076	CMakeFiles/QT.dir/mainwindow.cpp.obj	8fee4937aa4da6da
+1674	2308	6929766076343685	QT.exe	4189dc7a70f0908c

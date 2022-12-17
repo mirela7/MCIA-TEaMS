@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-2bd25cd825ac1524b8af.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "QT",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "QT::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QT-Debug-d5b25c3f4f78616c2758.json",
+					"name" : "QT",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "QT_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QT_autogen-Debug-c1ee05f1a8e4fa2b66c1.json",
+					"name" : "QT_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "QT_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QT_autogen_timestamp_deps-Debug-e77a607eef76290338c6.json",
+					"name" : "QT_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/build-QT-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug",
+		"source" : "C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
