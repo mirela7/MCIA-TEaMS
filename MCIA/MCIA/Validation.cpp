@@ -1,4 +1,5 @@
 #include "Validation.h"
+#include "OperationStatusToMessage.h"
 
 OperationStatus Validation::IsUsernameValid(const std::string& username)
 {

@@ -23,6 +23,7 @@ void MainWindow::loadStylesheet()
         qInfo() << "Stylesheet could not be opened";
     QString StyleSheet = QLatin1String(stylesFile.readAll());
     qApp->setStyleSheet(StyleSheet);
+
 }
 
 void MainWindow::linkSlots()
@@ -36,7 +37,7 @@ void MainWindow::linkSlots()
 void MainWindow::LoginBtnClicked()
 {
     std::string username = ui->lneUsername->text().toStdString();
-    std::string password = ui->lneUsername->text().toStdString();
+    std::string password = ui->lnePassword->text().toStdString();
 
     try {
         AuthService::LoginUser(*(new User(username, password)));
@@ -52,7 +53,7 @@ void MainWindow::RegisterBtnClicked()
 {
     qInfo() << " Register user:";
     std::string username = ui->lneUsername->text().toStdString();
-    std::string password = ui->lneUsername->text().toStdString();
+    std::string password = ui->lnePassword->text().toStdString();
     try {
         AuthService::RegisterUser(*(new User(username, password)));
     }
