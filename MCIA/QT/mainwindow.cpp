@@ -35,9 +35,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::loginUser()
 {
-    qInfo() << " Login user:";
-    AuthService::LoginUser(*(new User("sorana", "parola")));
-    qInfo() << AuthService::GetConnectedUser().GetName().c_str();
+    std::string username = ui->lneUsername->text().toStdString();
+    std::string password = ui->lneUsername->text().toStdString();
+
+    try {
+        AuthService::LoginUser(*(new User(username, password)));
+    }
+    catch (CodedException e) {
+        /* AuthService throws error if user is not found.*/
+        ui->lblUsernameError->setText("Username or password invalid.");
+    }
 }
 
 
