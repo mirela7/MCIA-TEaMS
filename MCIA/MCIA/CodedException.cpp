@@ -15,6 +15,23 @@ CodedException::CodedException(const std::string& code, const std::string& messa
 {
 }
 
+std::string CodedException::GetCode()
+{
+	return m_message.substr(1, m_message.find_first_of("]") - 1);
+}
+
+std::string CodedException::GetWhat()
+{
+	return std::string(what());
+}
+
+std::string CodedException::GetMessage()
+{
+	std::string fullMessage = GetWhat();
+	int lastParanthesesPos = fullMessage.find_last_of("]") + 1;
+	return fullMessage.substr(lastParanthesesPos, fullMessage.size() - lastParanthesesPos);
+}
+
 CodedException::~CodedException() noexcept
 {
 }

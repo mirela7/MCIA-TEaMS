@@ -18,9 +18,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private:
+    void loadStylesheet();
+    void linkSlots();
+
 private slots:
-    void loginUser();
-    void registerUser();
+    void LoginBtnClicked();
+    void RegisterBtnClicked();
+    void LNETextEdited(QString string);
 
 private:
     Ui::MainWindow *ui;
