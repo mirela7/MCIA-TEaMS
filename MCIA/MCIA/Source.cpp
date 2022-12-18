@@ -8,6 +8,8 @@
 #include "Movie.h"
 #include "Validation.h"
 #include "WishList.h"
+#include "OperationStatusToMessage.h"
+#include "OperationStatus.h"
 
 using namespace sqlite_orm;
 
@@ -37,7 +39,9 @@ void displayTable(T filter)
 
 int main()
 {
-	char ch;
+	OperationStatusToMessage ostm;
+	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
+	/*char ch;
 	bool isSearching = false;
 	std::string movieName;
 	Validation validate;
@@ -187,7 +191,7 @@ int main()
 			
 
 		}
-	}
+	}*/
 	
 	return 0;
 }

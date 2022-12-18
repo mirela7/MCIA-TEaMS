@@ -149,6 +149,7 @@
     <ClCompile Include="Validation.cpp" />
     <ClCompile Include="OperationStatus.cpp" />
     <ClCompile Include="CodedException.cpp" />
+    <ClCompile Include="OperationStatusToMessage.cpp" />
     <ClCompile Include="WatchedMovie.cpp" />
     <ClCompile Include="WishList.cpp" />
   </ItemGroup>
@@ -160,13 +161,14 @@
     <ClInclude Include="Movie.h" />
     <ClInclude Include="DBPage.h" />
     <ClInclude Include="MovieIntermediary.h" />
+    <ClInclude Include="NamedAsciiChars.h" />
     <ClInclude Include="Question.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserAnswerQuestion.h" />
-    <ClInclude Include="Utils\NamedAsciiChars.h" />
     <ClInclude Include="Validation.h" />
     <ClInclude Include="OperationStatus.h" />
     <ClInclude Include="CodedException.h" />
+    <ClInclude Include="OperationStatusToMessage.h" />
     <ClInclude Include="WatchedMovie.h" />
     <ClInclude Include="WishList.h" />
   </ItemGroup>
