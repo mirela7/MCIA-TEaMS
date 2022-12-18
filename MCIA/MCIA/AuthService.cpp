@@ -7,7 +7,7 @@ User* AuthService::m_connectedUser = nullptr;
 
 void AuthService::RegisterUser(User& user)
 {
-	Validation validate;
+	DBValidation validate;
 	OperationStatus username_valid = validate.IsUsernameValid(user.GetName());
 	OperationStatus pw_valid = validate.IsPasswordValid(user.GetPassword());
 	if (!username_valid)

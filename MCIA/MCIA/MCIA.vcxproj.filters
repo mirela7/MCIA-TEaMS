@@ -30,7 +30,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Validation.cpp">
+    <ClCompile Include="DBValidation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source.cpp">
@@ -80,7 +80,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Validation.h">
+    <ClInclude Include="DBValidation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CodedException.h">

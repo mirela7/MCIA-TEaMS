@@ -6,7 +6,7 @@
 #include "AuthService.h"
 #include "DBPage.h"
 #include "Movie.h"
-#include "Validation.h"
+#include "DBValidation.h"
 #include "WishList.h"
 
 using namespace sqlite_orm;
@@ -40,7 +40,7 @@ int main()
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
-	Validation validate;
+	DBValidation validate;
 	auto connectedUser = AuthService::StartAuthProcess();
 	std::cout << "Now logged in.";
 	while (true)

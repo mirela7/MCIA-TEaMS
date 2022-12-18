@@ -146,7 +146,7 @@
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="UserAnswerQuestion.cpp" />
-    <ClCompile Include="Validation.cpp" />
+    <ClCompile Include="DBValidation.cpp" />
     <ClCompile Include="OperationStatus.cpp" />
     <ClCompile Include="CodedException.cpp" />
     <ClCompile Include="WatchedMovie.cpp" />
@@ -164,7 +164,7 @@
     <ClInclude Include="User.h" />
     <ClInclude Include="UserAnswerQuestion.h" />
     <ClInclude Include="Utils\NamedAsciiChars.h" />
-    <ClInclude Include="Validation.h" />
+    <ClInclude Include="DBValidation.h" />
     <ClInclude Include="OperationStatus.h" />
     <ClInclude Include="CodedException.h" />
     <ClInclude Include="WatchedMovie.h" />
