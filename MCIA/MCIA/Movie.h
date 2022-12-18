@@ -21,7 +21,7 @@ public:
 	uint16_t GetReleaseYear() const;
 	float GetRating() const;
 
-	void parse();
+	static void ParseMovieData();
 	
 	Movie& operator=(const Movie& movie);
 	Movie& operator=(Movie&& movie) noexcept;

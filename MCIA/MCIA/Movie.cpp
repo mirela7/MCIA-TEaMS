@@ -76,25 +76,25 @@ Movie& Movie::operator=(Movie&& movie) noexcept
 	return *this;
 }
 
-void Movie::parse()
+void Movie::ParseMovieData()
 {
 	auto& storage = DatabaseManagement::GetInstance().GetStorage();
 	auto allMovies = storage.select(columns(&MovieIntermediary::GetId, &MovieIntermediary::GetTitle, &MovieIntermediary::GetGenre));
 
 	std::cout << allMovies.size();
-	int i = 0;
+	int movie_counter = 0;
 	for (auto& tpl : allMovies)
 	{
 		std::string title = get<1>(tpl);
 		std::string sreleaseYear = "";
-		for (int j = title.size() - 5; j <= title.size() - 2; j++)
-			sreleaseYear.push_back(title[j]);
+		for (int index = title.size() - 5; index <= title.size() - 2; index++)
+			sreleaseYear.push_back(title[index]);
 		int releaseYear = std::stoi(sreleaseYear);
 		Movie m(std::get<0>(tpl), std::get<1>(tpl), releaseYear, 0.0f);
 		DatabaseManagement::GetInstance().InsertElement(m); 
-		i++;
-		if (i % 1000 == 0)
-			std::cout << "\nInserted " << i << " values: " << '\n';
+		movie_counter++;
+		if (movie_counter % 1000 == 0)
+			std::cout << "\nInserted " << movie_counter << " values: " << '\n';
 	}
 }
 

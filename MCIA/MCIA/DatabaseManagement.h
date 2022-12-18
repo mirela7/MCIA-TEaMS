@@ -15,6 +15,7 @@
 #include "Genre.h"
 #include "WatchedMovie.h"
 #include "WishList.h"
+#include "MovieGenre.h"
 
 /* Others */
 #include "DBPage.h"
@@ -34,7 +35,8 @@ namespace {
                 primary_key())
             , make_column("name",
                 &Genre::GetName,
-                &Genre::SetName));
+                &Genre::SetName,
+                unique()));
         return el;
     }
 
@@ -68,6 +70,21 @@ namespace {
             , make_column("rating",
                 &Movie::GetRating,
                 &Movie::SetRating));
+        return el;
+    }
+
+    auto make_movieGenre_table() {
+        static auto el = make_table("movie_genre",
+            make_column("movie_id",
+                &MovieGenre::GetMovieId,
+                &MovieGenre::SetMovieId,
+                foreign_key(&MovieGenre::GetMovieId).references(&Movie::GetId)),
+            make_column("genre_id",
+                &MovieGenre::GetGenreId,
+                &MovieGenre::SetGenreId,
+                foreign_key(&MovieGenre::GetGenreId).references(&Genre::GetId)),
+            primary_key(&MovieGenre::GetMovieId, &MovieGenre::GetGenreId)
+            );
         return el;
     }
 
@@ -184,10 +201,12 @@ namespace {
             , make_question_table()
             , make_answer_table()
             , make_movie_table()
+            , make_genre_table()
             , make_movieIntermediary_table()
             , make_user_answer_question_table()
             , make_watched_movies_table()
             , make_wishlist_table()
+            , make_movieGenre_table()
         );
 
         return storage;

@@ -141,6 +141,7 @@
     <ClCompile Include="Genre.cpp" />
     <ClCompile Include="Movie.cpp" />
     <ClCompile Include="DBPage.cpp" />
+    <ClCompile Include="MovieGenre.cpp" />
     <ClCompile Include="MovieIntermediary.cpp" />
     <ClCompile Include="Question.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Genre.h" />
     <ClInclude Include="Movie.h" />
     <ClInclude Include="DBPage.h" />
+    <ClInclude Include="MovieGenre.h" />
     <ClInclude Include="MovieIntermediary.h" />
     <ClInclude Include="NamedAsciiChars.h" />
     <ClInclude Include="Question.h" />
