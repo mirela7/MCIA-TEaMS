@@ -1,7 +1,8 @@
-QLabel {
-	background-color: red;
+QPushButton {
+	 border: none;
+     background-color: red;
 }
 
-QPushButton {
-	color: yellow;
+QLabel { 
+    background-color: red;
 }
