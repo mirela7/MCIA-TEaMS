@@ -17,6 +17,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void loginUser();
+    void registerUser();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -22,10 +22,25 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lblTitle->setStyleSheet(transparentBG);
     ui->lblUsername->setStyleSheet(transparentBG);
     ui->lblPassword->setStyleSheet(transparentBG);
+
+    /* Signals & slots */
+    connect(ui->btnLogin, SIGNAL(clicked()), this, SLOT(loginUser()));
+    connect(ui->btnRegister, SIGNAL(clicked()), this, SLOT(registerUser()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::loginUser()
+{
+    qInfo() << " Login user:";
+}
+
+
+void MainWindow::registerUser()
+{
+    qInfo() << " Register user:";
 }
 
