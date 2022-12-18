@@ -8,7 +8,6 @@ public:
 	
 	template<typename... Args>
 	std::string GetMessage(OperationStatus::Code code, Args... args);
-
 private:
 	template<typename T, typename... Args>
 	std::string GetMessageFromBase(const std::string& base, T value, Args... args);
