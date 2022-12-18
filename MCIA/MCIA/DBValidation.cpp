@@ -1,4 +1,5 @@
 #include "DBValidation.h"
+
 OperationStatus DBValidation::IsUsernameValid(const std::string& username)
 {
 
