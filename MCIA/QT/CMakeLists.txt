@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(SqliteOrm REQUIRED)
 
 message(STATUS "Working here:" + ${CMAKE_SOURCE_DIR})
 
@@ -44,7 +45,9 @@ else()
     endif()
 endif()
 
-target_link_libraries(QT PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(QT 
+    PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+    PRIVATE sqlite_orm::sqlite_orm)
 
 set_target_properties(QT PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -61,3 +64,7 @@ install(TARGETS QT
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(QT)
 endif()
+
+include_directories(
+    ../MCIA
+)
