@@ -11,13 +11,19 @@ void AuthService::RegisterUser(User& user)
 	OperationStatus username_valid = validate.IsUsernameValid(user.GetName());
 	OperationStatus pw_valid = validate.IsPasswordValid(user.GetPassword());
 	if (!username_valid)
-		throw CodedException(username_valid, "Invalid name.");
-	if(!pw_valid)
-		throw CodedException(pw_valid, "Invalid password.");
+		throw CodedException("username", username_valid);
+	if (!pw_valid)
+		throw CodedException("password", pw_valid);
+	if (ExistsUserWithUsername(user.GetName()))
+		throw CodedException("username", "A user with this username already exists.");
 	int insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
 	m_connectedUser = new User(user);
 	m_connectedUser->SetId(insertedUserId);
-	
+}
+
+void AuthService::RegisterUserProcess(User& user)
+{
+	RegisterUser(user);
 	std::cout << "Welcome " << user.GetName() << " please answer some questions first: \n\n";
     auto question = DatabaseManagement::GetInstance().GetStorage().get_all<Question>();
 
@@ -155,7 +161,7 @@ User AuthService::StartAuthProcess()
 		}
 		try {
 			if (isRegistering)
-				AuthService::RegisterUser(user);
+				AuthService::RegisterUserProcess(user);
 			else
 				AuthService::LoginUser(user);
 			break;
@@ -178,7 +184,7 @@ void AuthService::AuthenticateUser(User& user)
 {
 	if (ExistsUserWithUsername(user.GetName()))
 		LoginUser(user);
-	else RegisterUser(user);
+	else RegisterUserProcess(user);
 }
 
 void AuthService::LogOut()

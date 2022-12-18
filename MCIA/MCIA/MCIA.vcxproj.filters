@@ -78,6 +78,9 @@
     <ClCompile Include="Genre.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OperationStatusToMessage.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DBValidation.h">
@@ -113,9 +116,6 @@
     <ClInclude Include="DBPage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\NamedAsciiChars.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="MovieIntermediary.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
@@ -127,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="Genre.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NamedAsciiChars.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="OperationStatusToMessage.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

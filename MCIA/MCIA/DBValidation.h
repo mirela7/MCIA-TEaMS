@@ -11,6 +11,7 @@ class DBValidation
 public:
 	OperationStatus IsUsernameValid(const std::string& username);
 	OperationStatus IsPasswordValid(const std::string& password);
+
 	template <class T> 
 	OperationStatus IdExists(const int id);
 

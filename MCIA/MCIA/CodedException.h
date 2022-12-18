@@ -10,6 +10,10 @@ public:
 	explicit CodedException(const OperationStatus::Code code, const std::string& message);
 	explicit CodedException(const std::string& code, const std::string& message);
 
+	std::string GetCode();
+	std::string GetWhat();
+	std::string GetMessage();
+
 	virtual ~CodedException() noexcept;
 	virtual const char* what() const noexcept;
 

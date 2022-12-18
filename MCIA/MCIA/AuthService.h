@@ -16,6 +16,7 @@ class AuthService
 {
 public:
 	static void RegisterUser(User& user);
+	static void RegisterUserProcess(User& user);
 	static void LoginUser(User& user);
 	static void AuthenticateUser(User& user);
 	static void LogOut();
