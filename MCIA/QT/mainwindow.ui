@@ -15,27 +15,27 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
-    <string notr="true">background: rgb(255, 255, 255);</string>
+    <string notr="true">background: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(29, 145, 177, 255), stop:1 rgba(0, 160, 175, 255));</string>
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-       <widget class="QWidget" name="widget" native="true">
+       <widget class="QWidget" name="formHolder" native="true">
         <property name="minimumSize">
          <size>
-          <width>297</width>
+          <width>300</width>
           <height>400</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>297</width>
+          <width>300</width>
           <height>400</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(175, 238, 255, 255), stop:1 rgba(231, 255, 246, 255))</string>
+         <string notr="true">background: white; border-top-right-radius: 8; border-bottom-right-radius: 8; border-top-left-radius: 8; border-bottom-left-radius: 8;</string>
         </property>
         <widget class="QWidget" name="verticalLayoutWidget_2">
          <property name="geometry">
@@ -47,90 +47,14 @@
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="6" column="1">
+          <item row="5" column="1">
            <widget class="QLineEdit" name="lnePassword">
-            <property name="styleSheet">
-             <string notr="true">background: white;</string>
-            </property>
             <property name="echoMode">
              <enum>QLineEdit::Password</enum>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="lblPassword">
-            <property name="text">
-             <string>Password</string>
-            </property>
-            <property name="buddy">
-             <cstring>lnePassword</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="lneUsername">
-            <property name="styleSheet">
-             <string notr="true">background: white;</string>
-            </property>
-           </widget>
-          </item>
           <item row="8" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QPushButton" name="btnLogin">
-              <property name="styleSheet">
-               <string notr="true">background: lightblue;</string>
-              </property>
-              <property name="text">
-               <string>Login</string>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btnRegister">
-              <property name="styleSheet">
-               <string notr="true">background: lightblue;</string>
-              </property>
-              <property name="text">
-               <string>Register</string>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="1" column="2">
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="12" column="1">
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -143,22 +67,23 @@
             </property>
            </spacer>
           </item>
-          <item row="4" column="1">
-           <widget class="QLabel" name="lblUsernameError">
-            <property name="font">
-             <font>
-              <pointsize>8</pointsize>
-             </font>
+          <item row="0" column="0">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-            <property name="styleSheet">
-             <string notr="true">color: darkred; background: transparent;</string>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
             </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
+           </spacer>
           </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lneUsername"/>
+          </item>
+          <item row="0" column="1">
            <layout class="QHBoxLayout" name="titleSpacer">
             <item>
              <spacer name="horizontalSpacer_3">
@@ -206,17 +131,7 @@
             </item>
            </layout>
           </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="lblUsername">
-            <property name="text">
-             <string>Username</string>
-            </property>
-            <property name="buddy">
-             <cstring>lneUsername</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
+          <item row="6" column="1">
            <widget class="QLabel" name="lblPasswordError">
             <property name="font">
              <font>
@@ -230,6 +145,90 @@
              <string/>
             </property>
            </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="lblUsername">
+            <property name="minimumSize">
+             <size>
+              <width>260</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Username</string>
+            </property>
+            <property name="buddy">
+             <cstring>lneUsername</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QPushButton" name="btnLogin">
+              <property name="text">
+               <string>Login</string>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+              <property name="info" stdset="0">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnRegister">
+              <property name="text">
+               <string>Register</string>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+              <property name="info" stdset="0">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="lblUsernameError">
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: darkred; background: transparent;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="lblPassword">
+            <property name="text">
+             <string>Password</string>
+            </property>
+            <property name="buddy">
+             <cstring>lnePassword</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>

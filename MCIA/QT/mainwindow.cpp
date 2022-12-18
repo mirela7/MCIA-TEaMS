@@ -17,12 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
     QString StyleSheet = QLatin1String(stylesFile.readAll());
     qApp->setStyleSheet(StyleSheet);
 
-    /* Temp solution */
-    const char* transparentBG = "QLabel { background-color : transparent; }";
-    ui->lblTitle->setStyleSheet(transparentBG);
-    ui->lblUsername->setStyleSheet(transparentBG);
-    ui->lblPassword->setStyleSheet(transparentBG);
-
     /* Signals & slots */
     connect(ui->btnLogin, SIGNAL(clicked()), this, SLOT(loginUser()));
     connect(ui->btnRegister, SIGNAL(clicked()), this, SLOT(registerUser()));
