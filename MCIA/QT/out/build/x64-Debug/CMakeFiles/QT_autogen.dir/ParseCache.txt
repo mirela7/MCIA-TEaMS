@@ -2,6 +2,7 @@
 C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/mainwindow.h
  mmc:Q_OBJECT
  mdp:C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/mainwindow.h
+ mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/QFile
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qalgorithms.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qanystringview.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qarraydata.h
@@ -25,12 +26,15 @@ C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/mainwindow.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qcontiguouscache.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qdatastream.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qdebug.h
+ mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qfile.h
+ mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qfiledevice.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qflags.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qforeach.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qglobal.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qglobalstatic.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qhash.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qhashfunctions.h
+ mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qiodevice.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qiodevicebase.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qiterable.h
  mdp:C:/Qt/6.4.1/msvc2019_64/include/QtCore/qiterator.h

@@ -1,4 +1,5 @@
 C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/QT_autogen/EWIEGA46WW/moc_mainwindow.cpp: C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/mainwindow.h \
+  C:/Qt/6.4.1/msvc2019_64/include/QtCore/QFile \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qalgorithms.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qanystringview.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qarraydata.h \
@@ -22,12 +23,15 @@ C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/QT_autoge
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qcontiguouscache.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qdatastream.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qdebug.h \
+  C:/Qt/6.4.1/msvc2019_64/include/QtCore/qfile.h \
+  C:/Qt/6.4.1/msvc2019_64/include/QtCore/qfiledevice.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qflags.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qforeach.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qglobal.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qglobalstatic.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qhash.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qhashfunctions.h \
+  C:/Qt/6.4.1/msvc2019_64/include/QtCore/qiodevice.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qiodevicebase.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qiterable.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtCore/qiterator.h \
