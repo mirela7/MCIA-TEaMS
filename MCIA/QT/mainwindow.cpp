@@ -45,5 +45,8 @@ void MainWindow::loginUser()
 void MainWindow::registerUser()
 {
     qInfo() << " Register user:";
+    std::string username = ui->lneUsername->text().toStdString();
+    std::string password = ui->lneUsername->text().toStdString();
+
 }
 
