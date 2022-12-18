@@ -8,15 +8,15 @@ public:
 	
 	template<typename... Args>
 	std::string GetMessage(OperationStatus::Code code, Args... args);
-public:
+
+private:
+	template<typename T, typename... Args>
+	std::string GetMessageFromBase(const std::string& base, T value, Args... args);
 
 	template<typename T, typename... Args>
-	std::string GetMessageFromBase(std::string base, T value, Args... args);
+	std::string GetMessageFromBase(const std::string& base, T last);
 
-
-	template<typename T, typename... Args>
-	std::string GetMessageFromBase(std::string base, T last);
-
+private:
 	std::map<OperationStatus::Code, std::string> m_codeToMessage;
 };
 
@@ -28,7 +28,7 @@ inline std::string OperationStatusToMessage::GetMessage(OperationStatus::Code co
 }
 
 template<typename T, typename ...Args>
-std::string OperationStatusToMessage::GetMessageFromBase(std::string base, T value, Args ...args)
+std::string OperationStatusToMessage::GetMessageFromBase(const std::string& base, T value, Args ...args)
 {
 	int posOfMod = base.find_first_of("%");
 	if (posOfMod == -1)
@@ -39,7 +39,7 @@ std::string OperationStatusToMessage::GetMessageFromBase(std::string base, T val
 }
 
 template<typename T, typename ...Args>
-std::string OperationStatusToMessage::GetMessageFromBase(std::string base, T last) {
+std::string OperationStatusToMessage::GetMessageFromBase(const std::string& base, T last) {
 	int posOfMod = base.find_first_of("%");
 	if (posOfMod == -1)
 		return base;

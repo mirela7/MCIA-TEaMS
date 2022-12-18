@@ -67,9 +67,9 @@ void MainWindow::RegisterBtnClicked()
 
 void MainWindow::LNETextEdited(QString string)
 {
-    if(qobject_cast<QLineEdit*>(sender()) == ui->lneUsername)
-        qInfo() << "LNE username: " << string;
-    else qInfo() << "LNE password: " << string;
+    if (qobject_cast<QLineEdit*>(sender()) == ui->lneUsername)
+        ui->lblUsernameError->setText("");
+    else ui->lblPasswordError->setText("");
 }
 
 MainWindow::~MainWindow()
