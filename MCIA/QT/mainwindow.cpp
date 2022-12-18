@@ -36,6 +36,8 @@ MainWindow::~MainWindow()
 void MainWindow::loginUser()
 {
     qInfo() << " Login user:";
+    AuthService::LoginUser(*(new User("sorana", "parola")));
+    qInfo() << AuthService::GetConnectedUser().GetName().c_str();
 }
 
 

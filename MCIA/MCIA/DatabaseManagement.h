@@ -179,7 +179,7 @@ namespace {
     }
 
     auto getStorage() {
-        static auto storage = make_storage("DBtest.db"
+        static auto storage = make_storage("C:\\Users\\mirel\\Documents\\GitHub\\MCIA-TEaMS\\MCIA\\MCIA\\DBtest.db"
             , make_user_table()
             , make_question_table()
             , make_answer_table()
@@ -255,6 +255,7 @@ inline TEntity DatabaseManagement::GetElementByColumnValue(TValue(TEntity::* get
     if (throwIfNotFound && result.size() < 1)
         throw CodedException(OperationStatus::Code::DB_ENTITY_NOT_FOUND, "No entity with wanted value found.");
     return result[0];
+    
 }
 
 template<class TEntity, class sqlite_expression>

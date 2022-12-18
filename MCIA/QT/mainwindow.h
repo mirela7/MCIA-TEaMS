@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QFile>
+#include "AuthService.h"
 
 
 QT_BEGIN_NAMESPACE
