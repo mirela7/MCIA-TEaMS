@@ -1,7 +1,5 @@
-#include "Validation.h"
-#include "OperationStatusToMessage.h"
-
-OperationStatus Validation::IsUsernameValid(const std::string& username)
+#include "DBValidation.h"
+OperationStatus DBValidation::IsUsernameValid(const std::string& username)
 {
 
     if (m_validator.IsBlank(username))
@@ -16,7 +14,7 @@ OperationStatus Validation::IsUsernameValid(const std::string& username)
 }
 
 
-OperationStatus Validation::IsPasswordValid(const std::string& password)
+OperationStatus DBValidation::IsPasswordValid(const std::string& password)
 {
     if (m_validator.IsBlank(password))
         return OperationStatus(OperationStatus::Code::F_BLANK);

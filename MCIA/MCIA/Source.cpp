@@ -6,7 +6,7 @@
 #include "AuthService.h"
 #include "DBPage.h"
 #include "Movie.h"
-#include "Validation.h"
+#include "DBValidation.h"
 #include "WishList.h"
 #include "OperationStatusToMessage.h"
 #include "OperationStatus.h"
@@ -44,7 +44,7 @@ int main()
 	/*char ch;
 	bool isSearching = false;
 	std::string movieName;
-	Validation validate;
+	DBValidation validate;
 	auto connectedUser = AuthService::StartAuthProcess();
 	std::cout << "Now logged in.";
 	while (true)

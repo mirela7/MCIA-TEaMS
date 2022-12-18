@@ -6,7 +6,7 @@
 #include "..\Validation\Validator.h"
 
 
-class Validation
+class DBValidation
 {
 public:
 	OperationStatus IsUsernameValid(const std::string& username);
@@ -22,7 +22,7 @@ private:
 };
 
 template<class T>
-inline OperationStatus Validation::IdExists(const int id)
+inline OperationStatus DBValidation::IdExists(const int id)
 {
 	auto& st = DatabaseManagement::GetInstance().GetStorage();
 	auto search_element = st.get_all<T>(where(c(&T::GetId) == id));
