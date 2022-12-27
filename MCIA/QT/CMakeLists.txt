@@ -48,6 +48,8 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         # mainwindow.h
         mainwindow.ui
+        homewindow.cpp
+        homewindow.ui
         ${BACKEND_SOURCES}
 )
 

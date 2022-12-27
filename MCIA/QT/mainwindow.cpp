@@ -42,6 +42,10 @@ void MainWindow::LoginBtnClicked()
 
     try {
         AuthService::LoginUser(*(new User(username, password)));
+        this->hide();
+        HomeWindow homeWindow;
+        homeWindow.setModal(true);
+        homeWindow.exec();
     }
     catch (CodedException e) {
         /* AuthService throws error if user is not found.*/
@@ -59,6 +63,9 @@ void MainWindow::RegisterBtnClicked()
     std::string password = ui->lnePassword->text().toStdString();
     try {
         AuthService::RegisterUser(*(new User(username, password)));
+        HomeWindow homeWindow;
+        homeWindow.setModal(true);
+        homeWindow.exec();
     }
     catch (CodedException e) {
         auto fieldMessage = e.GetMessage();
