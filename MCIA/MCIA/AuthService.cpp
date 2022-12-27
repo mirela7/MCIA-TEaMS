@@ -11,9 +11,9 @@ void AuthService::RegisterUser(User& user)
 	OperationStatus username_valid = validate.IsUsernameValid(user.GetName());
 	OperationStatus pw_valid = validate.IsPasswordValid(user.GetPassword());
 	if (!username_valid)
-		throw CodedException("username", username_valid);
+		throw CodedException(username_valid.GetCode(), "username");
 	if (!pw_valid)
-		throw CodedException("password", pw_valid);
+		throw CodedException(pw_valid.GetCode(), "password");
 	if (ExistsUserWithUsername(user.GetName()))
 		throw CodedException("username", "A user with this username already exists.");
 	int insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);

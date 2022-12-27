@@ -10,10 +10,10 @@ public:
 	std::string GetMessage(OperationStatus::Code code, Args... args);
 private:
 	template<typename T, typename... Args>
-	std::string GetMessageFromBase(const std::string& base, T value, Args... args);
+	std::string GetMessageFromBase(std::string& base, T value, Args... args);
 
 	template<typename T, typename... Args>
-	std::string GetMessageFromBase(const std::string& base, T last);
+	std::string GetMessageFromBase(std::string& base, T last);
 
 private:
 	std::map<OperationStatus::Code, std::string> m_codeToMessage;
@@ -27,22 +27,28 @@ inline std::string OperationStatusToMessage::GetMessage(OperationStatus::Code co
 }
 
 template<typename T, typename ...Args>
-std::string OperationStatusToMessage::GetMessageFromBase(const std::string& base, T value, Args ...args)
+std::string OperationStatusToMessage::GetMessageFromBase(std::string& base, T value, Args ...args)
 {
 	int posOfMod = base.find_first_of("%");
 	if (posOfMod == -1)
 		return base;
 	base.erase(posOfMod, 1);
-	base.insert(posOfMod, std::string(value));
+	if constexpr(std::is_convertible<T, std::string>::value)
+		base.insert(posOfMod, std::string(value));
+	else
+		base.insert(posOfMod, std::to_string(value));
 	return GetMessageFromBase(base, args...);
 }
 
 template<typename T, typename ...Args>
-std::string OperationStatusToMessage::GetMessageFromBase(const std::string& base, T last) {
+std::string OperationStatusToMessage::GetMessageFromBase(std::string& base, T last) {
 	int posOfMod = base.find_first_of("%");
 	if (posOfMod == -1)
 		return base;
 	base.erase(posOfMod, 1);
-	base.insert(posOfMod, std::string(last));
+	if constexpr(std::is_convertible<T, std::string>::value)
+		base.insert(posOfMod, std::string(last));
+	else
+		base.insert(posOfMod, std::to_string(last));
 	return base;
 }

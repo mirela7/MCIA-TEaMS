@@ -261,7 +261,15 @@
 		"C:/Qt/6.4.1/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginTargets.cmake",
 		"C:/Qt/6.4.1/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginTargets-debug.cmake",
 		"C:/Qt/6.4.1/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginTargets-relwithdebinfo.cmake",
-		"C:/Qt/6.4.1/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginAdditionalTargetInfo.cmake"
+		"C:/Qt/6.4.1/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginAdditionalTargetInfo.cmake",
+		"C:/src/vcpkg/vcpkg/installed/x64-windows/share/SqliteOrm/SqliteOrmConfigVersion.cmake",
+		"C:/src/vcpkg/vcpkg/installed/x64-windows/share/SqliteOrm/SqliteOrmConfig.cmake",
+		"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeFindDependencyMacro.cmake",
+		"C:/src/vcpkg/vcpkg/installed/x64-windows/share/unofficial-sqlite3/unofficial-sqlite3-config.cmake",
+		"C:/src/vcpkg/vcpkg/installed/x64-windows/share/unofficial-sqlite3/unofficial-sqlite3-targets.cmake",
+		"C:/src/vcpkg/vcpkg/installed/x64-windows/share/unofficial-sqlite3/unofficial-sqlite3-targets-debug.cmake",
+		"C:/src/vcpkg/vcpkg/installed/x64-windows/share/unofficial-sqlite3/unofficial-sqlite3-targets-release.cmake",
+		"C:/src/vcpkg/vcpkg/installed/x64-windows/share/SqliteOrm/SqliteOrmTargets.cmake"
 	],
 	"CMAKE_SOURCE_DIR" : "C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT",
 	"DEP_FILE" : "C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/QT_autogen/deps",
@@ -269,9 +277,111 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Answer.h",
+			"MU",
+			"KCP3US2V3L/moc_Answer.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/AuthService.h",
+			"MU",
+			"KCP3US2V3L/moc_AuthService.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/CodedException.h",
+			"MU",
+			"KCP3US2V3L/moc_CodedException.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DBPage.h",
+			"MU",
+			"KCP3US2V3L/moc_DBPage.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DBValidation.h",
+			"MU",
+			"KCP3US2V3L/moc_DBValidation.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DatabaseManagement.h",
+			"MU",
+			"KCP3US2V3L/moc_DatabaseManagement.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Genre.h",
+			"MU",
+			"KCP3US2V3L/moc_Genre.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Movie.h",
+			"MU",
+			"KCP3US2V3L/moc_Movie.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/MovieIntermediary.h",
+			"MU",
+			"KCP3US2V3L/moc_MovieIntermediary.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/OperationStatus.h",
+			"MU",
+			"KCP3US2V3L/moc_OperationStatus.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/OperationStatusToMessage.h",
+			"MU",
+			"KCP3US2V3L/moc_OperationStatusToMessage.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Question.h",
+			"MU",
+			"KCP3US2V3L/moc_Question.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/User.h",
+			"MU",
+			"KCP3US2V3L/moc_User.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/UserAnswerQuestion.h",
+			"MU",
+			"KCP3US2V3L/moc_UserAnswerQuestion.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/WatchedMovie.h",
+			"MU",
+			"KCP3US2V3L/moc_WatchedMovie.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/WishList.h",
+			"MU",
+			"KCP3US2V3L/moc_WishList.cpp",
+			null
+		],
+		[
 			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/Validation/Validator.h",
+			"MU",
+			"O2EYUOSPAM/moc_Validator.cpp",
 			null
 		]
 	],
@@ -283,6 +393,8 @@
 		"QT_CORE_LIB",
 		"QT_GUI_LIB",
 		"QT_WIDGETS_LIB",
+		"SQLITE_API=__declspec(dllimport)",
+		"SQLITE_OS_WIN=1",
 		"UNICODE",
 		"WIN32",
 		"WIN64",
@@ -299,11 +411,13 @@
 	],
 	"MOC_INCLUDES" : 
 	[
+		"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA",
 		"C:/Qt/6.4.1/msvc2019_64/include/QtCore",
 		"C:/Qt/6.4.1/msvc2019_64/include",
 		"C:/Qt/6.4.1/msvc2019_64/mkspecs/win32-msvc",
 		"C:/Qt/6.4.1/msvc2019_64/include/QtWidgets",
-		"C:/Qt/6.4.1/msvc2019_64/include/QtGui"
+		"C:/Qt/6.4.1/msvc2019_64/include/QtGui",
+		"C:/src/vcpkg/vcpkg/installed/x64-windows/include"
 	],
 	"MOC_MACRO_NAMES" : 
 	[
@@ -330,12 +444,97 @@
 	"SOURCES" : 
 	[
 		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Answer.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/AuthService.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/CodedException.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DBPage.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DBValidation.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DatabaseManagement.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Genre.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Movie.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/MovieIntermediary.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/OperationStatus.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/OperationStatusToMessage.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Question.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/User.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/UserAnswerQuestion.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/WatchedMovie.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/WishList.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/main.cpp",
 			"MU",
 			null
 		],
 		[
 			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/mainwindow.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/Validation/Validator.cpp",
 			"MU",
 			null
 		]

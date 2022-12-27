@@ -14,6 +14,23 @@ OperationStatus DBValidation::IsUsernameValid(const std::string& username)
     return OperationStatus(OperationStatus::Code::SUCCESS);
 }
 
+std::string DBValidation::UsernameErrorMessage(OperationStatus status)
+{
+    switch (status.GetCode())
+    {
+    case OperationStatus::Code::F_BLANK:
+        return m_statusToMessage.GetMessage(status.GetCode(), "username");
+    case OperationStatus::Code::F_TRIM:
+        return m_statusToMessage.GetMessage(status.GetCode(), "username");
+    case OperationStatus::Code::F_SIZE:
+        return m_statusToMessage.GetMessage(status.GetCode(), "username", kMinUsernameLength);
+    case OperationStatus::Code::F_ALPHA_NUMERIC:
+        return m_statusToMessage.GetMessage(status.GetCode(), "username", "alpha-numeric characters and must not begin with a digit.");
+    default:
+        return "";
+    }
+}
+
 
 OperationStatus DBValidation::IsPasswordValid(const std::string& password)
 {
@@ -22,4 +39,17 @@ OperationStatus DBValidation::IsPasswordValid(const std::string& password)
     if (password.size() < kMinPasswordLength)
         return OperationStatus(OperationStatus::Code::F_SIZE);
     return OperationStatus(OperationStatus::Code::SUCCESS);
+}
+
+std::string DBValidation::PasswordErrorMessage(OperationStatus status)
+{
+    switch (status.GetCode())
+    {
+    case OperationStatus::Code::F_BLANK:
+        return m_statusToMessage.GetMessage(status.GetCode(), "password");
+    case OperationStatus::Code::F_SIZE:
+        return m_statusToMessage.GetMessage(status.GetCode(), "password", kMinPasswordLength);
+    default:
+        return "";
+    }
 }

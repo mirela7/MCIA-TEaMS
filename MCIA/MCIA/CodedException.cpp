@@ -2,12 +2,12 @@
 
 CodedException::CodedException(const char* code, const char* message)
 {
-	m_message = "[" + std::string(code) + "] " + message;
+	m_message = "[" + std::string(code) + "]" + message;
 }
 
 CodedException::CodedException(const OperationStatus::Code code, const std::string& message)
 {
-	m_message = "[" + std::string(OperationStatus(code)) + "] " + message;
+	m_message = "[" + std::string(OperationStatus(code)) + "]" + message;
 }
 
 CodedException::CodedException(const std::string& code, const std::string& message)

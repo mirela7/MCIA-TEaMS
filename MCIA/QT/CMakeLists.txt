@@ -35,9 +35,10 @@ set(BACKEND_SOURCES
         ${BACKEND_DIR}/Question.cpp
         ${BACKEND_DIR}/User.cpp
         ${BACKEND_DIR}/UserAnswerQuestion.cpp
-        ${BACKEND_DIR}/Validation.cpp
+        ${BACKEND_DIR}/DBValidation.cpp
         ${BACKEND_DIR}/WatchedMovie.cpp    
         ${BACKEND_DIR}/WishList.cpp
+        ${BACKEND_DIR}/OperationStatusToMessage.cpp
         ../Validation/Validator.cpp
 )
 

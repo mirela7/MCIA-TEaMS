@@ -4,19 +4,23 @@
 #include "OperationStatus.h"
 #include "DatabaseManagement.h"
 #include "..\Validation\Validator.h"
+#include "OperationStatusToMessage.h"
 
 
 class DBValidation
 {
 public:
 	OperationStatus IsUsernameValid(const std::string& username);
+	std::string UsernameErrorMessage(OperationStatus status);
 	OperationStatus IsPasswordValid(const std::string& password);
+	std::string PasswordErrorMessage(OperationStatus status);
 
 	template <class T> 
 	OperationStatus IdExists(const int id);
 
 private:
 	Validator m_validator;
+	OperationStatusToMessage m_statusToMessage;
 	static const int kMinUsernameLength = 3;
 	static const int kMinPasswordLength = 3;
 };
