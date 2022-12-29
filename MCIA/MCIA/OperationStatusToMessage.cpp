@@ -6,7 +6,7 @@ OperationStatusToMessage::OperationStatusToMessage()
 		{OperationStatus::Code::F_BLANK,
 			"Field % cannot be left blank."},
 		{OperationStatus::Code::F_SIZE,
-			"Field % must be longer than %."},
+			"Field % must be longer than % characters."},
 		{OperationStatus::Code::F_ALPHA_NUMERIC,
 			"Field % must only contain %."},
 		{OperationStatus::Code::F_TRIM,

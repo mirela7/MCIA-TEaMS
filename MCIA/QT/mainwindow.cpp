@@ -7,7 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    
+    ui->lblUsernameError->setWordWrap(true);
+    ui->lblPasswordError->setWordWrap(true);
     loadStylesheet();
     linkSlots();
 }
@@ -41,6 +42,10 @@ void MainWindow::LoginBtnClicked()
 
     try {
         AuthService::LoginUser(*(new User(username, password)));
+        this->hide();
+        HomeWindow homeWindow;
+        homeWindow.setModal(true);
+        homeWindow.exec();
     }
     catch (CodedException e) {
         /* AuthService throws error if user is not found.*/
@@ -51,18 +56,29 @@ void MainWindow::LoginBtnClicked()
 
 void MainWindow::RegisterBtnClicked()
 {
+    OperationStatusToMessage ostm;
+    DBValidation validator;
     qInfo() << " Register user:";
     std::string username = ui->lneUsername->text().toStdString();
     std::string password = ui->lnePassword->text().toStdString();
     try {
         AuthService::RegisterUser(*(new User(username, password)));
+        HomeWindow homeWindow;
+        homeWindow.setModal(true);
+        homeWindow.exec();
     }
     catch (CodedException e) {
-        std::string code = e.GetCode();
-        if (code == "username")
-            ui->lblUsernameError->setText(QString::fromStdString(e.GetMessage()));
-        else
-            ui->lblPasswordError->setText(QString::fromStdString(e.GetMessage()));
+        auto fieldMessage = e.GetMessage();
+        if (fieldMessage == "username") {
+            ui->lblUsernameError->setText(QString::fromStdString(
+                validator.UsernameErrorMessage(e.GetCode())
+            ));
+        }
+        else {
+            ui->lblPasswordError->setText(QString::fromStdString(
+                validator.PasswordErrorMessage(e.GetCode())
+            ));
+        }
     }
 }
 

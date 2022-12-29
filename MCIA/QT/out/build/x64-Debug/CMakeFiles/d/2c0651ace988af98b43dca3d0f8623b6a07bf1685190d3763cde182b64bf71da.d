@@ -1,77 +1,21 @@
 QT_autogen/timestamp: \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeCXXCompiler.cmake.in \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeCXXInformation.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeCommonLanguageInclude.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeCompilerIdDetection.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeDependentOption.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeDetermineCXXCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeDetermineCompileFeatures.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeDetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeDetermineCompilerABI.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeDetermineCompilerId.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeDetermineRCCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeDetermineSystem.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeFindBinUtils.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeFindDependencyMacro.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeGenericSystem.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeInitializeConfigs.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeLanguageInformation.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeParseImplicitIncludeInfo.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeParseImplicitLinkInfo.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeParseLibraryArchitecture.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeRCCompiler.cmake.in \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeRCInformation.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeSystem.cmake.in \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeSystemSpecificInformation.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeSystemSpecificInitialize.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeTestCXXCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeTestCompilerCommon.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CMakeTestRCCompiler.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CheckCXXCompilerFlag.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CheckCXXSourceCompiles.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CheckIncludeFile.cxx.in \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CheckIncludeFileCXX.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/CheckLibraryExists.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/ADSP-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/ARMCC-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/ARMClang-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/AppleClang-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/Borland-DetermineCompiler.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/CMakeCommonCompilerMacros.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/Clang-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/Clang-DetermineCompilerInternal.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/Cray-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/Embarcadero-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/Fujitsu-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/GHS-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/HP-CXX-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/IAR-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/Intel-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/MSVC-CXX.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/MSVC-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/NVHPC-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/NVIDIA-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/PGI-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/PathScale-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/SCO-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/TI-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/Watcom-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/XL-CXX-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/FindPackageHandleStandardArgs.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/FindPackageMessage.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/FindThreads.cmake \
@@ -80,8 +24,6 @@ QT_autogen/timestamp: \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Internal/CheckCompilerFlag.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Internal/CheckFlagCommonConfig.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Internal/CheckSourceCompiles.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Internal/FeatureTesting.cmake \
-  C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Platform/Windows-Determine-CXX.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Platform/Windows-MSVC-CXX.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Platform/Windows-MSVC.cmake \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.23/Modules/Platform/Windows.cmake \
@@ -354,6 +296,38 @@ QT_autogen/timestamp: \
   C:/Qt/6.4.1/msvc2019_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfigVersionImpl.cmake \
   C:/Qt/6.4.1/msvc2019_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateTargets.cmake \
   C:/Qt/6.4.1/msvc2019_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateVersionlessTargets.cmake \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Answer.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Answer.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/AuthService.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/AuthService.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/CodedException.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/CodedException.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DBPage.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DBPage.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DBValidation.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DBValidation.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DatabaseManagement.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/DatabaseManagement.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Genre.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Genre.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Movie.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Movie.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/MovieIntermediary.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/MovieIntermediary.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/OperationStatus.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/OperationStatus.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/OperationStatusToMessage.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/OperationStatusToMessage.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Question.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Question.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/User.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/User.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/UserAnswerQuestion.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/UserAnswerQuestion.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/WatchedMovie.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/WatchedMovie.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/WishList.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/WishList.h \
   ../../../CMakeLists.txt \
   ../../../main.cpp \
   ../../../mainwindow.cpp \
@@ -361,6 +335,15 @@ QT_autogen/timestamp: \
   CMakeFiles/3.23.22060601-MSVC_2/CMakeCXXCompiler.cmake \
   CMakeFiles/3.23.22060601-MSVC_2/CMakeRCCompiler.cmake \
   CMakeFiles/3.23.22060601-MSVC_2/CMakeSystem.cmake \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/Validation/Validator.cpp \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/Validation/Validator.h \
+  C:/src/vcpkg/vcpkg/installed/x64-windows/share/SqliteOrm/SqliteOrmConfig.cmake \
+  C:/src/vcpkg/vcpkg/installed/x64-windows/share/SqliteOrm/SqliteOrmConfigVersion.cmake \
+  C:/src/vcpkg/vcpkg/installed/x64-windows/share/SqliteOrm/SqliteOrmTargets.cmake \
+  C:/src/vcpkg/vcpkg/installed/x64-windows/share/unofficial-sqlite3/unofficial-sqlite3-config.cmake \
+  C:/src/vcpkg/vcpkg/installed/x64-windows/share/unofficial-sqlite3/unofficial-sqlite3-targets-debug.cmake \
+  C:/src/vcpkg/vcpkg/installed/x64-windows/share/unofficial-sqlite3/unofficial-sqlite3-targets-release.cmake \
+  C:/src/vcpkg/vcpkg/installed/x64-windows/share/unofficial-sqlite3/unofficial-sqlite3-targets.cmake \
   C:/src/vcpkg/vcpkg/scripts/buildsystems/vcpkg.cmake \
   ../../../mainwindow.ui \
   C:/Program\ Files/Microsoft\ Visual\ Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe

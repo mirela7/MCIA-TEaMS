@@ -116,4 +116,7 @@ C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/QT_autoge
   C:/Qt/6.4.1/msvc2019_64/include/QtWidgets/qtwidgets-config.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtWidgets/qtwidgetsexports.h \
   C:/Qt/6.4.1/msvc2019_64/include/QtWidgets/qtwidgetsglobal.h \
-  C:/Qt/6.4.1/msvc2019_64/include/QtWidgets/qwidget.h
+  C:/Qt/6.4.1/msvc2019_64/include/QtWidgets/qwidget.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/Answer.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/AuthService.h \
+  C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/MCIA/User.h

@@ -16,7 +16,9 @@
 # ipycheckpoint
 .ipynb_checkpoints
 
+# Internal files
 RecomSystem/data
+MCIA/QT/out
 
 # Mono auto generated files
 mono_crash.*

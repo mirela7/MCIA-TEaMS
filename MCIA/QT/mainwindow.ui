@@ -6,12 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>770</width>
+    <width>713</width>
     <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">:enabled { 
+	background: #3B82F6; 
+}
+:hover {
+	background: #226be3;
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -133,6 +142,12 @@
           </item>
           <item row="6" column="1">
            <widget class="QLabel" name="lblPasswordError">
+            <property name="maximumSize">
+             <size>
+              <width>260</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>8</pointsize>
@@ -209,6 +224,12 @@
           </item>
           <item row="3" column="1">
            <widget class="QLabel" name="lblUsernameError">
+            <property name="maximumSize">
+             <size>
+              <width>260</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>8</pointsize>

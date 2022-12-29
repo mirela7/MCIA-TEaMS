@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QFile>
 #include "AuthService.h"
+#include "homewindow.h"
 
 
 QT_BEGIN_NAMESPACE

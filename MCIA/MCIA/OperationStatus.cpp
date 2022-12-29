@@ -3,6 +3,17 @@
 OperationStatus::OperationStatus(const Code& c)
 	: m_code(c)
 {
+
+}
+
+OperationStatus::OperationStatus(const std::string& str)
+{
+	m_code = m_conversionMap.at(str);
+}
+
+OperationStatus::Code OperationStatus::GetCode()
+{
+	return m_code;
 }
 
 bool OperationStatus::operator!=(const OperationStatus& cmp)
@@ -51,6 +62,8 @@ OperationStatus::operator std::string()
 		return "EntityNotFound";
 	case Code::DB_USER_INVALID_PASSWORD:
 		return "InvalidUser";
+	case Code::DB_INVALID_ID:
+		return "InvalidId";
 	default:
 		return "Err";
 	}
