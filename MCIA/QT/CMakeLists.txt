@@ -30,6 +30,7 @@ set(BACKEND_SOURCES
         ${BACKEND_DIR}/DBPage.cpp
         ${BACKEND_DIR}/Genre.cpp
         ${BACKEND_DIR}/Movie.cpp
+        ${BACKEND_DIR}/MovieGenre.cpp
         ${BACKEND_DIR}/MovieIntermediary.cpp
         ${BACKEND_DIR}/OperationStatus.cpp
         ${BACKEND_DIR}/Question.cpp
