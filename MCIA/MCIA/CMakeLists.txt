@@ -7,6 +7,22 @@ cmake_minimum_required (VERSION 3.8)
 
 find_package(SqliteOrm REQUIRED)
 
+set(CMAKE_PREFIX_PATH $CONDA_PREFIX)
+find_package (PythonLibs REQUIRED)
+message(WARNING ${PYTHON_LIBRARIES})
+
+set(wanted_path_source "${CMAKE_CURRENT_SOURCE_DIR}")
+cmake_path(GET wanted_path_source PARENT_PATH PARENT_DIRS)
+cmake_path(GET PARENT_DIRS PARENT_PATH base_folder)
+message(WARNING ${base_folder})
+
+# set($ENV{PYTHONHOME} "C:\\Users\\sorana\\.conda\\envs\\recomsys")
+# set($ENV{PYTHONPATH} "C:\\Users\\sorana\\.conda\\envs\\recomsys;${base_folder}\\RecomSystem")
+# set($ENV{PYTHON_INCLUDE_DIR} "C:\\Users\\sorana\\.conda\\envs\\recomsys\\include")
+# set($ENV{PYTHON_LIBRARY} "C:\\Users\\sorana\\.conda\\envs\\recomsys\\libs")
+
+
+
 set(BACKEND_SOURCES
 		include/NamedAsciiChars.h
 		src/Answer.cpp
@@ -37,6 +53,7 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET MCIA PROPERTY CXX_STANDARD 20)
 endif()
 
+
 # TODO: Add tests and install targets if needed.
 set(wanted_path "${CMAKE_CURRENT_BINARY_DIR}")
 cmake_path(GET wanted_path PARENT_PATH PARENT_DIR)
@@ -45,11 +62,20 @@ message("Where to look for Validator: ${PARENT_DIR}")
 target_link_libraries(MCIA
         PRIVATE sqlite_orm::sqlite_orm
 		PUBLIC Validator
+		PUBLIC ${PYTHON_LIBRARIES}
         )
+
+#target_link_directories(MCIA
+#		PRIVATE ${PYTHON_LIBRARIES})
 
 target_link_libraries(MCIALib
         PRIVATE sqlite_orm::sqlite_orm
 		PUBLIC Validator
+		PRIVATE ${PYTHON_LIBRARIES}
         )
 
+# target_link_directories(MCIALib
+#		PRIVATE ${PYTHON_LIBRARIES})
+
 target_include_directories(MCIALib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
+target_include_directories(MCIA PRIVATE ${PYTHON_INCLUDE_DIRS})
