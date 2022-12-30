@@ -9,6 +9,20 @@ def retrieve_model(path):
     return tf.keras.models.load_model('saved_model/first_train')
 
 
+def get_user_submodule(model_path):
+    full_model = retrieve_model('model_path')
+    user_model = Model(inputs=full_model.get_layer('user_inp').input,
+                       outputs=full_model.get_layer('reshape_usr').output)
+    return user_model
+
+
+def get_movie_submodule(model_path):
+    full_model = retrieve_model('model_path')
+    movie_model = Model(inputs=full_model.get_layer('movie_inp').input,
+                        outputs=full_model.get_layer('reshape_movie').output)
+    return movie_model
+
+
 class NeuralNetwork:
     def __init__(self, input_max1, embedding_size, input_max2, name1, name2, denselayers_number=1,
                  denselayers_units=[20]):
@@ -61,11 +75,10 @@ class NeuralNetwork:
         self.model.compile(optimizer='adam', loss='mean_absolute_error', metrics=['mean_absolute_percentage_error'])
         # Train
         training = self.model.fit(x=[train["user"], train["entry_id"]], y=train["y"], epochs=100, batch_size=128,
-                             shuffle=True, verbose=1, validation_split=0.3)
+                                  shuffle=True, verbose=1, validation_split=0.3)
 
     def save_weights(self, path_to_weights='model_weights'):
-        self.model.save_weights('./checkpoints/'+path_to_weights)
+        self.model.save_weights('./checkpoints/' + path_to_weights)
 
     def load_weights(self, path_to_weights='model_weights'):
-        self.model.load_weights('./checkpoints/'+path_to_weights)
-
+        self.model.load_weights('./checkpoints/' + path_to_weights)
