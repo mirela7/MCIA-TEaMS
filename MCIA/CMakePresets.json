@@ -14,7 +14,7 @@
         },
         "environment": {
           "PYTHONHOME": "C:\\Users\\sorana\\.conda\\envs\\recomsys",
-          "PYTHONPATH": "C:\\Users\\sorana\\.conda\\envs\\recomsys",
+          "PYTHONPATH": "C:\\\\Users\\\\sorana\\\\.conda\\\\envs\\\\recomsys;D:\\facultate\\Sem3\\MCIA\\MCIA-TEaMS\\MCIA-TEaMS\\RecomSystem",
           "PYTHON_INCLUDE_DIR": "C:\\Users\\sorana\\.conda\\envs\\recomsys\\include",
           "PYTHON_LIBRARY": "C:\\Users\\sorana\\.conda\\envs\\recomsys\\libs"
         },

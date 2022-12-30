@@ -40,6 +40,12 @@ void displayTable(T filter)
 
 int main()
 {
+	Py_Initialize();
+	PyRun_SimpleString("import dummy");
+	PyRun_SimpleString("dummy.test_import_python()");
+	PyRun_SimpleString("print('Hello din acest fisier')");
+
+	Py_Finalize();
 //	OperationStatusToMessage ostm;
 //	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
 	/*char ch;
