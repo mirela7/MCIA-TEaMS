@@ -18,8 +18,10 @@
 
 # Internal files
 RecomSystem/data
-MCIA/QT/out
-
+MCIA/QT/out/*
+MCIA/build/*
+MCIA/.idea/*
+RecomSystem/.idea/*
 # Mono auto generated files
 mono_crash.*
 

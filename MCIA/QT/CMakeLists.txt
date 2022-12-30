@@ -19,31 +19,6 @@ include_directories(
     ../MCIA
 )
 
-set(BACKEND_DIR "../MCIA")
-set(DLL_DIR "C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/x64/Debug")
-
-set(BACKEND_SOURCES
-        ${BACKEND_DIR}/Answer.cpp
-        ${BACKEND_DIR}/AuthService.cpp
-        ${BACKEND_DIR}/CodedException.cpp
-        ${BACKEND_DIR}/DatabaseManagement.cpp
-        ${BACKEND_DIR}/DBPage.cpp
-        ${BACKEND_DIR}/Genre.cpp
-        ${BACKEND_DIR}/Movie.cpp
-        ${BACKEND_DIR}/MovieGenre.cpp
-        ${BACKEND_DIR}/MovieIntermediary.cpp
-        ${BACKEND_DIR}/OperationStatus.cpp
-        ${BACKEND_DIR}/Question.cpp
-        ${BACKEND_DIR}/User.cpp
-        ${BACKEND_DIR}/UserAnswerQuestion.cpp
-        ${BACKEND_DIR}/DBValidation.cpp
-        ${BACKEND_DIR}/WatchedMovie.cpp    
-        ${BACKEND_DIR}/WishList.cpp
-        ${BACKEND_DIR}/OperationStatusToMessage.cpp
-        ../Validation/Validator.cpp
-)
-
-
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
@@ -51,7 +26,6 @@ set(PROJECT_SOURCES
         mainwindow.ui
         homewindow.cpp
         homewindow.ui
-        ${BACKEND_SOURCES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -79,7 +53,8 @@ endif()
 
 target_link_libraries(QT 
     PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
-    PRIVATE sqlite_orm::sqlite_orm
+    PRIVATE sqlite_orm::sqlite_orm 
+    PUBLIC MCIALib
 )
 
 set_target_properties(QT PROPERTIES

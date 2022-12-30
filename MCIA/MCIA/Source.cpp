@@ -2,14 +2,14 @@
 #pragma warning(disable : 4996)
 #include <iostream>
 #include <sqlite_orm/sqlite_orm.h>
-#include "DatabaseManagement.h"
-#include "AuthService.h"
-#include "DBPage.h"
-#include "Movie.h"
-#include "DBValidation.h"
-#include "WishList.h"
-#include "OperationStatusToMessage.h"
-#include "OperationStatus.h"
+#include "include/DatabaseManagement.h"
+#include "include/AuthService.h"
+#include "include/DBPage.h"
+#include "include/Movie.h"
+#include "include/DBValidation.h"
+#include "include/WishList.h"
+#include "include/OperationStatusToMessage.h"
+#include "include/OperationStatus.h"
 
 using namespace sqlite_orm;
 
@@ -39,9 +39,9 @@ void displayTable(T filter)
 
 int main()
 {
-	OperationStatusToMessage ostm;
-	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
-	/*char ch;
+//	OperationStatusToMessage ostm;
+//	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
+	char ch;
 	bool isSearching = false;
 	std::string movieName;
 	DBValidation validate;
@@ -191,7 +191,7 @@ int main()
 			
 
 		}
-	}*/
+	}
 	
 	return 0;
 }

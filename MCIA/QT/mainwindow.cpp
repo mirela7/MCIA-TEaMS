@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::loadStylesheet()
 {
-    QFile stylesFile("../../../stylesheet.qss");
+    QFile stylesFile("../../../QT/stylesheet.qss");
     if (!stylesFile.exists())
         qInfo() << "Stylesheet doesnt exist";
     stylesFile.open(QFile::ReadOnly);
