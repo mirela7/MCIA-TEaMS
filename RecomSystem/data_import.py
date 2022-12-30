@@ -13,3 +13,6 @@ def get_data():
     movies = pd.read_excel('data/movie_e.xlsx')
     UNIQUE_MOVIE_IDS = movies['movie_id'].unique()
     return UNIQUE_MOVIE_IDS
+
+def test_function():
+    print('Hi from data_import!')
