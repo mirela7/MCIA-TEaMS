@@ -10,6 +10,7 @@
 #include "include/WishList.h"
 #include "include/OperationStatusToMessage.h"
 #include "include/OperationStatus.h"
+#include <Python.h>
 
 using namespace sqlite_orm;
 
@@ -41,7 +42,7 @@ int main()
 {
 //	OperationStatusToMessage ostm;
 //	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
-	char ch;
+	/*char ch;
 	bool isSearching = false;
 	std::string movieName;
 	DBValidation validate;
@@ -192,6 +193,6 @@ int main()
 
 		}
 	}
-	
+	*/
 	return 0;
 }
