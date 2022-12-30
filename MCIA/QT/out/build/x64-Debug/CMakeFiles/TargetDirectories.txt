@@ -1,8 +1,8 @@
-C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/QT.dir
-C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
-C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/list_install_components.dir
-C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/install.dir
-C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/install/local.dir
-C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/QT_autogen_timestamp_deps.dir
-C:/Users/mirel/Documents/GitHub/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/QT_autogen.dir
+D:/facultate/Sem3/MCIA/MCIA-TEaMS/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/QT.dir
+D:/facultate/Sem3/MCIA/MCIA-TEaMS/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/facultate/Sem3/MCIA/MCIA-TEaMS/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+D:/facultate/Sem3/MCIA/MCIA-TEaMS/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/list_install_components.dir
+D:/facultate/Sem3/MCIA/MCIA-TEaMS/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/install.dir
+D:/facultate/Sem3/MCIA/MCIA-TEaMS/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/install/local.dir
+D:/facultate/Sem3/MCIA/MCIA-TEaMS/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/QT_autogen_timestamp_deps.dir
+D:/facultate/Sem3/MCIA/MCIA-TEaMS/MCIA-TEaMS/MCIA/QT/out/build/x64-Debug/CMakeFiles/QT_autogen.dir

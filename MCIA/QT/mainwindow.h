@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QFile>
-#include "AuthService.h"
+#include <AuthService.h>
 #include "homewindow.h"
 
 
