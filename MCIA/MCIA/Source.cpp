@@ -10,7 +10,6 @@
 #include "include/WishList.h"
 #include "include/OperationStatusToMessage.h"
 #include "include/OperationStatus.h"
-#include <Python.h>
 
 using namespace sqlite_orm;
 
@@ -40,17 +39,17 @@ void displayTable(T filter)
 
 int main()
 {
-	Py_Initialize();
+	/*Py_Initialize();
 	PyRun_SimpleString("import os");
 	PyRun_SimpleString("print(\"PYTHONPATH:\", os.environ.get('PYTHONPATH'))");
     PyRun_SimpleString("import data_import");
     PyRun_SimpleString("data_import.test_function()");
 	PyRun_SimpleString("print('Hello din acest fisier')");
 
-	Py_Finalize();
+	Py_Finalize();*/
 //	OperationStatusToMessage ostm;
 //	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
-	/*char ch;
+	char ch;
 	bool isSearching = false;
 	std::string movieName;
 	DBValidation validate;
@@ -201,6 +200,5 @@ int main()
 
 		}
 	}
-	*/
 	return 0;
 }
