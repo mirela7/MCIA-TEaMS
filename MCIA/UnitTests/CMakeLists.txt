@@ -11,7 +11,7 @@ add_executable(
   testing
   tests/UserTests.cpp  
   tests/AnswerTests.cpp
-	Source.cpp)
+	Source.cpp "tests/CodedExceptionTests.cpp")
 
  target_link_libraries(testing 
 	PRIVATE GTest::gmock GTest::gtest
