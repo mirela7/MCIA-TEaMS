@@ -7,6 +7,7 @@
 #include "Answer.h""
 #include "Question.h"
 #include "UserAnswerQuestion.h"
+#include <fstream>
 
 /* Others */
 #include "DatabaseManagement.h"
