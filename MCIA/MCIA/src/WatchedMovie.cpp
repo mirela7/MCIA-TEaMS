@@ -1,6 +1,6 @@
 #include "../include/WatchedMovie.h"
 
-WatchedMovie::WatchedMovie(const uint16_t user_id, const uint16_t movie_id, const float rating)
+WatchedMovie::WatchedMovie(const uint16_t user_id, const uint32_t movie_id, const float rating)
 	: m_user_id(user_id)
 	, m_movie_id(movie_id)
 	, m_rating(rating)
@@ -12,7 +12,7 @@ uint16_t WatchedMovie::GetUserId() const
 	return m_user_id;
 }
 
-uint16_t WatchedMovie::GetMovieId() const
+uint32_t WatchedMovie::GetMovieId() const
 {
 	return m_movie_id;
 }
@@ -27,7 +27,7 @@ void WatchedMovie::SetUserId(const uint16_t user_id)
 	m_user_id = user_id;
 }
 
-void WatchedMovie::SetMovieId(const uint16_t movie_id)
+void WatchedMovie::SetMovieId(const uint32_t movie_id)
 {
 	m_movie_id = movie_id;
 }
