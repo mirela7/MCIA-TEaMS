@@ -1,23 +1,25 @@
 #include <gtest/gtest.h>
 #include <DBValidation.h>
 
-// Demonstrate some basic assertions.
-TEST(HelloTest, BasicAssertions) {
-	// Expect two strings not to be equal.
-	EXPECT_STRNE("hello", "world");
-	// Expect equality.
-	EXPECT_EQ(7 * 6, 42);
-
+TEST(UserTests, Constructor3) {
+	User user(1, "nume", "parola");
+	EXPECT_EQ(user.GetId(), 1);
+	EXPECT_STREQ(user.GetName().c_str(), "nume");
+	EXPECT_STREQ(user.GetPassword().c_str(), "parola");
 }
 
-// Demonstrate some basic assertions.
-TEST(HelloTest2, BasicAssertionsT2) {
-	// Expect two strings not to be equal.
-	EXPECT_STRNE("hello", "world");
-	// Expect equality.
-	EXPECT_EQ(7 * 6, 42);
+TEST(UserTests, ConstructorCopy) {
+	User user(1, "nume", "parola");
+	User cpy(user);
+	EXPECT_EQ(cpy.GetId(), 1);
+	EXPECT_STREQ(cpy.GetName().c_str(), "nume");
+	EXPECT_STREQ(cpy.GetPassword().c_str(), "parola");
+}
 
-	DBValidation validator;
-	validator.IsUsernameValid("ana");
+TEST(UserTests, ConstructorNoId) {
+	User user("nume", "parola");
+	EXPECT_EQ(user.GetId(), 0);
+	EXPECT_STREQ(user.GetName().c_str(), "nume");
+	EXPECT_STREQ(user.GetPassword().c_str(), "parola");
 }
 

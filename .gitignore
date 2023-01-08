@@ -19,6 +19,7 @@
 # Internal files
 RecomSystem/data
 MCIA/QT/out/*
+MCIA/out/*
 MCIA/build/*
 MCIA/build-QT-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug/*
 MCIA/.idea/*
