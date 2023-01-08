@@ -23,3 +23,33 @@ TEST(UserTests, ConstructorNoId) {
 	EXPECT_STREQ(user.GetPassword().c_str(), "parola");
 }
 
+TEST(UserTests, CopyOperator) {
+	User user(1, "nume", "parola");
+	User u2;
+	u2 = user;
+	EXPECT_EQ(u2.GetId(), 1);
+	EXPECT_STREQ(u2.GetName().c_str(), "nume");
+	EXPECT_STREQ(u2.GetPassword().c_str(), "parola");
+}
+
+TEST(UserTests, MoveOperator) {
+	User user(1, "nume", "parola");
+	User u2 = std::move(user);
+
+	EXPECT_EQ(u2.GetId(), 1);
+	EXPECT_STREQ(u2.GetName().c_str(), "nume");
+	EXPECT_STREQ(u2.GetPassword().c_str(), "parola");
+	EXPECT_EQ(user.GetName(), "");
+	EXPECT_EQ(user.GetPassword(), "");
+}
+
+TEST(UserTests, MoveConstructor) {
+	User user(1, "nume", "parola");
+	User u2{ std::move(user) };
+
+	EXPECT_EQ(u2.GetId(), 1);
+	EXPECT_STREQ(u2.GetName().c_str(), "nume");
+	EXPECT_STREQ(u2.GetPassword().c_str(), "parola");
+	EXPECT_EQ(user.GetName(), "");
+	EXPECT_EQ(user.GetPassword(), "");
+}
