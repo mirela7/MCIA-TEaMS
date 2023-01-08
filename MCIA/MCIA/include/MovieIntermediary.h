@@ -7,18 +7,18 @@ class MovieIntermediary
 {
 public:
 	MovieIntermediary() = default;
-	MovieIntermediary(uint16_t id, const std::string& title, const std::string& genres);
+	MovieIntermediary(uint32_t id, const std::string& title, const std::string& genres);
 
-	void SetId(uint16_t id);
+	void SetId(uint32_t id);
 	void SetTitle(const std::string& title);
 	void SetGenre(const std::string& genres);
 
-	uint16_t GetId() const;
+	uint32_t GetId() const;
 	std::string GetTitle() const;
 	std::string GetGenre() const;
 
 private:
-	uint16_t m_id;
+	uint32_t m_id;
 	std::string m_title;
 	std::string m_genre;
 };

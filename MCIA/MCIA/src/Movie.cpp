@@ -1,7 +1,7 @@
 #include "../include/Movie.h"
 #include "../include/DatabaseManagement.h"
 
-Movie::Movie(const uint16_t id, const std::string& title, const uint16_t releaseYear, const float rating)
+Movie::Movie(const uint32_t id, const std::string& title, const uint16_t releaseYear, const float rating)
 	: m_id(id)
 	, m_title(title)
 	, m_releaseYear(releaseYear)
@@ -18,7 +18,7 @@ Movie::Movie(Movie&& movie) noexcept
 	*this = std::move(movie);
 }
 
-void Movie::SetId(const uint16_t id)
+void Movie::SetId(const uint32_t id)
 {
 	m_id = id;
 }
@@ -37,7 +37,7 @@ void Movie::SetRating(const float rating)
 	m_rating = rating;
 }
 
-uint16_t Movie::GetId() const
+uint32_t Movie::GetId() const
 {
 	return m_id;
 }
@@ -81,20 +81,29 @@ void Movie::ParseMovieData()
 	auto& storage = DatabaseManagement::GetInstance().GetStorage();
 	auto allMovies = storage.select(columns(&MovieIntermediary::GetId, &MovieIntermediary::GetTitle, &MovieIntermediary::GetGenre));
 
-	std::cout << allMovies.size();
+	std::cout << allMovies.size() << '\n';
 	int movie_counter = 0;
+	uint32_t id = 0;
 	for (auto& tpl : allMovies)
 	{
 		std::string title = get<1>(tpl);
 		std::string sreleaseYear = "";
 		for (int index = title.size() - 5; index <= title.size() - 2; index++)
 			sreleaseYear.push_back(title[index]);
-		int releaseYear = std::stoi(sreleaseYear);
-		Movie m(std::get<0>(tpl), std::get<1>(tpl), releaseYear, 0.0f);
-		DatabaseManagement::GetInstance().InsertElement(m); 
-		movie_counter++;
-		if (movie_counter % 1000 == 0)
-			std::cout << "\nInserted " << movie_counter << " values: " << '\n';
+		try {
+			int releaseYear = std::stoi(sreleaseYear);
+			Movie m(std::get<0>(tpl), std::get<1>(tpl), releaseYear, 0.0f);
+			DatabaseManagement::GetInstance().GetStorage().replace(m);
+		}
+		catch (std::invalid_argument e)
+		{
+			Movie m(std::get<0>(tpl), std::get<1>(tpl), -1, 0.0f);
+			DatabaseManagement::GetInstance().GetStorage().replace(m);
+		}
+		id = get<0>(tpl);
+		std::cout << id << '\n';
+		//movie_counter++;
+		//std::cout << movie_counter << '\n';
 	}
 }
 
