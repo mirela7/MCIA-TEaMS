@@ -1,8 +1,11 @@
 cmake_minimum_required (VERSION 3.8)
 
-enable_testing()
 
 find_package(GTest REQUIRED)
+
+enable_testing()
+include(GoogleTest)
+
 
 add_executable(
   testing
@@ -12,5 +15,5 @@ add_executable(
 	PRIVATE GTest::gmock GTest::gtest
 	PUBLIC MCIALib)
 
-include(GoogleTest)
-gtest_discover_tests(testing)
+add_test(testing_t testing)
+# gtest_discover_tests(testing)
