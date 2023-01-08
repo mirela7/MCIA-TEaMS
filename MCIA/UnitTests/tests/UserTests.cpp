@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <DBValidation.h>
+#include <User.h>
 
 TEST(UserTests, Constructor3) {
 	User user(1, "nume", "parola");
