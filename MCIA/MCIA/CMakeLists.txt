@@ -7,9 +7,9 @@ cmake_minimum_required (VERSION 3.8)
 
 find_package(SqliteOrm REQUIRED)
 
-set(CMAKE_PREFIX_PATH $CONDA_PREFIX)
-find_package (PythonLibs REQUIRED)
-message(WARNING ${PYTHON_LIBRARIES})
+# set(CMAKE_PREFIX_PATH $CONDA_PREFIX)
+# find_package (PythonLibs REQUIRED)
+# message(WARNING ${PYTHON_LIBRARIES})
 
 set(wanted_path_source "${CMAKE_CURRENT_SOURCE_DIR}")
 cmake_path(GET wanted_path_source PARENT_PATH PARENT_DIRS)
@@ -62,7 +62,7 @@ message("Where to look for Validator: ${PARENT_DIR}")
 target_link_libraries(MCIA
         PRIVATE sqlite_orm::sqlite_orm
 		PUBLIC Validator
-		PUBLIC ${PYTHON_LIBRARIES}
+		#PUBLIC ${PYTHON_LIBRARIES}
         )
 
 #target_link_directories(MCIA
@@ -71,11 +71,11 @@ target_link_libraries(MCIA
 target_link_libraries(MCIALib
         PRIVATE sqlite_orm::sqlite_orm
 		PUBLIC Validator
-		PRIVATE ${PYTHON_LIBRARIES}
+		#PRIVATE ${PYTHON_LIBRARIES}
         )
 
 # target_link_directories(MCIALib
 #		PRIVATE ${PYTHON_LIBRARIES})
 
 target_include_directories(MCIALib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
-target_include_directories(MCIA PRIVATE ${PYTHON_INCLUDE_DIRS})
+#target_include_directories(MCIA PRIVATE ${PYTHON_INCLUDE_DIRS})
