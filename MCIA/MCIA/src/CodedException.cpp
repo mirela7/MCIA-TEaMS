@@ -11,7 +11,7 @@ CodedException::CodedException(const OperationStatus::Code code, const std::stri
 }
 
 CodedException::CodedException(const std::string& code, const std::string& message)
-	: m_message("[" + code + "] " + message)
+	: m_message("[" + code + "]" + message)
 {
 }
 
