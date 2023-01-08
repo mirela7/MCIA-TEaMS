@@ -4,6 +4,9 @@
 
 /* Entities */
 #include "User.h"
+#include "Answer.h"
+#include "Question.h"
+#include "UserAnswerQuestion.h"
 #include <fstream>
 
 /* Others */
