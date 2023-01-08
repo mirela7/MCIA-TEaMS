@@ -4,7 +4,9 @@
 cmake_minimum_required (VERSION 3.8)
 
 project ("MCIA")
+
 # Include sub-projects.
 add_subdirectory (Validator)
 add_subdirectory ("MCIA")
 add_subdirectory (QT)
+add_subdirectory ("UnitTests")
