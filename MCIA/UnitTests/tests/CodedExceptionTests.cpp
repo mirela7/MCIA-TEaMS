@@ -3,7 +3,7 @@
 
 TEST(CodedExceptionTest, ConstructorCharChar) {
 	CodedException e("cod", "mesaj");
-	EXPECT_STREQ(std::string(e.GetWhat()).c_str(), "[cod]mesaj");
+	EXPECT_STREQ(e.what(), "[cod]mesaj");
 }
 
 TEST(CodedExceptionTest, ConstructorOpStatusString) {
@@ -16,4 +16,14 @@ TEST(CodedExceptionTest, ConstructorStringString) {
 	std::string mesaj = "mesaj";
 	CodedException e(cod, mesaj);
 	EXPECT_STREQ(std::string(e.GetWhat()).c_str(), "[cod]mesaj");
+}
+
+TEST(CodedExceptionTest, GetterCode) {
+	CodedException e("cod", "mesaj");
+	EXPECT_STREQ(e.GetCode().c_str(), "cod");
+}
+
+TEST(CodedExceptionTest, GetterMessage) {
+	CodedException e("cod", "mesaj");
+	EXPECT_STREQ(e.GetMessage().c_str(), "mesaj");
 }
