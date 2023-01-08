@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <User.h>
 
-TEST(UserTests, Constructor3) {
+TEST(UserTest, UserTest) {
 	User user(1, "nume", "parola");
 	EXPECT_EQ(user.GetId(), 1);
 	EXPECT_STREQ(user.GetName().c_str(), "nume");
