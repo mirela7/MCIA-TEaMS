@@ -20,6 +20,7 @@
 RecomSystem/data
 MCIA/QT/out/*
 MCIA/build/*
+MCIA/build-QT-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug/*
 MCIA/.idea/*
 RecomSystem/.idea/*
 # Mono auto generated files
@@ -357,3 +358,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+MCIA/build-QT-Desktop_Qt_6_4_1_MSVC2019_64bit-Debug/.cmake/api/v1/query/cmakeFiles-v1
+MCIA/CMakePresets.json

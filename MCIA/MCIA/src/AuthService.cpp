@@ -2,7 +2,7 @@
 #include <regex>
 #include <sstream>
 
-User* AuthService::m_connectedUser = nullptr;
+std::unique_ptr<User> AuthService::m_connectedUser = nullptr;
 
 
 void AuthService::RegisterUser(User& user)
@@ -17,7 +17,7 @@ void AuthService::RegisterUser(User& user)
 	if (ExistsUserWithUsername(user.GetName()))
 		throw CodedException("username", "A user with this username already exists.");
 	int insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
-	m_connectedUser = new User(user);
+	m_connectedUser = std::make_unique<User>(user);
 	m_connectedUser->SetId(insertedUserId);
 }
 
@@ -180,10 +180,10 @@ void AuthService::LoginUser(User& user)
 {
 	if (user.GetPassword() != DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()).GetPassword())
 		throw CodedException(OperationStatus::Code::DB_USER_INVALID_PASSWORD, "Incorrect password.");
-	m_connectedUser = new User(DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()));
+	m_connectedUser = std::make_unique<User>(DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()));
 }
 
-User AuthService::StartAuthProcess()
+void AuthService::StartAuthProcess()
 {
 	char c;
 	bool isRegistering = false;
@@ -224,8 +224,6 @@ User AuthService::StartAuthProcess()
 			std::cout << e.what() << "\n\n";
 		}
 	}
-
-	return AuthService::GetConnectedUser();
 }
 
 bool AuthService::ExistsUserWithUsername(const std::string& username)
@@ -243,11 +241,16 @@ void AuthService::AuthenticateUser(User& user)
 
 void AuthService::LogOut()
 {
-	delete m_connectedUser;
+	m_connectedUser.release();
 	StartAuthProcess();
+}	
+
+int AuthService::GetConnectedUserId()
+{
+	return m_connectedUser->GetId();
 }
 
-User AuthService::GetConnectedUser()
+std::string AuthService::GetConnectedUserName()
 {
-	return *m_connectedUser;
+	return m_connectedUser->GetName();
 }

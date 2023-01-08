@@ -54,7 +54,7 @@ int main()
 	bool isSearching = false;
 	std::string movieName;
 	DBValidation validate;
-	auto connectedUser = AuthService::StartAuthProcess();
+	AuthService::StartAuthProcess();
 	std::cout << "Now logged in.";
 	while (true)
 	{
@@ -91,7 +91,7 @@ int main()
 				float rating;
 				auto& st = DatabaseManagement::GetInstance().GetStorage();
 
-				user_id = AuthService::GetConnectedUser().GetId();
+				user_id = AuthService::GetConnectedUserId();
 
 				std::cout << "Please enter the id of the movie you want to rate: ";
 				//This checks if the id of the movie to add in watched list exists or not)
@@ -163,7 +163,7 @@ int main()
 				std::string smovie_id; 
 				int movie_id;
 				auto& st = DatabaseManagement::GetInstance().GetStorage();
-				user_id = AuthService::GetConnectedUser().GetId();
+				user_id = AuthService::GetConnectedUserId();
 
 				std::cout << "Please enter the id of the movie you want to add in wishlist: ";
 				//This checks if the id of the movie to add in watched list exists or not)

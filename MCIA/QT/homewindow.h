@@ -15,6 +15,9 @@ public:
     explicit HomeWindow(QWidget *parent = nullptr);
     ~HomeWindow();
 
+private slots:
+    void ProfilBtnClicked();
+
 private:
     Ui::HomeWindow *ui;
 };

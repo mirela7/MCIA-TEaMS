@@ -22,10 +22,11 @@ public:
 	static void AuthenticateUser(User& user);
 	static void LogOut();
 	static bool ExistsUserWithUsername(const std::string& username);
-	static User GetConnectedUser();
-	static User StartAuthProcess();
+	static int GetConnectedUserId();
+	static std::string GetConnectedUserName();
+	static void StartAuthProcess();
 
 private:
-	static User* m_connectedUser;
+	static std::unique_ptr<User> m_connectedUser;
 };
 
