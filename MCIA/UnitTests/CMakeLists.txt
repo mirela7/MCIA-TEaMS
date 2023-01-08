@@ -9,7 +9,9 @@ include(GoogleTest)
 
 add_executable(
   testing
-  tests/UserTests.cpp  Source.cpp)
+  tests/UserTests.cpp  
+  tests/AnswerTests.cpp
+	Source.cpp)
 
  target_link_libraries(testing 
 	PRIVATE GTest::gmock GTest::gtest
