@@ -4,6 +4,7 @@
 class MovieGenre
 {
 public:
+	MovieGenre() = default;
 	MovieGenre(const uint16_t movieId, const uint16_t genreId);
 
 	uint16_t GetMovieId() const;
@@ -12,6 +13,7 @@ public:
 	void SetMovieId(const uint16_t movieId);
 	void SetGenreId(const uint16_t genreId);
 
+	void LinkGenreMovie();
 private:
 	uint16_t m_movieId;
 	uint16_t m_genreId;
