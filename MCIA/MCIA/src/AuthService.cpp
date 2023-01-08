@@ -24,9 +24,60 @@ void AuthService::RegisterUser(User& user)
 void AuthService::RegisterUserProcess(User& user)
 {
 	RegisterUser(user);
-	std::cout << "Welcome " << user.GetName() << " please answer some questions first: \n\n";
-    auto question = DatabaseManagement::GetInstance().GetStorage().get_all<Question>();
+	std::cout << "Welcome " << user.GetName() << " please rate some movies first: \n\n";
+	std::ifstream f("C:\\Users\\Tiberio\\Desktop\\Anul II sem I\\MCIA\\MCIA vs.2\\MCIA-TEaMS\\MCIA\\MCIA\\src\\Questions.txt");
+	uint32_t id_movie;
+	std::string genre, srating;
+	float rating;
+	
+		while (f >> id_movie && f >> genre)
+		{
+			auto movie = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(where(c(&Movie::GetId) == id_movie));
+			std::cout << "For the movie\n";
+			std::cout << movie[0].GetTitle() << " with the most relevant genres: " << genre <<"\n";
+			std::cout << "Please enter the rating between 1 and 5: \n";
+			//This checks if the rating for the movie to add in watched list table is valid or out of range.
+			while (true)
+			{
+				std::cin >> srating;
+				try
+				{
+					size_t maximumRatingValueLenght = 3;
+					if (srating.size() <= maximumRatingValueLenght)
+					{
+						rating = std::stof(srating);
+						if (rating < 1.0f || rating > 5.0f)
+						{
+							std::cout << "\nOut of range rating.\n";
+							std::cout << "Please enter a valid rating value: \n";
+						}
+						else
+							break;
+					}
+					else
+					{
+						std::cout << "\nOut of range rating.\n";
+						std::cout << "Please enter a valid rating value: ";
+					}
+				}
+				catch (std::invalid_argument e)
+				{
+					std::cout << "\nOut of range rating.\n";
+					std::cout << "Please enter a valid rating value: ";
+				}
+			}
 
+			WatchedMovie watchedMovie(m_connectedUser->GetId(),id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
+			try {
+				DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
+			}
+			catch (std::exception e) {
+				std::cout << e.what();
+			}
+
+		}
+
+	/*auto question = DatabaseManagement::GetInstance().GetStorage().get_all<Question>();
 	for (uint16_t index = 0; index < question.size(); index++)
 	{
 		std::cout << "Question number " << index+1 << ":\n";
@@ -53,7 +104,7 @@ void AuthService::RegisterUserProcess(User& user)
 					std::string valstr;
 					std::vector<uint16_t> values;
 					while(iss>>valstr)
-					{	
+					{
 						const uint8_t maxAnswerNumber = 4;
 						if(valstr.size() >= 0 && valstr.size() < maxAnswerNumber)
 						{
@@ -82,7 +133,7 @@ void AuthService::RegisterUserProcess(User& user)
 						UserAnswerQuestion element(m_connectedUser->GetId(), answer[it].GetId(), question[index].GetId());
 						DatabaseManagement::GetInstance().GetStorage().replace(element);
 					}
-					
+
 				}
 				else
 				{
@@ -117,12 +168,12 @@ void AuthService::RegisterUserProcess(User& user)
 						std::cout << "Invalid option please retry\n\nEnter your option: ";
 					}
 			}
-			
+
 			UserAnswerQuestion element(m_connectedUser->GetId(), answer[option].GetId(), question[index].GetId());
 			DatabaseManagement::GetInstance().GetStorage().replace(element);
 		}
-		
-	}
+
+	}*/
 }
 
 void AuthService::LoginUser(User& user)
@@ -169,11 +220,11 @@ User AuthService::StartAuthProcess()
 		catch (CodedException e) {
 			std::cout << e.what() << "\n\n";
 		}
-        catch (std::exception e){
-            std::cout<<e.what()<<"\n\n";
-        }
+		catch (std::exception e) {
+			std::cout << e.what() << "\n\n";
+		}
 	}
-	
+
 	return AuthService::GetConnectedUser();
 }
 
