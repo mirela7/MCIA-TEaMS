@@ -146,7 +146,7 @@ void AuthService::LogOut()
 	StartAuthProcess();
 }	
 
-int AuthService::GetConnectedUserId()
+int AuthService::GetConnectedUserId() // TODO: throw exception if user isnt connected
 {
 	return m_connectedUser->GetId();
 }
