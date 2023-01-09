@@ -10,6 +10,8 @@
 #include "include/WishList.h"
 #include "include/OperationStatusToMessage.h"
 #include "include/OperationStatus.h"
+#include <stdlib.h>
+//#include <Python.h>
 
 using namespace sqlite_orm;
 
@@ -25,6 +27,7 @@ void displayTable(T filter)
 	std::cout << "Navigate table: ";
 	while (std::cin >> ch)
 	{
+		system("CLS");
 		if (ch == 'b')
 			wantedPage = std::max(wantedPage - 1, 0);
 		else if (ch == 'n')
@@ -47,8 +50,8 @@ int main()
 	PyRun_SimpleString("print('Hello din acest fisier')");
 
 	Py_Finalize();*/
-//	OperationStatusToMessage ostm;
-//	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
+	OperationStatusToMessage ostm;
+	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
@@ -200,5 +203,6 @@ int main()
 
 		}
 	}
+	
 	return 0;
 }

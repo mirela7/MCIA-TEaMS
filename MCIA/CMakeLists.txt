@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 3.8)
 
 project ("MCIA")
 enable_testing()
-# set(COVERAGE_FLAGS " -fprofile-arcs -ftest-coverage")
+# set(COVERAGE_FLAGS " -coverage -fprofile-arcs -ftest-coverage")
 # SET(LCOV_COVERAGE_LINK_FLAGS " -lgcov --coverage")
 
 # string(APPEND CMAKE_C_FLAGS "${COVERAGE_FLAGS}")
