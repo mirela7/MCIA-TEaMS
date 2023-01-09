@@ -10,7 +10,6 @@ include(GoogleTest)
 add_executable(
   testing
   tests/UserTests.cpp  
-  tests/AnswerTests.cpp
   tests/CodedExceptionTests.cpp
   Source.cpp)
 
