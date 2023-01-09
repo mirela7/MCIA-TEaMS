@@ -10,7 +10,8 @@
 #include "include/WishList.h"
 #include "include/OperationStatusToMessage.h"
 #include "include/OperationStatus.h"
-#include <Python.h>
+#include <stdlib.h>
+//#include <Python.h>
 
 using namespace sqlite_orm;
 
@@ -26,6 +27,7 @@ void displayTable(T filter)
 	std::cout << "Navigate table: ";
 	while (std::cin >> ch)
 	{
+		system("CLS");
 		if (ch == 'b')
 			wantedPage = std::max(wantedPage - 1, 0);
 		else if (ch == 'n')
@@ -40,21 +42,21 @@ void displayTable(T filter)
 
 int main()
 {
-	Py_Initialize();
+	/*Py_Initialize();
 	PyRun_SimpleString("import os");
 	PyRun_SimpleString("print(\"PYTHONPATH:\", os.environ.get('PYTHONPATH'))");
     PyRun_SimpleString("import data_import");
     PyRun_SimpleString("data_import.test_function()");
 	PyRun_SimpleString("print('Hello din acest fisier')");
 
-	Py_Finalize();
-//	OperationStatusToMessage ostm;
-//	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
-	/*char ch;
+	Py_Finalize();*/
+	OperationStatusToMessage ostm;
+	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
+	char ch;
 	bool isSearching = false;
 	std::string movieName;
 	DBValidation validate;
-	auto connectedUser = AuthService::StartAuthProcess();
+	AuthService::StartAuthProcess();
 	std::cout << "Now logged in.";
 	while (true)
 	{
@@ -91,7 +93,7 @@ int main()
 				float rating;
 				auto& st = DatabaseManagement::GetInstance().GetStorage();
 
-				user_id = AuthService::GetConnectedUser().GetId();
+				user_id = AuthService::GetConnectedUserId();
 
 				std::cout << "Please enter the id of the movie you want to rate: ";
 				//This checks if the id of the movie to add in watched list exists or not)
@@ -163,7 +165,7 @@ int main()
 				std::string smovie_id; 
 				int movie_id;
 				auto& st = DatabaseManagement::GetInstance().GetStorage();
-				user_id = AuthService::GetConnectedUser().GetId();
+				user_id = AuthService::GetConnectedUserId();
 
 				std::cout << "Please enter the id of the movie you want to add in wishlist: ";
 				//This checks if the id of the movie to add in watched list exists or not)
@@ -201,6 +203,6 @@ int main()
 
 		}
 	}
-	*/
+	
 	return 0;
 }

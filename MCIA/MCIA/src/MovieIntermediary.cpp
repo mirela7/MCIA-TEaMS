@@ -1,12 +1,12 @@
 #include "../include/MovieIntermediary.h"
 
-MovieIntermediary::MovieIntermediary(uint16_t id, const std::string& title, const std::string& genre)
+MovieIntermediary::MovieIntermediary(uint32_t id, const std::string& title, const std::string& genre)
 	:m_id(id)
 	,m_title(title)
 	,m_genre(genre)
 {}
 
-void MovieIntermediary::SetId(uint16_t id)
+void MovieIntermediary::SetId(uint32_t id)
 {
 	m_id = id;
 }
@@ -21,7 +21,7 @@ void MovieIntermediary::SetGenre(const std::string& genres)
 	m_genre = genres;
 }
 
-uint16_t MovieIntermediary::GetId() const
+uint32_t MovieIntermediary::GetId() const
 {
 	return m_id;
 }
