@@ -17,17 +17,14 @@ using namespace sqlite_orm;
 
 const int kNmbRows = 10;
 
-/* returns valid { movieId, rating } */
-std::pair<int, float> gatherMovieRatingInfo(const std::vector<Movie>& displayedPage)
+int gatherMovieIdFromUser(const std::vector<Movie>& displayedPage)
 {
 	char ch;
-	std::pair<int, float> movieRatingPair;
+	int movieId;
 	DBValidation validate;
 	std::string inputString;
 
-
 	std::cout << "Please enter the id of the movie you want to rate: ";
-
 	//This checks if the id of the movie to add in watched list exists or not)
 	while (true)
 	{
@@ -37,18 +34,18 @@ std::pair<int, float> gatherMovieRatingInfo(const std::vector<Movie>& displayedP
 			continue;
 		}
 		try {
-			movieRatingPair.first = std::stoi(inputString);
+			movieId = std::stoi(inputString);
 		}
 		catch (std::invalid_argument e) {
 			std::cout << "Please enter a valid id: ";
 			continue;
 		}
 		if (!std::any_of(displayedPage.begin(), displayedPage.end(),
-			[&](const Movie& movie) { return movie.GetId() == movieRatingPair.first; }))
+			[&](const Movie& movie) { return movie.GetId() == movieId; }))
 		{
-			std::cout << "This id doesn't appear to be on this page. Are you sure you want to proceed?\n [y]/[n]: "; 
+			std::cout << "This id doesn't appear to be on this page. Are you sure you want to proceed?\n [y]/[n]: ";
 			std::cin >> ch;
-			if (ch == 'y' && !validate.IdExists<Movie>(movieRatingPair.first) || ch != 'y') {
+			if (ch == 'y' && !validate.IdExists<Movie>(movieId) || ch != 'y') {
 				std::cout << "Please enter a valid id: ";
 			}
 			else break;
@@ -56,6 +53,16 @@ std::pair<int, float> gatherMovieRatingInfo(const std::vector<Movie>& displayedP
 		}
 		break;
 	}
+	return movieId;
+}
+
+/* returns valid { movieId, rating } */
+std::pair<int, float> gatherMovieRatingInfo(const std::vector<Movie>& displayedPage)
+{
+	char ch;
+	std::pair<int, float> movieRatingPair;
+	std::string inputString;
+	movieRatingPair.first = gatherMovieIdFromUser(displayedPage);
 
 	std::cout << "Please enter the rating between 1 and 5: ";
 	//This checks if the rating for the movie to add in watched list table is valid or out of range.
@@ -133,6 +140,20 @@ void displayTable(T filter)
 				}
 			}
 			break;
+		case 'w':
+			{
+				int movieId = gatherMovieIdFromUser(result.results);
+				WishList wishlist(AuthService::GetConnectedUserId(), movieId);
+				try {
+					DatabaseManagement::GetInstance().GetStorage().replace(wishlist);
+					system("CLS");
+					std::cout << "Movie added to watchlist.\n";
+				}
+				catch (std::exception e) {
+					std::cout << e.what();
+				}
+			}
+			break;
 		default:
 			return;
 		}
@@ -199,51 +220,45 @@ Enter an option: ";
 				else displayTable(allFilter);
 			}
 			break;
-		
-		case 'r':
-			{ // <--- same, this scope shouldn't be done like this
-				
-				break;
-			}
 		case 'w':
 			{
-				int user_id;
-				std::string smovie_id; 
-				int movie_id;
-				auto& st = DatabaseManagement::GetInstance().GetStorage();
-				user_id = AuthService::GetConnectedUserId();
+				//int user_id;
+				//std::string smovie_id; 
+				//int movie_id;
+				//auto& st = DatabaseManagement::GetInstance().GetStorage();
+				//user_id = AuthService::GetConnectedUserId();
 
-				std::cout << "Please enter the id of the movie you want to add in wishlist: ";
-				//This checks if the id of the movie to add in watched list exists or not)
-				while (true)
-				{
-					std::cin >> smovie_id;
-					if (smovie_id.size() > 9) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					try {
-						movie_id = std::stoi(smovie_id);
-					}
-					catch (std::invalid_argument e) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					if (!validate.IdExists<Movie>(movie_id)) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					break;
-				}
+				//std::cout << "Please enter the id of the movie you want to add in wishlist: ";
+				////This checks if the id of the movie to add in watched list exists or not)
+				//while (true)
+				//{
+				//	std::cin >> smovie_id;
+				//	if (smovie_id.size() > 9) {
+				//		std::cout << "Please enter a valid id: ";
+				//		continue;
+				//	}
+				//	try {
+				//		movie_id = std::stoi(smovie_id);
+				//	}
+				//	catch (std::invalid_argument e) {
+				//		std::cout << "Please enter a valid id: ";
+				//		continue;
+				//	}
+				//	if (!validate.IdExists<Movie>(movie_id)) {
+				//		std::cout << "Please enter a valid id: ";
+				//		continue;
+				//	}
+				//	break;
+				//}
 
-				WishList wishlist(user_id, movie_id);
-				try {
-					st.replace(wishlist);
-				}
-				catch (std::exception e) {
-					std::cout << e.what();
-				}
-				break;
+				//WishList wishlist(user_id, movie_id);
+				//try {
+				//	st.replace(wishlist);
+				//}
+				//catch (std::exception e) {
+				//	std::cout << e.what();
+				//}
+				//break;
 			}
 			
 		default:
