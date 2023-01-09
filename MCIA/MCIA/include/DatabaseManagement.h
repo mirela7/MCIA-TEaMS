@@ -7,11 +7,8 @@
 
 /* Entities */
 #include "User.h"
-#include "Question.h"
-#include "Answer.h"
 #include "Movie.h"
 #include "MovieIntermediary.h"
-#include "UserAnswerQuestion.h"
 #include "Genre.h"
 #include "WatchedMovie.h"
 #include "WishList.h"
@@ -100,62 +97,6 @@ namespace {
         return el;
     }
 
-    auto make_question_table() {
-
-        static auto el = make_table("questions"
-            , make_column("id", 
-                &Question::GetId,
-                &Question::SetId,
-                primary_key())
-            , make_column("question",
-                &Question::GetQuestion,
-                &Question::SetQuestion)
-            , make_column("mschoice",
-                &Question::GetChoice,
-                &Question::SetChoice)
-        );
-
-        return el;
-    }
-
-    auto make_answer_table() {
-        static auto el = make_table("answers"
-            , make_column("id",
-                &Answer::GetId,
-                &Answer::SetId,
-                primary_key())
-            , make_column("question_id",
-                &Answer::GetQuestionID,
-                &Answer::SetQuestionId)
-            , make_column("answer",
-                &Answer::GetAnswer,
-                &Answer::SetAnswear)
-            , foreign_key(&Answer::GetAnswer).references(&Question::GetId)
-        );
-
-        return el;
-    }
-
-    auto make_user_answer_question_table() {
-        static auto el = make_table("user_answer_question"
-            , make_column("user_id",
-                &UserAnswerQuestion::GetUserId,
-                &UserAnswerQuestion::SetUserId,
-                foreign_key(&UserAnswerQuestion::GetUserId).references(&User::GetId))
-            , make_column("answer_id",
-                &UserAnswerQuestion::GetAnswerId,
-                &UserAnswerQuestion::SetAnswerId,
-              foreign_key(&UserAnswerQuestion::GetAnswerId).references(&Answer::GetId))
-            ,  make_column("question_id",
-                &UserAnswerQuestion::GetQuestionId,
-                &UserAnswerQuestion::SetQuestionId,
-                foreign_key(&UserAnswerQuestion::GetQuestionId).references(&Question::GetId))
-            , primary_key(&UserAnswerQuestion::GetUserId, &UserAnswerQuestion::GetAnswerId, &UserAnswerQuestion::GetQuestionId)
-        );
-
-        return el;
-    }
-
     auto make_watched_movies_table() {
         static auto el = make_table("watched_movie"
             , make_column("user_id",
@@ -196,12 +137,9 @@ namespace {
 
         static auto storage = make_storage("..\\..\\..\\MCIA\\DBtest.db"
             , make_user_table()
-            , make_question_table()
-            , make_answer_table()
             , make_movie_table()
             , make_genre_table()
             , make_movieIntermediary_table()
-            , make_user_answer_question_table()
             , make_watched_movies_table()
             , make_wishlist_table()
             , make_movieGenre_table()
