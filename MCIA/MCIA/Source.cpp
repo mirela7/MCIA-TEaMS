@@ -17,6 +17,81 @@ using namespace sqlite_orm;
 
 const int kNmbRows = 10;
 
+/* returns valid { movieId, rating } */
+std::pair<int, float> gatherMovieRatingInfo(const std::vector<Movie>& displayedPage)
+{
+	char ch;
+	std::pair<int, float> movieRatingPair;
+	DBValidation validate;
+	std::string inputString;
+
+
+	std::cout << "Please enter the id of the movie you want to rate: ";
+
+	//This checks if the id of the movie to add in watched list exists or not)
+	while (true)
+	{
+		std::cin >> inputString;
+		if (inputString.size() > 9) {
+			std::cout << "Please enter a valid id: ";
+			continue;
+		}
+		try {
+			movieRatingPair.first = std::stoi(inputString);
+		}
+		catch (std::invalid_argument e) {
+			std::cout << "Please enter a valid id: ";
+			continue;
+		}
+		if (!std::any_of(displayedPage.begin(), displayedPage.end(),
+			[&](const Movie& movie) { return movie.GetId() == movieRatingPair.first; }))
+		{
+			std::cout << "This id doesn't appear to be on this page. Are you sure you want to proceed?\n [y]/[n]: "; 
+			std::cin >> ch;
+			if (ch == 'y' && !validate.IdExists<Movie>(movieRatingPair.first) || ch != 'y') {
+				std::cout << "Please enter a valid id: ";
+			}
+			else break;
+			continue;
+		}
+		break;
+	}
+
+	std::cout << "Please enter the rating between 1 and 5: ";
+	//This checks if the rating for the movie to add in watched list table is valid or out of range.
+	while (true)
+	{
+		std::cin >> inputString;
+		try
+		{
+			size_t maximumRatingValueLenght = 3;
+			if (inputString.size() <= maximumRatingValueLenght)
+			{
+				movieRatingPair.second = std::stof(inputString);
+				if (movieRatingPair.second < 1.0f || movieRatingPair.second > 5.0f)
+				{
+					std::cout << "Out of range rating.\n";
+					std::cout << "Please enter a valid rating value: ";
+				}
+				else
+					break;
+			}
+			else
+			{
+				std::cout << "Out of range rating.\n";
+				std::cout << "Please enter a valid rating value: ";
+			}
+		}
+		catch (std::invalid_argument e)
+		{
+			std::cout << "Out of range rating.\n";
+			std::cout << "Please enter a valid rating value: ";
+		}
+	}
+	system("CLS");
+	return movieRatingPair;
+}
+
 template<typename T>
 void displayTable(T filter) 
 {
@@ -24,18 +99,40 @@ void displayTable(T filter)
 	int wantedPage = 0;
 	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
 	std::cout << result;
-	std::cout << "Navigate table: ";
+	std::cout << "Navigate table using [b] or [n].\nOther options:\n [r] rate movie\n [w] add to wishlist.\n";
+	std::cout << "Input character: ";
 	while (std::cin >> ch)
 	{
-		system("CLS");
-		if (ch == 'b')
+		switch (ch)
+		{
+		case 'b':
+			system("CLS");
 			wantedPage = std::max(wantedPage - 1, 0);
-		else if (ch == 'n')
+			break;
+		case 'n':
+			system("CLS");
 			wantedPage = std::min(wantedPage + 1, result.nmbPages - 1);
-		else return;
-		auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
+			break;
+		case 'r':
+			{
+				std::pair<int, float> movieIdRating = gatherMovieRatingInfo(result.results);
+				WatchedMovie watchedMovie(AuthService::GetConnectedUserId(), movieIdRating.first, movieIdRating.second);
+				try {
+					DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
+					std::cout << "Movie rating saved.\n";
+				}
+				catch (std::exception e) {
+					std::cout << e.what();
+				}
+			}
+			break;
+		default:
+			return;
+		}
+		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
 		std::cout << result;
-		std::cout << "Navigate table: ";
+		std::cout << "Navigate table using [b] or [n].\nOther options:\n [r] rate movie\n [w] add to wishlist.\n";
+		std::cout << "Input character: ";
 	}
 }
 
@@ -50,18 +147,29 @@ int main()
 	PyRun_SimpleString("print('Hello din acest fisier')");
 
 	Py_Finalize();*/
+
 	OperationStatusToMessage ostm;
-	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
+	//std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
 	DBValidation validate;
+	
 	AuthService::StartAuthProcess();
-	std::cout << "Now logged in.";
+	system("CLS");
+	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
 	while (true)
 	{
-		std::cout << "Please choose where to go : \n[a] all movies browising  [s] search movie by name [r] rate movie  [w] add movie to Wishlist\nEnter option : ";
+		std::cout << "Please choose what to do : \n \
+[a] all movies browising\n \
+[s] search movie by name\n \
+[v] my watched list\n \
+[w] my wishlist\n \
+[r] recommend me something\n \
+[x] Log out.\n\
+Enter an option: ";
 		std::cin >> ch;
+		system("CLS");
 		switch (ch) {
 		case 'a':
 		case 's':
@@ -86,77 +194,7 @@ int main()
 		
 		case 'r':
 			{ // <--- same, this scope shouldn't be done like this
-				int user_id; 
-				std::string smovie_id; 
-				int movie_id;
-				std::string srating; 
-				float rating;
-				auto& st = DatabaseManagement::GetInstance().GetStorage();
-
-				user_id = AuthService::GetConnectedUserId();
-
-				std::cout << "Please enter the id of the movie you want to rate: ";
-				//This checks if the id of the movie to add in watched list exists or not)
-				while (true)
-				{
-					std::cin >> smovie_id;
-					if (smovie_id.size() > 9) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					try {
-						movie_id = std::stoi(smovie_id); // TODO: solve for smovie_id = "12/2"
-					}
-					catch (std::invalid_argument e) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					if (!validate.IdExists<Movie>(movie_id)) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					break;
-				}
-
-				std::cout << "Please enter the rating between 1 and 5: ";
-				//This checks if the rating for the movie to add in watched list table is valid or out of range.
-				while (true)
-				{
-					std::cin >> srating;
-					try
-					{
-						size_t maximumRatingValueLenght = 3;
-						if (srating.size() <= maximumRatingValueLenght)
-						{
-							rating = std::stof(srating);
-							if (rating < 1.0f || rating > 5.0f)
-							{
-								std::cout << "\nOut of range rating.\n";
-								std::cout << "Please enter a valid rating value: ";
-							}
-							else
-								break;
-						}
-						else
-						{
-							std::cout << "\nOut of range rating.\n";
-							std::cout << "Please enter a valid rating value: ";
-						}
-					}
-					catch (std::invalid_argument e)
-					{
-						std::cout << "\nOut of range rating.\n";
-						std::cout << "Please enter a valid rating value: ";
-					}
-				}
-
-				WatchedMovie watchedMovie(user_id, movie_id, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
-				try {
-					st.replace(watchedMovie);
-				}
-				catch (std::exception e) {
-					std::cout << e.what();
-				}
+				
 				break;
 			}
 		case 'w':
@@ -200,7 +238,9 @@ int main()
 				break;
 			}
 			
-
+		default:
+			std::cout << "Invalid option.\n";
+			break;
 		}
 	}
 	
