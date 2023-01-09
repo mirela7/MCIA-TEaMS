@@ -25,7 +25,6 @@ message(WARNING ${base_folder})
 
 set(BACKEND_SOURCES
 		include/NamedAsciiChars.h
-		src/Answer.cpp
 		src/AuthService.cpp
 		src/CodedException.cpp
 		src/DatabaseManagement.cpp
@@ -37,9 +36,7 @@ set(BACKEND_SOURCES
 		src/MovieIntermediary.cpp
 		src/OperationStatus.cpp
 		src/OperationStatusToMessage.cpp
-		src/Question.cpp
 		src/User.cpp
-		src/UserAnswerQuestion.cpp
 		src/WatchedMovie.cpp
 		src/WishList.cpp	)
 
