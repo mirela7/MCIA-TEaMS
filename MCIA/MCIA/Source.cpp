@@ -99,8 +99,8 @@ void displayTable(T filter)
 	int wantedPage = 0;
 	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
 	std::cout << result;
-	std::cout << "Navigate table using [b] or [n].\nOther options:\n [r] rate movie\n [w] add to wishlist.\n";
-	std::cout << "Input character: ";
+	std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist.\n";
+	std::cout << "Input character: "; 
 	while (std::cin >> ch)
 	{
 		switch (ch)
@@ -112,6 +112,13 @@ void displayTable(T filter)
 		case 'n':
 			system("CLS");
 			wantedPage = std::min(wantedPage + 1, result.nmbPages - 1);
+			break;
+		case 'j':
+			std::cout << "Choose page number: ";
+			std::cin >> wantedPage;
+			system("CLS");
+			wantedPage = std::min(wantedPage, result.nmbPages - 1);
+			wantedPage = std::max(wantedPage, 0);
 			break;
 		case 'r':
 			{
@@ -131,7 +138,7 @@ void displayTable(T filter)
 		}
 		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
 		std::cout << result;
-		std::cout << "Navigate table using [b] or [n].\nOther options:\n [r] rate movie\n [w] add to wishlist.\n";
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist.\n";
 		std::cout << "Input character: ";
 	}
 }
@@ -181,6 +188,7 @@ Enter an option: ";
 					isSearching = true;
 					std::cout << "Please enter a movie name: ";
 					std::cin >> movieName;
+					system("CLS");
 				}
 				std::string query = "%" + movieName + "%";
 				auto allFilter = c(&Movie::GetId) >= 0;
