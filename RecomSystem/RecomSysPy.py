@@ -33,3 +33,7 @@ class Recom:
         embedd = return_user_embedding(id)
         return self.__recommend_movies(embedd)
 
+
+rec = Recom()
+ids = rec.recommend_movies_for_user_id(0)
+print(ids)

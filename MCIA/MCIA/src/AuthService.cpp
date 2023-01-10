@@ -1,5 +1,6 @@
 #include "../include/AuthService.h"
 #include <sstream>
+#include <exception>
 
 std::unique_ptr<User> AuthService::m_connectedUser = nullptr;
 
@@ -36,7 +37,7 @@ void AuthService::RegisterUserProcess(User& user)
 	f.open("Questions.txt");
 	if (f.fail() || f.bad()) {
 		DatabaseManagement::GetInstance().GetStorage().rollback();
-		throw std::exception("[ResFileNotOpen] An error occured. Please try again later.\n");
+		throw std::runtime_error("[ResFileNotOpen] An error occured. Please try again later.\n");
 	}
 	uint32_t id_movie;
 	std::string genre, srating;

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sqlite_orm/sqlite_orm.h>
 #include <functional>
+#include <cmath>
 #include <vector>
 #include <tuple>
 
@@ -221,7 +222,7 @@ inline TEntity DatabaseManagement::GetElementByColumnValue(TValue(TEntity::* get
 template<class TEntity, class sqlite_expression>
 inline DBPage<TEntity> DatabaseManagement::PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters)
 {
-    int totalPages = ceil(m_storage.count<TEntity>(where(filters)) * 1.0 / nmbRowsPerPage);
+    int totalPages = std::ceil(m_storage.count<TEntity>(where(filters)) * 1.0 / nmbRowsPerPage);
     auto result = m_storage.get_all<TEntity>(where(filters), limit(nmbRowsPerPage, offset(idxOfPage * nmbRowsPerPage)));
-    return DBPage(result, totalPages, idxOfPage);
+    return DBPage<TEntity>(result, totalPages, idxOfPage);
 }
