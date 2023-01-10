@@ -1,12 +1,9 @@
 #pragma once
 #include <iostream>
 #include <string>
-
-/* Entities */
-#include "User.h"
 #include <fstream>
 
-/* Others */
+#include "User.h"
 #include "DatabaseManagement.h"
 #include "DBValidation.h"
 
@@ -16,7 +13,6 @@ public:
 	static void RegisterUser(User& user);
 	static void RegisterUserProcess(User& user);
 	static void LoginUser(User& user);
-	static void AuthenticateUser(User& user);
 	static void LogOut();
 	static bool ExistsUserWithUsername(const std::string& username);
 	static int GetConnectedUserId();

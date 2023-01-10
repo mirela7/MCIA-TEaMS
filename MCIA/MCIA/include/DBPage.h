@@ -11,7 +11,7 @@ public:
 	DBPage() = default;
 	DBPage(const std::vector<TEntity>& res, int nPages, int nCurrPage);
 
-	const std::vector<TEntity>& GetResults() const;
+	std::vector<TEntity> GetResults() const;
 	int GetNmbPages() const;
 	int GetNmbCurrentPage() const;
 
@@ -61,7 +61,7 @@ DBPage<TEntity>::DBPage(const std::vector<TEntity>& res, int nPages, int nCurrPa
 
 
 template<class TEntity>
-const std::vector<TEntity>& DBPage<TEntity>::GetResults() const
+std::vector<TEntity> DBPage<TEntity>::GetResults() const
 {
 	return m_results;
 }
