@@ -1,4 +1,6 @@
 #include "../include/Validator.h"
+#include <algorithm>
+using namespace std;
 
 bool Validator::IsAlphaNumericOrSpecial(const std::string& string)
 {
