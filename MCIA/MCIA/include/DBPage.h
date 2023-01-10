@@ -3,18 +3,17 @@
 #include <iomanip>
 #include <string>
 #include <vector>
-#include <tuple>
 #include "NamedAsciiChars.h"
 
 template<class TEntity>
 class DBPage {
 public:
 	DBPage() = default;
-	DBPage(const std::vector<TEntity> res, int nPages, int nCurrPage);
+	DBPage(const std::vector<TEntity>& res, int nPages, int nCurrPage);
 
-	std::vector<TEntity>& GetResults();
-	int GetNmbPages();
-	int GetNmbCurrentPage();
+	const std::vector<TEntity>& GetResults() const;
+	int GetNmbPages() const;
+	int GetNmbCurrentPage() const;
 
 	friend std::ostream& operator<<(std::ostream& out, DBPage<TEntity> page)
 	{
@@ -53,7 +52,7 @@ private:
 };
 
 template<class TEntity>
-DBPage<TEntity>::DBPage(const std::vector<TEntity> res, int nPages, int nCurrPage)
+DBPage<TEntity>::DBPage(const std::vector<TEntity>& res, int nPages, int nCurrPage)
 	: m_results(res)
 	, m_nmbPages(nPages)
 	, m_nmbCurrPage(nCurrPage)
@@ -62,19 +61,19 @@ DBPage<TEntity>::DBPage(const std::vector<TEntity> res, int nPages, int nCurrPag
 
 
 template<class TEntity>
-std::vector<TEntity>& DBPage<TEntity>::GetResults()
+const std::vector<TEntity>& DBPage<TEntity>::GetResults() const
 {
 	return m_results;
 }
 
 template<class TEntity>
-int DBPage<TEntity>::GetNmbPages()
+int DBPage<TEntity>::GetNmbPages() const
 {
 	return m_nmbPages;
 }
 
 template<class TEntity>
-int DBPage<TEntity>::GetNmbCurrentPage()
+int DBPage<TEntity>::GetNmbCurrentPage() const
 {
 	return m_nmbCurrPage;
 }

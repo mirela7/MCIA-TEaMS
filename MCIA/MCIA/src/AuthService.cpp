@@ -23,8 +23,14 @@ void AuthService::RegisterUser(User& user)
 void AuthService::RegisterUserProcess(User& user)
 {
 	DatabaseManagement::GetInstance().GetStorage().begin_transaction();
+	try {
+		RegisterUser(user);
+	}
+	catch (CodedException e) {
+		DatabaseManagement::GetInstance().GetStorage().rollback();
+		throw e;
+	}
 
-	RegisterUser(user);
 	std::cout << "Welcome, " << user.GetName() << "! Please rate some movies first: \n\n";
 	std::ifstream f;
 	f.open("Questions.txt");
@@ -114,7 +120,7 @@ void AuthService::StartAuthProcess()
 
 		if (!ExistsUserWithUsername(name))
 		{
-			std::cout << "There is no account with username " + name + ":\n [r] register       [x] back to login\nPlease choose: ";
+			std::cout << "There is no account with username " + name + ":\n [r] register\t[x] back to login\nPlease choose: ";
 			std::cin >> c;
 			if (c == 'x')
 				continue;
@@ -128,7 +134,14 @@ void AuthService::StartAuthProcess()
 			break;
 		}
 		catch (CodedException e) {
-			std::cout << e.what() << "\n\n";
+			DBValidation validate;
+			if (isRegistering) {
+				if (e.GetMessage() == "username")
+					std::cout << validate.UsernameErrorMessage(e.GetCode());
+				else std::cout << validate.PasswordErrorMessage(e.GetCode());
+				std::cout << "\n\nPlease retry:\n";
+			}
+			else std::cout << e.what() << "\n\n";
 		}
 		catch (std::exception e) {
 			std::cout << e.what() << "\n\n";
