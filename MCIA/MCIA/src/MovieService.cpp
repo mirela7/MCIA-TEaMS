@@ -28,3 +28,24 @@ DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(uint32_t user
 	}
 	return DBPage<WatchedMovieDisplayer>(simplifiedPageResults, totalPages, page);
 }
+
+MovieInformationDisplayer MovieService::GetMovieInformations(uint32_t id)
+{
+	/*
+	SELECT *  movie.title, movie.release_year, genre.name FROM movie
+	JOIN movie_genre on movie_genre.movie_id = movie.id
+	JOIN genre on movie_genre.genre_id = genre.id
+	WHERE movie.id = id
+	*/
+	auto informationRows = DatabaseManagement::GetInstance().GetStorage().select(
+		columns(&Movie::GetTitle, &Movie::GetReleaseYear, &Genre::GetName),
+		left_join<MovieGenre>(on(c(&MovieGenre::GetMovieId) == &Movie::GetId)),
+		left_join<Genre>(on(c(&Genre::GetId) == &MovieGenre::GetGenreId)),
+		where(c(&Movie::GetId) == id)
+	);
+	MovieInformationDisplayer movieInfoDisplayer(id, std::get<0>(informationRows[0]), std::get<1>(informationRows[0]));
+	for (auto& row : informationRows) {
+		movieInfoDisplayer.addGenre(std::move(std::get<2>(row)));
+	}
+	return movieInfoDisplayer;
+}

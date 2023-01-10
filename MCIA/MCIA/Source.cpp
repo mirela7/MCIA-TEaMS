@@ -25,8 +25,8 @@ int gatherMovieIdFromUser(const std::vector<T>& displayedPage)
 	DBValidation validate;
 	std::string inputString;
 
-	std::cout << "Please enter the id of the movie you want to rate: ";
-	//This checks if the id of the movie to add in watched list exists or not)
+	std::cout << "Please enter the id of the movie you want to pick: ";
+	//This checks if the id of the movie to pick exists or not)
 	while (true)
 	{
 		std::cin >> inputString;
@@ -142,12 +142,16 @@ std::pair<int, float> gatherMovieRatingInfo(const std::vector<Movie>& displayedP
 template<typename T>
 void displayTable(T filter) 
 {
+	auto showInstructions = []() {
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist.\n [x] back to menu\n";
+		std::cout << "Input character: ";
+	};
+
 	char ch;
 	int wantedPage = 0;
 	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
 	std::cout << result;
-	std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist.\n";
-	std::cout << "Input character: "; 
+	showInstructions();
 	while (std::cin >> ch)
 	{
 		switch (ch)
@@ -194,27 +198,32 @@ void displayTable(T filter)
 				}
 			}
 			break;
-		default:
+		case 'x':
 			system("CLS");
 			return;
+		default:
+			std::cout << "Input character: ";
+			continue;
 		}
 		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
 		std::cout << result;
-		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist.\n";
-		std::cout << "Input character: ";
+		showInstructions();
 	}
 }
 
 void displayWatchedList()
 {
+	auto showInstructions = [](){
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [i] info about movie\n [x] back to menu\n";
+		std::cout << "Input character: ";
+	};
 	MovieService ms;
 	char ch;
 	uint32_t connectedUserId = AuthService::GetConnectedUserId();
 	int wantedPage = 0;
 	auto result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
 	std::cout << result;
-	std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [i] info about movie\n";
-	std::cout << "Input character: ";
+	showInstructions();
 	while (std::cin >> ch)
 	{
 		switch (ch)
@@ -237,15 +246,22 @@ void displayWatchedList()
 		case 'i':
 			{
 				int movieId = gatherMovieIdFromUser(result.GetResults());
+				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
+				std::cout << movieInfo << '\n';
+				showInstructions();
+				continue;
 			}
 			break;
-		default:
+		case 'x':
+			system("CLS");
 			return;
+		default:
+			std::cout << "Input character: ";
+			continue;
 		}
 		result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
 		std::cout << result;
-		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [i] info about movie\n";
-		std::cout << "Input character: ";
+		showInstructions();
 	}
 }
 
