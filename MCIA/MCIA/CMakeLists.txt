@@ -26,18 +26,22 @@ message(WARNING ${base_folder})
 set(BACKEND_SOURCES
 		include/NamedAsciiChars.h
 		src/AuthService.cpp
+		src/MovieService.cpp
 		src/CodedException.cpp
+		src/ConsoleInputController.cpp
 		src/DatabaseManagement.cpp
 		src/DBPage.cpp
 		src/DBValidation.cpp
 		src/Genre.cpp
 		src/Movie.cpp
+		src/MovieInformationDisplayer.cpp
 		src/MovieGenre.cpp
 		src/MovieIntermediary.cpp
 		src/OperationStatus.cpp
 		src/OperationStatusToMessage.cpp
 		src/User.cpp
 		src/WatchedMovie.cpp
+		src/WatchedMovieDisplayer.cpp
 		src/WishList.cpp	)
 
 add_executable (MCIA 

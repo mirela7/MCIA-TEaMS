@@ -8,8 +8,9 @@
 #include "include/Movie.h"
 #include "include/DBValidation.h"
 #include "include/WishList.h"
-#include "include/OperationStatusToMessage.h"
 #include "include/OperationStatus.h"
+#include "include/MovieService.h"
+#include "include/ConsoleInputController.h"
 #include <stdlib.h>
 //#include <Python.h>
 
@@ -18,27 +19,140 @@ using namespace sqlite_orm;
 const int kNmbRows = 10;
 
 template<typename T>
-void displayTable(T filter) 
+void displayTable(T filter, const ConsoleInputController& consoleInputController) 
 {
+	auto showInstructions = []() {
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist.\n [i] info about movie\n [x] back to menu\n";
+		std::cout << "Input character: ";
+	};
+
 	char ch;
 	int wantedPage = 0;
 	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
+	MovieService ms;
 	std::cout << result;
-	std::cout << "Navigate table: ";
+	showInstructions();
 	while (std::cin >> ch)
 	{
-		system("CLS");
-		if (ch == 'b')
+		switch (ch)
+		{
+		case 'b':
+			system("CLS");
 			wantedPage = std::max(wantedPage - 1, 0);
-		else if (ch == 'n')
-			wantedPage = std::min(wantedPage + 1, result.nmbPages - 1);
-		else return;
-		auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
+			break;
+		case 'n':
+			system("CLS");
+			wantedPage = std::min(wantedPage + 1, result.GetNmbPages() - 1);
+			break;
+		case 'j':
+			std::cout << "Choose page number: ";
+			std::cin >> wantedPage;
+			system("CLS");
+			wantedPage = std::min(wantedPage, result.GetNmbPages() - 1);
+			wantedPage = std::max(wantedPage, 0);
+			break;
+		case 'r':
+			{
+				std::pair<int, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults());
+				WatchedMovie watchedMovie(AuthService::GetConnectedUserId(), movieIdRating.first, movieIdRating.second);
+				try {
+					DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
+					std::cout << "Movie rating saved.\n";
+				}
+				catch (std::exception e) {
+					std::cout << e.what();
+				}
+			}
+			break;
+		case 'i':
+			{
+				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
+				std::cout << movieInfo << '\n';
+				showInstructions();
+				continue;
+			}
+			break;
+		case 'w':
+			{
+				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				WishList wishlist(AuthService::GetConnectedUserId(), movieId);
+				try {
+					DatabaseManagement::GetInstance().GetStorage().replace(wishlist);
+					system("CLS");
+					std::cout << "Movie added to watchlist.\n";
+				}
+				catch (std::exception e) {
+					std::cout << e.what();
+				}
+			}
+			break;
+		case 'x':
+			system("CLS");
+			return;
+		default:
+			std::cout << "Input character: ";
+			continue;
+		}
+		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
 		std::cout << result;
-		std::cout << "Navigate table: ";
+		showInstructions();
 	}
 }
 
+void displayWatchedList(const ConsoleInputController& consoleInputController)
+{
+	auto showInstructions = [](){
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [i] info about movie\n [x] back to menu\n";
+		std::cout << "Input character: ";
+	};
+	MovieService ms;
+	char ch;
+	uint32_t connectedUserId = AuthService::GetConnectedUserId();
+	int wantedPage = 0;
+	auto result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
+	std::cout << result;
+	showInstructions();
+	while (std::cin >> ch)
+	{
+		switch (ch)
+		{
+		case 'b':
+			system("CLS");
+			wantedPage = std::max(wantedPage - 1, 0);
+			break;
+		case 'n':
+			system("CLS");
+			wantedPage = std::min(wantedPage + 1, result.GetNmbPages() - 1);
+			break;
+		case 'j':
+			std::cout << "Choose page number: ";
+			std::cin >> wantedPage;
+			system("CLS");
+			wantedPage = std::min(wantedPage, result.GetNmbPages() - 1);
+			wantedPage = std::max(wantedPage, 0);
+			break;
+		case 'i':
+			{
+				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
+				std::cout << movieInfo << '\n';
+				showInstructions();
+				continue;
+			}
+			break;
+		case 'x':
+			system("CLS");
+			return;
+		default:
+			std::cout << "Input character: ";
+			continue;
+		}
+		result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
+		std::cout << result;
+		showInstructions();
+	}
+}
 
 int main()
 {
@@ -50,18 +164,28 @@ int main()
 	PyRun_SimpleString("print('Hello din acest fisier')");
 
 	Py_Finalize();*/
-	OperationStatusToMessage ostm;
-	std::cout << ostm.GetMessage(OperationStatus::F_BLANK, "username");
+
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
 	DBValidation validate;
+	ConsoleInputController consoleInputController;
+	
 	AuthService::StartAuthProcess();
-	std::cout << "Now logged in.";
+	system("CLS");
+	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
 	while (true)
 	{
-		std::cout << "Please choose where to go : \n[a] all movies browising  [s] search movie by name [r] rate movie  [w] add movie to Wishlist\nEnter option : ";
+		std::cout << "Please choose what to do : \n \
+[a] all movies browising\n \
+[s] search movie by name\n \
+[v] my watched list\n \
+[w] my wishlist\n \
+[r] recommend me something\n \
+[x] log out.\n\
+Enter an option: ";
 		std::cin >> ch;
+		system("CLS");
 		switch (ch) {
 		case 'a':
 		case 's':
@@ -73,134 +197,31 @@ int main()
 					isSearching = true;
 					std::cout << "Please enter a movie name: ";
 					std::cin >> movieName;
+					system("CLS");
 				}
 				std::string query = "%" + movieName + "%";
 				auto allFilter = c(&Movie::GetId) >= 0;
 				auto movieNameFilter = like(&Movie::GetTitle, query);
 
 				if (isSearching)
-					displayTable(movieNameFilter);
-				else displayTable(allFilter);
+					displayTable(movieNameFilter, consoleInputController);
+				else displayTable(allFilter, consoleInputController);
 			}
 			break;
-		
-		case 'r':
-			{ // <--- same, this scope shouldn't be done like this
-				int user_id; 
-				std::string smovie_id; 
-				int movie_id;
-				std::string srating; 
-				float rating;
-				auto& st = DatabaseManagement::GetInstance().GetStorage();
-
-				user_id = AuthService::GetConnectedUserId();
-
-				std::cout << "Please enter the id of the movie you want to rate: ";
-				//This checks if the id of the movie to add in watched list exists or not)
-				while (true)
-				{
-					std::cin >> smovie_id;
-					if (smovie_id.size() > 9) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					try {
-						movie_id = std::stoi(smovie_id); // TODO: solve for smovie_id = "12/2"
-					}
-					catch (std::invalid_argument e) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					if (!validate.IdExists<Movie>(movie_id)) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					break;
-				}
-
-				std::cout << "Please enter the rating between 1 and 5: ";
-				//This checks if the rating for the movie to add in watched list table is valid or out of range.
-				while (true)
-				{
-					std::cin >> srating;
-					try
-					{
-						size_t maximumRatingValueLenght = 3;
-						if (srating.size() <= maximumRatingValueLenght)
-						{
-							rating = std::stof(srating);
-							if (rating < 1.0f || rating > 5.0f)
-							{
-								std::cout << "\nOut of range rating.\n";
-								std::cout << "Please enter a valid rating value: ";
-							}
-							else
-								break;
-						}
-						else
-						{
-							std::cout << "\nOut of range rating.\n";
-							std::cout << "Please enter a valid rating value: ";
-						}
-					}
-					catch (std::invalid_argument e)
-					{
-						std::cout << "\nOut of range rating.\n";
-						std::cout << "Please enter a valid rating value: ";
-					}
-				}
-
-				WatchedMovie watchedMovie(user_id, movie_id, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
-				try {
-					st.replace(watchedMovie);
-				}
-				catch (std::exception e) {
-					std::cout << e.what();
-				}
-				break;
-			}
+		case 'v':
+			displayWatchedList(consoleInputController);
+			break;
 		case 'w':
-			{
-				int user_id;
-				std::string smovie_id; 
-				int movie_id;
-				auto& st = DatabaseManagement::GetInstance().GetStorage();
-				user_id = AuthService::GetConnectedUserId();
-
-				std::cout << "Please enter the id of the movie you want to add in wishlist: ";
-				//This checks if the id of the movie to add in watched list exists or not)
-				while (true)
-				{
-					std::cin >> smovie_id;
-					if (smovie_id.size() > 9) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					try {
-						movie_id = std::stoi(smovie_id);
-					}
-					catch (std::invalid_argument e) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					if (!validate.IdExists<Movie>(movie_id)) {
-						std::cout << "Please enter a valid id: ";
-						continue;
-					}
-					break;
-				}
-
-				WishList wishlist(user_id, movie_id);
-				try {
-					st.replace(wishlist);
-				}
-				catch (std::exception e) {
-					std::cout << e.what();
-				}
-				break;
-			}
-			
-
+			/*
+			 * wishlist 
+			 */
+			break;
+		case 'x':
+			AuthService::LogOut();
+			break;
+		default:
+			std::cout << "Invalid option.\n";
+			break;
 		}
 	}
 	

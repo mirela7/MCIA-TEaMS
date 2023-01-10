@@ -11,7 +11,7 @@ OperationStatus::OperationStatus(const std::string& str)
 	m_code = m_conversionMap.at(str);
 }
 
-OperationStatus::Code OperationStatus::GetCode()
+OperationStatus::Code OperationStatus::GetCode() const
 {
 	return m_code;
 }

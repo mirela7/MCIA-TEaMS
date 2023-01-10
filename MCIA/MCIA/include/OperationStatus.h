@@ -5,7 +5,7 @@
 class OperationStatus
 {
 public:
-	enum Code {
+	enum Code : uint8_t {
 		SUCCESS,
 		
 		F_BLANK,
@@ -23,7 +23,7 @@ public:
 	OperationStatus(const Code& c);
 	OperationStatus(const std::string& str);
 
-	Code GetCode();
+	Code GetCode() const;
 
 	bool operator!=(const OperationStatus& cmp);
 	bool operator==(const OperationStatus& cmp);
@@ -31,8 +31,6 @@ public:
 	bool operator==(const bool cmp);
 	operator bool();
 	operator std::string();
-
-	
 	
 private:
 	Code m_code;

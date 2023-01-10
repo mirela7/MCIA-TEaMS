@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sqlite_orm/sqlite_orm.h>
 #include <functional>
+#include <vector>
+#include <tuple>
 
 /* Entities */
 #include "User.h"
