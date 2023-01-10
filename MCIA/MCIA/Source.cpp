@@ -155,6 +155,7 @@ void displayTable(T filter)
 			}
 			break;
 		default:
+			system("CLS");
 			return;
 		}
 		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
@@ -194,7 +195,7 @@ int main()
 [v] my watched list\n \
 [w] my wishlist\n \
 [r] recommend me something\n \
-[x] Log out.\n\
+[x] log out.\n\
 Enter an option: ";
 		std::cin >> ch;
 		system("CLS");
@@ -220,47 +221,19 @@ Enter an option: ";
 				else displayTable(allFilter);
 			}
 			break;
+		case 'v':
+			/*
+			 * watched list
+			 */
+			break;
 		case 'w':
-			{
-				//int user_id;
-				//std::string smovie_id; 
-				//int movie_id;
-				//auto& st = DatabaseManagement::GetInstance().GetStorage();
-				//user_id = AuthService::GetConnectedUserId();
-
-				//std::cout << "Please enter the id of the movie you want to add in wishlist: ";
-				////This checks if the id of the movie to add in watched list exists or not)
-				//while (true)
-				//{
-				//	std::cin >> smovie_id;
-				//	if (smovie_id.size() > 9) {
-				//		std::cout << "Please enter a valid id: ";
-				//		continue;
-				//	}
-				//	try {
-				//		movie_id = std::stoi(smovie_id);
-				//	}
-				//	catch (std::invalid_argument e) {
-				//		std::cout << "Please enter a valid id: ";
-				//		continue;
-				//	}
-				//	if (!validate.IdExists<Movie>(movie_id)) {
-				//		std::cout << "Please enter a valid id: ";
-				//		continue;
-				//	}
-				//	break;
-				//}
-
-				//WishList wishlist(user_id, movie_id);
-				//try {
-				//	st.replace(wishlist);
-				//}
-				//catch (std::exception e) {
-				//	std::cout << e.what();
-				//}
-				//break;
-			}
-			
+			/*
+			 * wishlist 
+			 */
+			break;
+		case 'x':
+			AuthService::LogOut();
+			break;
 		default:
 			std::cout << "Invalid option.\n";
 			break;
