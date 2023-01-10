@@ -155,13 +155,6 @@ bool AuthService::ExistsUserWithUsername(const std::string& username)
 	return !(result.empty());
 }
 
-void AuthService::AuthenticateUser(User& user)
-{
-	if (ExistsUserWithUsername(user.GetName()))
-		LoginUser(user);
-	else RegisterUserProcess(user);
-}
-
 void AuthService::LogOut()
 {
 	m_connectedUser.release();

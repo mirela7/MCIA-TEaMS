@@ -5,7 +5,7 @@
 class OperationStatus
 {
 public:
-	enum Code {
+	enum Code : uint8_t {
 		SUCCESS,
 		
 		F_BLANK,

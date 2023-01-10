@@ -28,6 +28,7 @@ set(BACKEND_SOURCES
 		src/AuthService.cpp
 		src/MovieService.cpp
 		src/CodedException.cpp
+		src/ConsoleInputController.cpp
 		src/DatabaseManagement.cpp
 		src/DBPage.cpp
 		src/DBValidation.cpp

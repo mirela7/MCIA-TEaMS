@@ -10,6 +10,7 @@
 #include "include/WishList.h"
 #include "include/OperationStatus.h"
 #include "include/MovieService.h"
+#include "include/ConsoleInputController.h"
 #include <stdlib.h>
 //#include <Python.h>
 
@@ -17,132 +18,8 @@ using namespace sqlite_orm;
 
 const int kNmbRows = 10;
 
-//TODO discuss moving gather.. to specialized class
-
-template<class T>
-int gatherMovieIdFromUser(const std::vector<T>& displayedPage)
-{
-	char ch;
-	int movieId;
-	DBValidation validate;
-	std::string inputString;
-
-	std::cout << "Please enter the id of the movie you want to pick: ";
-	//This checks if the id of the movie to pick exists or not)
-	while (true)
-	{
-		std::cin >> inputString;
-		if (inputString.size() > 9) {
-			std::cout << "Please enter a valid id: ";
-			continue;
-		}
-		try {
-			movieId = std::stoi(inputString);
-		}
-		catch (std::invalid_argument e) {
-			std::cout << "Please enter a valid id: ";
-			continue;
-		}
-		if (!std::any_of(displayedPage.begin(), displayedPage.end(),
-			[&movieId](const T& movie) { return movie.GetMovieId() == movieId; }))
-		{
-			std::cout << "This id doesn't appear to be on this page. Are you sure you want to proceed?\n [y]/[n]: ";
-			std::cin >> ch;
-			if (ch == 'y' && !validate.IdExists<Movie>(movieId) || ch != 'y') {
-				std::cout << "Please enter a valid id: ";
-			}
-			else break;
-			continue;
-		}
-		break;
-	}
-	return movieId;
-}
-
-int gatherMovieIdFromUser(const std::vector<Movie>& displayedPage)
-{
-	char ch;
-	int movieId;
-	DBValidation validate;
-	std::string inputString;
-
-	std::cout << "Please enter the id of the movie you want to pick: ";
-	//This checks if the id of the movie to pick exists or not)
-	while (true)
-	{
-		std::cin >> inputString;
-		if (inputString.size() > 9) {
-			std::cout << "Please enter a valid id: ";
-			continue;
-		}
-		try {
-			movieId = std::stoi(inputString);
-		}
-		catch (std::invalid_argument e) {
-			std::cout << "Please enter a valid id: ";
-			continue;
-		}
-		if (!std::any_of(displayedPage.begin(), displayedPage.end(),
-			[&](const Movie& movie) { return movie.GetId() == movieId; }))
-		{
-			std::cout << "This id doesn't appear to be on this page. Are you sure you want to proceed?\n [y]/[n]: ";
-			std::cin >> ch;
-			if (ch == 'y' && !validate.IdExists<Movie>(movieId) || ch != 'y') {
-				std::cout << "Please enter a valid id: ";
-			}
-			else break;
-			continue;
-		}
-		break;
-	}
-	return movieId;
-}
-
-/* returns valid { movieId, rating } */
-std::pair<int, float> gatherMovieRatingInfo(const std::vector<Movie>& displayedPage)
-{
-	char ch = 0;
-	std::pair<int, float> movieRatingPair;
-	std::string inputString;
-	movieRatingPair.first = gatherMovieIdFromUser(displayedPage);
-
-	std::cout << "Please enter the rating between 1 and 5: ";
-	//This checks if the rating for the movie to add in watched list table is valid or out of range.
-	while (true)
-	{
-		std::cin >> inputString;
-		try
-		{
-			size_t maximumRatingValueLenght = 3;
-			if (inputString.size() <= maximumRatingValueLenght)
-			{
-				movieRatingPair.second = std::stof(inputString);
-				if (movieRatingPair.second < 1.0f || movieRatingPair.second > 5.0f)
-				{
-					std::cout << "Out of range rating.\n";
-					std::cout << "Please enter a valid rating value: ";
-				}
-				else
-					break;
-			}
-			else
-			{
-				std::cout << "Out of range rating.\n";
-				std::cout << "Please enter a valid rating value: ";
-			}
-		}
-		catch (std::invalid_argument e)
-		{
-			std::cout << "Out of range rating.\n";
-			std::cout << "Please enter a valid rating value: ";
-		}
-	}
-	system("CLS");
-	return movieRatingPair;
-}
-
 template<typename T>
-void displayTable(T filter) 
+void displayTable(T filter, const ConsoleInputController& consoleInputController) 
 {
 	auto showInstructions = []() {
 		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist.\n [i] info about movie\n [x] back to menu\n";
@@ -176,7 +53,7 @@ void displayTable(T filter)
 			break;
 		case 'r':
 			{
-				std::pair<int, float> movieIdRating = gatherMovieRatingInfo(result.GetResults());
+				std::pair<int, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults());
 				WatchedMovie watchedMovie(AuthService::GetConnectedUserId(), movieIdRating.first, movieIdRating.second);
 				try {
 					DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
@@ -189,7 +66,7 @@ void displayTable(T filter)
 			break;
 		case 'i':
 			{
-				int movieId = gatherMovieIdFromUser(result.GetResults());
+				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
 				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
 				std::cout << movieInfo << '\n';
 				showInstructions();
@@ -198,7 +75,7 @@ void displayTable(T filter)
 			break;
 		case 'w':
 			{
-				int movieId = gatherMovieIdFromUser(result.GetResults());
+				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
 				WishList wishlist(AuthService::GetConnectedUserId(), movieId);
 				try {
 					DatabaseManagement::GetInstance().GetStorage().replace(wishlist);
@@ -223,7 +100,7 @@ void displayTable(T filter)
 	}
 }
 
-void displayWatchedList()
+void displayWatchedList(const ConsoleInputController& consoleInputController)
 {
 	auto showInstructions = [](){
 		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [i] info about movie\n [x] back to menu\n";
@@ -257,7 +134,7 @@ void displayWatchedList()
 			break;
 		case 'i':
 			{
-				int movieId = gatherMovieIdFromUser(result.GetResults());
+				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
 				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
 				std::cout << movieInfo << '\n';
 				showInstructions();
@@ -292,6 +169,7 @@ int main()
 	bool isSearching = false;
 	std::string movieName;
 	DBValidation validate;
+	ConsoleInputController consoleInputController;
 	
 	AuthService::StartAuthProcess();
 	system("CLS");
@@ -326,12 +204,12 @@ Enter an option: ";
 				auto movieNameFilter = like(&Movie::GetTitle, query);
 
 				if (isSearching)
-					displayTable(movieNameFilter);
-				else displayTable(allFilter);
+					displayTable(movieNameFilter, consoleInputController);
+				else displayTable(allFilter, consoleInputController);
 			}
 			break;
 		case 'v':
-			displayWatchedList();
+			displayWatchedList(consoleInputController);
 			break;
 		case 'w':
 			/*
