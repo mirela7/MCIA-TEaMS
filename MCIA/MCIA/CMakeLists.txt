@@ -33,6 +33,7 @@ set(BACKEND_SOURCES
 		src/DBValidation.cpp
 		src/Genre.cpp
 		src/Movie.cpp
+		src/MovieInformationDisplayer.cpp
 		src/MovieGenre.cpp
 		src/MovieIntermediary.cpp
 		src/OperationStatus.cpp
