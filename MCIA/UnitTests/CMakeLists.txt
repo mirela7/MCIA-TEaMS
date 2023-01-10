@@ -21,8 +21,7 @@ endif()
 
 add_executable(
   testing
-  tests/UserTests.cpp
-  tests/AnswerTests.cpp
+  tests/UserTests.cpp  
   tests/CodedExceptionTests.cpp
   Source.cpp)
 

@@ -15,17 +15,17 @@ CodedException::CodedException(const std::string& code, const std::string& messa
 {
 }
 
-std::string CodedException::GetCode()
+std::string CodedException::GetCode() const
 {
 	return m_message.substr(1, m_message.find_first_of("]") - 1);
 }
 
-std::string CodedException::GetWhat()
+std::string CodedException::GetWhat() const
 {
 	return std::string(what());
 }
 
-std::string CodedException::GetMessage()
+std::string CodedException::GetMessage() const
 {
 	std::string fullMessage = GetWhat();
 	int lastParanthesesPos = fullMessage.find_last_of("]") + 1;

@@ -18,10 +18,11 @@ public:
 	OperationStatus IdExists(const int id);
 
 private:
-	Validator m_validator;
-	OperationStatusToMessage m_statusToMessage;
 	static const int kMinUsernameLength = 3;
 	static const int kMinPasswordLength = 3;
+private:
+	Validator m_validator;
+	OperationStatusToMessage m_statusToMessage;
 };
 
 template<class T>
