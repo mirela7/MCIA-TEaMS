@@ -15,5 +15,5 @@ uint32_t WatchedMovieDisplayer::GetMovieId() const
 std::ostream& operator<<(std::ostream& g, WatchedMovieDisplayer wmd)
 {
 	g << wmd.m_movieId << " " << wmd.m_movieTitle << " ";
-	return g << std::fixed << std::setprecision(1) << wmd.m_rating << "/5.0\n";
+	return g << std::fixed << std::setprecision(1) << wmd.m_rating << "/5.0";
 }
