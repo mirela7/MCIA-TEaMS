@@ -17,6 +17,8 @@ using namespace sqlite_orm;
 
 const int kNmbRows = 10;
 
+//TODO discuss moving gather.. to specialized class
+
 template<class T>
 int gatherMovieIdFromUser(const std::vector<T>& displayedPage)
 {
@@ -143,13 +145,14 @@ template<typename T>
 void displayTable(T filter) 
 {
 	auto showInstructions = []() {
-		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist.\n [x] back to menu\n";
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist.\n [i] info about movie\n [x] back to menu\n";
 		std::cout << "Input character: ";
 	};
 
 	char ch;
 	int wantedPage = 0;
 	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
+	MovieService ms;
 	std::cout << result;
 	showInstructions();
 	while (std::cin >> ch)
@@ -182,6 +185,15 @@ void displayTable(T filter)
 				catch (std::exception e) {
 					std::cout << e.what();
 				}
+			}
+			break;
+		case 'i':
+			{
+				int movieId = gatherMovieIdFromUser(result.GetResults());
+				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
+				std::cout << movieInfo << '\n';
+				showInstructions();
+				continue;
 			}
 			break;
 		case 'w':
