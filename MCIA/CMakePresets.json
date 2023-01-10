@@ -3,14 +3,20 @@
     "configurePresets": [
       {
         "name": "windows-base",
-        "toolchainFile": "C:\\src\\vcpkg\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
+        "toolchainFile": "C:\\Users\\sorana\\src\\vcpkg\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
         "hidden": true,
         "generator": "Ninja",
         "binaryDir": "${sourceDir}/build/${presetName}",
         "installDir": "${sourceDir}/install/${presetName}",
         "cacheVariables": {
-          "CMAKE_C_COMPILER": "cl.exe",
-          "CMAKE_CXX_COMPILER": "cl.exe"
+          "CMAKE_C_COMPILER": "gcc.exe",
+          "CMAKE_CXX_COMPILER": "g++.exe"
+        },
+        "environment": {
+          "PYTHONHOME": "C:\\Users\\sorana\\.conda\\envs\\recomsys",
+          "PYTHONPATH": "C:\\Users\\sorana\\.conda\\envs\\recomsys;D:\\facultate\\Sem3\\MCIA\\MCIA-TEaMS\\MCIA-TEaMS\\RecomSystem",
+          "PYTHON_INCLUDE_DIR": "C:\\Users\\sorana\\.conda\\envs\\recomsys\\include",
+          "PYTHON_LIBRARY": "C:\\Users\\sorana\\.conda\\envs\\recomsys\\libs"
         },
         "condition": {
           "type": "equals",
