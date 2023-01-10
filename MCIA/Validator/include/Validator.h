@@ -6,7 +6,7 @@
 #define VALIDATION_API _declspec(dllimport)
 #endif
 
-class Validator
+class VALIDATION_API Validator
 {
 public:
 	bool IsAlphaNumericOrSpecial(const std::string& string);
