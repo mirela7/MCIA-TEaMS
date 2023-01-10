@@ -22,59 +22,68 @@ void AuthService::RegisterUser(User& user)
 
 void AuthService::RegisterUserProcess(User& user)
 {
+	DatabaseManagement::GetInstance().GetStorage().begin_transaction();
+
 	RegisterUser(user);
-	std::cout << "Welcome " << user.GetName() << " please rate some movies first: \n\n";
-	std::ifstream f("Questions.txt");
+	std::cout << "Welcome, " << user.GetName() << "! Please rate some movies first: \n\n";
+	std::ifstream f;
+	f.open("Questions.txt");
+	if (f.fail() || f.bad()) {
+		DatabaseManagement::GetInstance().GetStorage().rollback();
+		throw std::exception("[ResFileNotOpen] An error occured. Please try again later.\n");
+	}
 	uint32_t id_movie;
 	std::string genre, srating;
 	float rating;
 	
-		while (f >> id_movie && f >> genre)
+	while (f >> id_movie && f >> genre)
+	{
+		auto movie = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(where(c(&Movie::GetId) == id_movie));
+		std::cout << "For the movie\n";
+		std::cout << movie[0].GetTitle() << " with the most relevant genres: " << genre <<"\n";
+		std::cout << "Please enter the rating between 1 and 5: \n";
+		//This checks if the rating for the movie to add in watched list table is valid or out of range.
+		while (true)
 		{
-			auto movie = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(where(c(&Movie::GetId) == id_movie));
-			std::cout << "For the movie\n";
-			std::cout << movie[0].GetTitle() << " with the most relevant genres: " << genre <<"\n";
-			std::cout << "Please enter the rating between 1 and 5: \n";
-			//This checks if the rating for the movie to add in watched list table is valid or out of range.
-			while (true)
+			std::cin >> srating;
+			try
 			{
-				std::cin >> srating;
-				try
+				size_t maximumRatingValueLenght = 3;
+				if (srating.size() <= maximumRatingValueLenght)
 				{
-					size_t maximumRatingValueLenght = 3;
-					if (srating.size() <= maximumRatingValueLenght)
-					{
-						rating = std::stof(srating);
-						if (rating < 1.0f || rating > 5.0f)
-						{
-							std::cout << "\nOut of range rating.\n";
-							std::cout << "Please enter a valid rating value: \n";
-						}
-						else
-							break;
-					}
-					else
+					rating = std::stof(srating);
+					if (rating < 1.0f || rating > 5.0f)
 					{
 						std::cout << "\nOut of range rating.\n";
-						std::cout << "Please enter a valid rating value: ";
+						std::cout << "Please enter a valid rating value: \n";
 					}
+					else
+						break;
 				}
-				catch (std::invalid_argument e)
+				else
 				{
 					std::cout << "\nOut of range rating.\n";
 					std::cout << "Please enter a valid rating value: ";
 				}
 			}
-
-			WatchedMovie watchedMovie(m_connectedUser->GetId(),id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
-			try {
-				DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
+			catch (std::invalid_argument e)
+			{
+				std::cout << "\nOut of range rating.\n";
+				std::cout << "Please enter a valid rating value: ";
 			}
-			catch (std::exception e) {
-				std::cout << e.what();
-			}
-
 		}
+
+		WatchedMovie watchedMovie(m_connectedUser->GetId(),id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
+		try {
+			DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
+		}
+		catch (std::exception e) {
+			std::cout << e.what();
+			DatabaseManagement::GetInstance().GetStorage().rollback();
+		}
+	}
+	DatabaseManagement::GetInstance().GetStorage().commit();
+	f.close();
 }
 
 void AuthService::LoginUser(User& user)
