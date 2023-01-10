@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <tuple>
 #include "NamedAsciiChars.h"
 
 template<class TEntity>

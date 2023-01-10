@@ -10,6 +10,7 @@
 #include "include/WishList.h"
 #include "include/OperationStatusToMessage.h"
 #include "include/OperationStatus.h"
+#include "include/MovieService.h"
 #include <stdlib.h>
 //#include <Python.h>
 
@@ -222,9 +223,17 @@ Enter an option: ";
 			}
 			break;
 		case 'v':
-			/*
-			 * watched list
-			 */
+			{
+				MovieService ms;
+				try {
+					uint32_t connectedUserId = AuthService::GetConnectedUserId();
+					auto pagedResult = ms.GetWatchedMoviesOfUser(connectedUserId, 0, 20);
+					std::cout << pagedResult;
+				}
+				catch (std::exception e) {
+					std::cout << e.what() << '\n';
+				}
+			}
 			break;
 		case 'w':
 			/*

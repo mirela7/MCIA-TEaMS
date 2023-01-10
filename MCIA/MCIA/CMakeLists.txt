@@ -26,6 +26,7 @@ message(WARNING ${base_folder})
 set(BACKEND_SOURCES
 		include/NamedAsciiChars.h
 		src/AuthService.cpp
+		src/MovieService.cpp
 		src/CodedException.cpp
 		src/DatabaseManagement.cpp
 		src/DBPage.cpp
