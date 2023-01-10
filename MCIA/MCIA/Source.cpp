@@ -64,8 +64,8 @@ int gatherMovieIdFromUser(const std::vector<Movie>& displayedPage)
 	DBValidation validate;
 	std::string inputString;
 
-	std::cout << "Please enter the id of the movie you want to rate: ";
-	//This checks if the id of the movie to add in watched list exists or not)
+	std::cout << "Please enter the id of the movie you want to pick: ";
+	//This checks if the id of the movie to pick exists or not)
 	while (true)
 	{
 		std::cin >> inputString;
@@ -214,6 +214,7 @@ void displayWatchedList()
 	auto result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
 	std::cout << result;
 	std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [i] info about movie\n";
+	std::cout << "Input character: ";
 	while (std::cin >> ch)
 	{
 		switch (ch)
@@ -241,6 +242,10 @@ void displayWatchedList()
 		default:
 			return;
 		}
+		result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
+		std::cout << result;
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [i] info about movie\n";
+		std::cout << "Input character: ";
 	}
 }
 
