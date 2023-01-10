@@ -171,9 +171,6 @@ public:
     template<class TEntity, class sqlite_expression>
     DBPage<TEntity> PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters);
 
-    template<class TEntity, class sqlite_expression>
-    DBPage<TEntity> QueryBasedPagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression statement);
-
 private:
     DatabaseManagement() = default;
     DatabaseManagement(DatabaseManagement&) = delete;
@@ -224,13 +221,4 @@ inline DBPage<TEntity> DatabaseManagement::PagedSelect(const int idxOfPage, cons
     int totalPages = ceil(m_storage.count<TEntity>(where(filters)) * 1.0 / nmbRowsPerPage);
     auto result = m_storage.get_all<TEntity>(where(filters), limit(nmbRowsPerPage, offset(idxOfPage * nmbRowsPerPage)));
     return DBPage(result, totalPages, idxOfPage);
-}
-
-template<class TEntity, class sqlite_expression>
-inline DBPage<TEntity> DatabaseManagement::QueryBasedPagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression statement)
-{
-    //int totalPages = ceil(m_storage.count<TEntity>(query) * 1.0 / nmbRowsPerPage);
-    auto result = m_storage.execute(statement);
-  //  std::vector<TEntity> r;
-   // return DBPage<TEntity>(r, totalPages, idxOfPage);
 }

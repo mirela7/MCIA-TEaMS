@@ -39,6 +39,7 @@ set(BACKEND_SOURCES
 		src/OperationStatusToMessage.cpp
 		src/User.cpp
 		src/WatchedMovie.cpp
+		src/WatchedMovieDisplayer.cpp
 		src/WishList.cpp	)
 
 add_executable (MCIA 

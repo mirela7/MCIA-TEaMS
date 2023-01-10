@@ -1,6 +1,6 @@
 #include "../include/MovieService.h"
 
-DBPage<MovieService::WatchedMovieDisplayed> MovieService::GetWatchedMoviesOfUser(uint32_t userId, int page, int nmbRowsPerPage)
+DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(uint32_t userId, int page, int nmbRowsPerPage)
 {
 	/* SELECT watched_movie.movie_id as mid, watched_movie.user_id as uid, movie.title, genre.name FROM watched_movie
 		JOIN movie ON watched_movie.movie_id = movie.id
@@ -18,7 +18,7 @@ DBPage<MovieService::WatchedMovieDisplayed> MovieService::GetWatchedMoviesOfUser
 		where(c(&WatchedMovie::GetUserId) == userId),
 		limit(nmbRowsPerPage, offset(page * nmbRowsPerPage))
 	);
-	std::vector<MovieService::WatchedMovieDisplayed> simplifiedPageResults;
+	std::vector<WatchedMovieDisplayer> simplifiedPageResults;
 	for (auto& movieTuple : watchedMovies) {
 		simplifiedPageResults.emplace_back(
 			std::move(std::get<0>(movieTuple)),
@@ -26,5 +26,5 @@ DBPage<MovieService::WatchedMovieDisplayed> MovieService::GetWatchedMoviesOfUser
 			std::move(std::get<3>(movieTuple))
 		);
 	}
-	return DBPage<MovieService::WatchedMovieDisplayed>(simplifiedPageResults, totalPages, page);
+	return DBPage<WatchedMovieDisplayer>(simplifiedPageResults, totalPages, page);
 }
