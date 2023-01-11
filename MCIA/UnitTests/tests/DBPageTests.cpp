@@ -2,14 +2,14 @@
 #include <DBPage.h>
 #include <Movie.h>
 
-TEST(DBPageTest, DefaultConstructor) {
+TEST(DBPageTests, DefaultConstructor) {
 	DBPage<Movie> page;
 	EXPECT_EQ(page.GetNmbPages(), 0);
 	EXPECT_EQ(page.GetNmbCurrentPage(), 0);
 	EXPECT_EQ(page.GetResults().size(), 0);
 }
 
-TEST(DBPageTest, Constructor) {
+TEST(DBPageTests, Constructor) {
 	Movie inserted(1, "Title", 2000, 5.0);
 	std::vector<Movie> mv;
 	mv.emplace_back(inserted);
@@ -21,7 +21,7 @@ TEST(DBPageTest, Constructor) {
 	EXPECT_EQ(page.GetResults().at(0).GetId(), inserted.GetId());
 }
 
-TEST(DBPageTest, GetterResults) {
+TEST(DBPageTests, GetterResults) {
 	Movie inserted(1, "Title", 2000, 5.0);
 	std::vector<Movie> mv;
 	mv.emplace_back(inserted);
@@ -31,13 +31,13 @@ TEST(DBPageTest, GetterResults) {
 	EXPECT_EQ(page.GetResults().at(0).GetId(), inserted.GetId());
 }
 
-TEST(DBPageTest, GetterNmbPages) {
+TEST(DBPageTests, GetterNmbPages) {
 	std::vector<Movie> mv;
 	DBPage<Movie> page(mv, 10, 0);
 	EXPECT_EQ(page.GetNmbPages(), 10);
 }
 
-TEST(DBPageTest, GetterCurrentPage) {
+TEST(DBPageTests, GetterCurrentPage) {
 	std::vector<Movie> mv;
 	DBPage<Movie> page(mv, 10, 3);
 	EXPECT_EQ(page.GetNmbCurrentPage(), 3);

@@ -29,6 +29,7 @@ add_executable(
   tests/DBValidationTests.cpp
   tests/MovieIntermediaryTests.cpp
   tests/OperationStatusTests.cpp
+  tests/OperationStatusToMessageTests.cpp
   Source.cpp)
 
  target_link_libraries(testing 
