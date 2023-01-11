@@ -11,7 +11,8 @@
 #include "include/OperationStatus.h"
 #include "include/MovieService.h"
 #include "include/ConsoleInputController.h"
-#include <stdlib.h>
+#include "include/RecomSystem.h"
+#include <cstdlib>
 #include <Python.h>
 
 using namespace sqlite_orm;
@@ -154,54 +155,15 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 	}
 }
 
-void test_python(){
-    int user_id = 1,num_movie_recom=10, batch_size=10;
-    double test=0.0;
-    PyObject* modname; // the name of the module we want to import : RecomSystemRatingBased
-    PyObject* module; // the module
-    PyObject* mdict; // the dictionary of the module
-    PyObject* function; // the function from the module : recommend_movies
-    PyObject* result; // the result of the function : list with id-s of recommended movies
-
-    // init python:
-    Py_Initialize();
-
-    modname = PyUnicode_FromString("RecomSystemRatingBased");
-    module = PyImport_Import(modname); // equivalent of "import RecomSystemRatingBased"
-
-    // does it exist?
-    if(!module){
-        PyErr_Print();
-    }
-
-    mdict = PyModule_GetDict(module);
-    function = PyDict_GetItemString(mdict, "recommend_movies");
-
-    if(!function){
-        std::cout<<"Function does not exist!";
-    }
-
-    result = PyObject_CallFunction(function, "iii", user_id, batch_size, num_movie_recom);
-
-    std::cout<<"Movies' id recommended for "<<user_id<<": ";
-    // is it really a list?
-    if (PyList_Check(result)) {
-        // okay, it's a list
-        for (Py_ssize_t i = 0; i < PyList_Size(result); ++i) {
-            PyObject* next = PyList_GetItem(result, i);
-            double value = PyFloat_AsDouble(next);
-            std::cout<<value<<" ";
-
-        }
-    }
-
-    //TODO: DEALLOCATE MEMORY
-    Py_Finalize();
-}
 int main()
 {
-	test_python();
-/*
+    /*
+	RecomSystem recom;
+    auto vec = recom.getRecommendedMovies(0, 10, 5);
+    for(auto& el: vec)
+        std::cout<<el<<" ";
+		*/
+
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
@@ -252,7 +214,7 @@ Enter an option: ";
 			/*
 			 * wishlist 
 			 */
-		/*	break;
+			break;
 		case 'x':
 			AuthService::LogOut();
 			break;
@@ -261,6 +223,6 @@ Enter an option: ";
 			break;
 		}
 	}
-	*/
+	
 	return 0;
 }

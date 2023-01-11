@@ -10,6 +10,7 @@ find_package(SqliteOrm REQUIRED)
 set(CMAKE_PREFIX_PATH $CONDA_PREFIX)
 find_package (PythonLibs REQUIRED)
 message(STATUS "Found python libraries: ${PYTHON_LIBRARIES}")
+message(STATUS "Found python includeDirs: ${PYTHON_INCLUDE_DIRS}")
 
 set(BACKEND_SOURCES
 		include/NamedAsciiChars.h
@@ -27,6 +28,7 @@ set(BACKEND_SOURCES
 		src/MovieIntermediary.cpp
 		src/OperationStatus.cpp
 		src/OperationStatusToMessage.cpp
+		src/RecomSystem.cpp
 		src/User.cpp
 		src/WatchedMovie.cpp
 		src/WatchedMovieDisplayer.cpp
@@ -52,14 +54,14 @@ message("Where to look for Validator: ${PARENT_DIR}")
 target_link_libraries(MCIA
         PRIVATE sqlite_orm::sqlite_orm
 		PUBLIC Validator
-		 PUBLIC ${PYTHON_LIBRARIES}
+		PUBLIC ${PYTHON_LIBRARIES}
         )
 
 target_link_libraries(MCIALib
         PRIVATE sqlite_orm::sqlite_orm
 		PUBLIC Validator
-		 PRIVATE ${PYTHON_LIBRARIES}
+		PRIVATE ${PYTHON_LIBRARIES}
         )
 
-target_include_directories(MCIALib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
+target_include_directories(MCIALib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/ PRIVATE ${PYTHON_INCLUDE_DIRS})
 target_include_directories(MCIA PRIVATE ${PYTHON_INCLUDE_DIRS})
