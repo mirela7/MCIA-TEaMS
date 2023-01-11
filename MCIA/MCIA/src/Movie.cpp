@@ -83,25 +83,31 @@ void Movie::ParseMovieData()
 
 	std::cout << allMovies.size() << '\n';
 	int movie_counter = 0;
+	uint32_t old_id = 0;
 	uint32_t id = 0;
 	for (auto& tpl : allMovies)
 	{
 		std::string title = get<1>(tpl);
+		std::string parsedTitle = "";
+		for (int index = 0; index < title.size() - 6; index++)
+			parsedTitle.push_back(title[index]);
 		std::string sreleaseYear = "";
 		for (int index = title.size() - 5; index <= title.size() - 2; index++)
 			sreleaseYear.push_back(title[index]);
 		try {
 			int releaseYear = std::stoi(sreleaseYear);
-			Movie m(std::get<0>(tpl), std::get<1>(tpl), releaseYear, 0.0f);
+			Movie m(id++, parsedTitle, releaseYear, 0.0f);
 			DatabaseManagement::GetInstance().GetStorage().replace(m);
 		}
 		catch (std::invalid_argument e)
 		{
 			Movie m(std::get<0>(tpl), std::get<1>(tpl), -1, 0.0f);
 			DatabaseManagement::GetInstance().GetStorage().replace(m);
+
 		}
-		id = get<0>(tpl);
-		std::cout << id << '\n';
+
+		old_id = get<0>(tpl);
+		std::cout << old_id << " " << id << '\n';
 		//movie_counter++;
 		//std::cout << movie_counter << '\n';
 	}
