@@ -1,14 +1,53 @@
 #include "../include/OperationStatus.h"
 
+
+const std::unordered_map<std::string, OperationStatus::Code> OperationStatus::m_conversionMap{
+	  { "Valid", Code::SUCCESS}
+	, { "Blank", Code::F_BLANK }
+	, { "Size", Code::F_SIZE }
+	, { "AlphaNumeric", Code::F_ALPHA_NUMERIC }
+	, { "Trim", Code::F_TRIM }
+	, { "InvalidEntity", Code::DB_INVALID_ENTITY }
+	, { "EntityNotFound", Code::DB_ENTITY_NOT_FOUND }
+	, { "InvalidUser", Code::DB_USER_INVALID_PASSWORD }
+	, { "InvalidId", Code::DB_INVALID_ID }
+};
+
+
 OperationStatus::OperationStatus(const Code& c)
 	: m_code(c)
 {
 
 }
 
-OperationStatus::OperationStatus(const std::string& str)
+std::string OperationStatus::CodeToString(const OperationStatus::Code& code)
 {
-	m_code = m_conversionMap.at(str);
+	switch (code) {
+	case Code::SUCCESS:
+		return "Valid";
+	case Code::F_BLANK:
+		return "Blank";
+	case Code::F_SIZE:
+		return "Size";
+	case Code::F_ALPHA_NUMERIC:
+		return "AlphaNumeric";
+	case Code::F_TRIM:
+		return "Trim";
+	case Code::DB_INVALID_ENTITY:
+		return "InvalidEntity";
+	case Code::DB_ENTITY_NOT_FOUND:
+		return "EntityNotFound";
+	case Code::DB_USER_INVALID_PASSWORD:
+		return "InvalidUser";
+	case Code::DB_INVALID_ID:
+		return "InvalidId";
+	default:
+		return "Err";
+	}
+}
+OperationStatus::Code OperationStatus::StringToCode(const std::string& str)
+{
+	return OperationStatus::m_conversionMap.at(str);
 }
 
 OperationStatus::Code OperationStatus::GetCode() const
@@ -51,26 +90,5 @@ OperationStatus::operator bool()
 
 OperationStatus::operator std::string()
 {
-	switch (m_code) {
-	case Code::SUCCESS:
-		return "Valid";
-	case Code::F_BLANK:
-		return "Blank";
-	case Code::F_SIZE:
-		return "Size";
-	case Code::F_ALPHA_NUMERIC:
-		return "AlphaNumeric";
-	case Code::F_TRIM:
-		return "Trim";
-	case Code::DB_INVALID_ENTITY:
-		return "InvalidEntity";
-	case Code::DB_ENTITY_NOT_FOUND:
-		return "EntityNotFound";
-	case Code::DB_USER_INVALID_PASSWORD:
-		return "InvalidUser";
-	case Code::DB_INVALID_ID:
-		return "InvalidId";
-	default:
-		return "Err";
-	}
+	return OperationStatus::CodeToString(m_code);
 }

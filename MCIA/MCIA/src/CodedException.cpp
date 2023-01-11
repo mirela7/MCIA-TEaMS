@@ -1,23 +1,25 @@
 #include "../include/CodedException.h"
+#include <cstring>
 
 CodedException::CodedException(const char* code, const char* message)
 {
-	m_message = "[" + std::string(code) + "]" + message;
+	m_code = OperationStatus::StringToCode(code);
+	std::string msg = "[" + std::string(code) + "]" + message;
+	m_message = new char[msg.size()];
+	strcpy(m_message, msg.c_str());
 }
 
 CodedException::CodedException(const OperationStatus::Code code, const std::string& message)
 {
-	m_message = "[" + std::string(OperationStatus(code)) + "]" + message;
+	m_code = code;
+	std::string msg = "[" + OperationStatus::CodeToString(code) + "]" + message;
+	m_message = new char[msg.size()];
+	strcpy(m_message, msg.c_str());
 }
 
-CodedException::CodedException(const std::string& code, const std::string& message)
-	: m_message("[" + code + "]" + message)
+OperationStatus::Code CodedException::GetCode() const
 {
-}
-
-std::string CodedException::GetCode() const
-{
-	return m_message.substr(1, m_message.find_first_of("]") - 1);
+	return m_code;
 }
 
 std::string CodedException::GetWhat() const
@@ -34,9 +36,11 @@ std::string CodedException::GetMessage() const
 
 CodedException::~CodedException() noexcept
 {
+	//delete[] m_message;
+	//TODO look into right way to handle memory here
 }
 
 const char* CodedException::what() const noexcept
 {
-	return m_message.c_str();
+	return m_message;
 }
