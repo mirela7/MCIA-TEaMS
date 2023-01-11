@@ -155,7 +155,8 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 }
 
 void test_python(){
-
+    int user_id = 1,num_movie_recom=10, batch_size=10;
+    double test=0.0;
     PyObject* modname; // the name of the module we want to import : RecomSystemRatingBased
     PyObject* module; // the module
     PyObject* mdict; // the dictionary of the module
@@ -186,15 +187,16 @@ void test_python(){
     if(!function){
         std::cout<<"Function does not exist!";
     }
-    PyObject* args = Py_BuildValue("(d)", 2.0);
-    result = PyObject_CallOneArg(function, args);
+    PyObject* userIdArg = Py_BuildValue("i i", user_id, num_movie_recom);
+    PyObject* numMoviesArg = Py_BuildValue("i", num_movie_recom);
+    result = PyObject_CallFunction(function, "ii", user_id, num_movie_recom);
 
     // is it really a list?
     if (PyList_Check(result)) {
         // okay, it's a list
         for (Py_ssize_t i = 0; i < PyList_Size(result); ++i) {
             PyObject* next = PyList_GetItem(result, i);
-            int value = PyFloat_AsDouble(next);
+            double value = PyFloat_AsDouble(next);
             std::cout<<value<<" ";
 
         }

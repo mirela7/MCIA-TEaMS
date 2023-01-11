@@ -24,8 +24,8 @@ def recommend_movies(user_id, num_movie_recom, batch_size):
     return ranklist
 
 
-def dummy_return_function(a):
-    return [1.0, 2.0, 4.0]
+def dummy_return_function(a, b):
+    return [a, b, a]
 
 
 # function to test import in c++
@@ -35,4 +35,4 @@ def test_import_functio():
 
 if __name__ == '__main__':
     # print(recommend_movies(0, 10, 10))
-    print(dummy_return_function('yay'))
+    print(dummy_return_function('yay', 'hello'))
