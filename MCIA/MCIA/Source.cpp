@@ -12,7 +12,7 @@
 #include "include/MovieService.h"
 #include "include/ConsoleInputController.h"
 #include <stdlib.h>
-//#include <Python.h>
+#include <Python.h>
 
 using namespace sqlite_orm;
 
@@ -156,15 +156,15 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 
 int main()
 {
-	/*Py_Initialize();
+	Py_Initialize();
 	PyRun_SimpleString("import os");
-	PyRun_SimpleString("print(\"PYTHONPATH:\", os.environ.get('PYTHONPATH'))");
-    PyRun_SimpleString("import data_import");
-    PyRun_SimpleString("data_import.test_function()");
 	PyRun_SimpleString("print('Hello din acest fisier')");
+	PyRun_SimpleString("print(\"PYTHONPATH:\", os.environ.get('PYTHONPATH'))");
+    PyRun_SimpleString("import RecomSystemRatingBased");
+    PyRun_SimpleString("RecomSystemRatingBased.test_import_functio()");
 
-	Py_Finalize();*/
-
+	Py_Finalize();
+/*
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
@@ -215,7 +215,7 @@ Enter an option: ";
 			/*
 			 * wishlist 
 			 */
-			break;
+		/*	break;
 		case 'x':
 			AuthService::LogOut();
 			break;
@@ -224,6 +224,6 @@ Enter an option: ";
 			break;
 		}
 	}
-	
+	*/
 	return 0;
 }
