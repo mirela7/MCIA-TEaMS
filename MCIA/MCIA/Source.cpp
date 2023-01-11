@@ -166,13 +166,6 @@ void test_python(){
     // init python:
     Py_Initialize();
 
-    // test for consistency in environment:
-    PyRun_SimpleString("import os");
-    PyRun_SimpleString("print('Hello din acest fisier')");
-    PyRun_SimpleString("print(\"PYTHONPATH:\", os.environ.get('PYTHONPATH'))");
-    PyRun_SimpleString("import RecomSystemRatingBased");
-    PyRun_SimpleString("RecomSystemRatingBased.test_import_functio()");
-
     modname = PyUnicode_FromString("RecomSystemRatingBased");
     module = PyImport_Import(modname); // equivalent of "import RecomSystemRatingBased"
 
@@ -187,10 +180,10 @@ void test_python(){
     if(!function){
         std::cout<<"Function does not exist!";
     }
-    PyObject* userIdArg = Py_BuildValue("i i", user_id, num_movie_recom);
-    PyObject* numMoviesArg = Py_BuildValue("i", num_movie_recom);
-    result = PyObject_CallFunction(function, "ii", user_id, num_movie_recom);
 
+    result = PyObject_CallFunction(function, "iii", user_id, num_movie_recom, batch_size);
+
+    std::cout<<"Movies' id recommended for "<<user_id<<": ";
     // is it really a list?
     if (PyList_Check(result)) {
         // okay, it's a list

@@ -24,8 +24,8 @@ def recommend_movies(user_id, num_movie_recom, batch_size):
     return ranklist
 
 
-def dummy_return_function(a, b):
-    return [a, b, a]
+def dummy_return_function(a, b, c):
+    return [a, b, c]
 
 
 # function to test import in c++
