@@ -175,13 +175,13 @@ void test_python(){
     }
 
     mdict = PyModule_GetDict(module);
-    function = PyDict_GetItemString(mdict, "dummy_return_function");
+    function = PyDict_GetItemString(mdict, "recommend_movies");
 
     if(!function){
         std::cout<<"Function does not exist!";
     }
 
-    result = PyObject_CallFunction(function, "iii", user_id, num_movie_recom, batch_size);
+    result = PyObject_CallFunction(function, "iii", user_id, batch_size, num_movie_recom);
 
     std::cout<<"Movies' id recommended for "<<user_id<<": ";
     // is it really a list?
