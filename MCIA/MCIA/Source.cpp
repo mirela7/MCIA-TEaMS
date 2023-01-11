@@ -154,16 +154,58 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 	}
 }
 
-int main()
-{
-	Py_Initialize();
-	PyRun_SimpleString("import os");
-	PyRun_SimpleString("print('Hello din acest fisier')");
-	PyRun_SimpleString("print(\"PYTHONPATH:\", os.environ.get('PYTHONPATH'))");
+void test_python(){
+
+    PyObject* modname; // the name of the module we want to import : RecomSystemRatingBased
+    PyObject* module; // the module
+    PyObject* mdict; // the dictionary of the module
+    PyObject* function; // the function from the module : recommend_movies
+    PyObject* result; // the result of the function : list with id-s of recommended movies
+
+    // init python:
+    Py_Initialize();
+
+    // test for consistency in environment:
+    PyRun_SimpleString("import os");
+    PyRun_SimpleString("print('Hello din acest fisier')");
+    PyRun_SimpleString("print(\"PYTHONPATH:\", os.environ.get('PYTHONPATH'))");
     PyRun_SimpleString("import RecomSystemRatingBased");
     PyRun_SimpleString("RecomSystemRatingBased.test_import_functio()");
 
-	Py_Finalize();
+    modname = PyUnicode_FromString("RecomSystemRatingBased");
+    module = PyImport_Import(modname); // equivalent of "import RecomSystemRatingBased"
+
+    // does it exist?
+    if(!module){
+        PyErr_Print();
+    }
+
+    mdict = PyModule_GetDict(module);
+    function = PyDict_GetItemString(mdict, "dummy_return_function");
+
+    if(!function){
+        std::cout<<"Function does not exist!";
+    }
+    PyObject* args = Py_BuildValue("(d)", 2.0);
+    result = PyObject_CallOneArg(function, args);
+
+    // is it really a list?
+    if (PyList_Check(result)) {
+        // okay, it's a list
+        for (Py_ssize_t i = 0; i < PyList_Size(result); ++i) {
+            PyObject* next = PyList_GetItem(result, i);
+            int value = PyFloat_AsDouble(next);
+            std::cout<<value<<" ";
+
+        }
+    }
+
+    //TODO: DEALLOCATE MEMORY
+    Py_Finalize();
+}
+int main()
+{
+	test_python();
 /*
 	char ch;
 	bool isSearching = false;
