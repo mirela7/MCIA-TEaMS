@@ -9,10 +9,17 @@ class ConsoleInputController {
 public:
 
 	template<class T>
-	int gatherMovieIdFromUser(const std::vector<T>& displayedPage) const;
+	int gatherMovieIdFromUser(const std::vector<T>& displayedPage, std::ostream& out = std::cout, std::istream& in = std::cin) const;
+	
+	std::pair<int, float> gatherMovieRatingInfo(const std::vector<Movie>& displayedPage, std::ostream& out = std::cout, std::istream& in = std::cin) const;
 
-	template <class T>
-	std::pair<int, float> gatherMovieRatingInfo(const std::vector<T>& displayedPage) const;
+public:
+	const std::string OUT_PICK_ID = "Please enter the id of the movie you want to pick: ";
+	const std::string OUT_ASK_VALID_ID = "Please enter a valid id: ";
+	const std::string OUT_ID_NOT_IN_PAGE_CONFIRM = "This id doesn't appear to be on this page. Are you sure you want to proceed?\n [y]/[n]: ";
+	const std::string OUT_PICK_RATING = "Please enter the rating between 1 and 5: ";
+	const std::string OUT_RATING_OUT_OF_RANGE = "Out of range rating.\nPlease enter a valid rating value: ";
+
 };
 
 template<class T>
@@ -59,36 +66,36 @@ std::pair<int, float> ConsoleInputController::gatherMovieRatingInfo(const std::v
 }
 
 template<>
-inline int ConsoleInputController::gatherMovieIdFromUser(const std::vector<Movie>& displayedPage) const
+inline int ConsoleInputController::gatherMovieIdFromUser(const std::vector<Movie>& displayedPage, std::ostream& out, std::istream& in) const
 {
 	char ch;
 	int movieId;
 	DBValidation validate;
 	std::string inputString;
 
-	std::cout << "Please enter the id of the movie you want to pick: ";
+	out << OUT_PICK_ID;
 	//This checks if the id of the movie to pick exists or not)
 	while (true)
 	{
-		std::cin >> inputString;
+		in >> inputString;
 		if (inputString.size() > 9) {
-			std::cout << "Please enter a valid id: ";
+			out << OUT_ASK_VALID_ID;
 			continue;
 		}
 		try {
 			movieId = std::stoi(inputString);
 		}
 		catch (std::invalid_argument e) {
-			std::cout << "Please enter a valid id: ";
+			out << OUT_ASK_VALID_ID;
 			continue;
 		}
 		if (!std::any_of(displayedPage.begin(), displayedPage.end(),
 			[&](const Movie& movie) { return movie.GetId() == movieId; }))
 		{
-			std::cout << "This id doesn't appear to be on this page. Are you sure you want to proceed?\n [y]/[n]: ";
-			std::cin >> ch;
+			out << OUT_ID_NOT_IN_PAGE_CONFIRM;
+			in >> ch;
 			if (ch == 'y' && !validate.IdExists<Movie>(movieId) || ch != 'y') {
-				std::cout << "Please enter a valid id: ";
+				out << OUT_ASK_VALID_ID;
 			}
 			else break;
 			continue;
@@ -99,36 +106,36 @@ inline int ConsoleInputController::gatherMovieIdFromUser(const std::vector<Movie
 }
 
 template<class T>
-int ConsoleInputController::gatherMovieIdFromUser(const std::vector<T>& displayedPage) const
+int ConsoleInputController::gatherMovieIdFromUser(const std::vector<T>& displayedPage, std::ostream& out, std::istream& in) const
 {
 	char ch;
 	int movieId;
 	DBValidation validate;
 	std::string inputString;
 
-	std::cout << "Please enter the id of the movie you want to pick: ";
+	out << OUT_PICK_ID;
 	//This checks if the id of the movie to pick exists or not)
 	while (true)
 	{
-		std::cin >> inputString;
+		in >> inputString;
 		if (inputString.size() > 9) {
-			std::cout << "Please enter a valid id: ";
+			out << OUT_ASK_VALID_ID;
 			continue;
 		}
 		try {
 			movieId = std::stoi(inputString);
 		}
 		catch (std::invalid_argument e) {
-			std::cout << "Please enter a valid id: ";
+			out << OUT_ASK_VALID_ID;
 			continue;
 		}
 		if (!std::any_of(displayedPage.begin(), displayedPage.end(),
 			[&movieId](const T& movie) { return movie.GetMovieId() == movieId; }))
 		{
-			std::cout << "This id doesn't appear to be on this page. Are you sure you want to proceed?\n [y]/[n]: ";
-			std::cin >> ch;
+			out << OUT_ID_NOT_IN_PAGE_CONFIRM;
+			in >> ch;
 			if (ch == 'y' && !validate.IdExists<Movie>(movieId) || ch != 'y') {
-				std::cout << "Please enter a valid id: ";
+				out << OUT_ASK_VALID_ID;
 			}
 			else break;
 			continue;
