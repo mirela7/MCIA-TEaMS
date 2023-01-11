@@ -17,7 +17,6 @@ const std::unordered_map<std::string, OperationStatus::Code> OperationStatus::m_
 OperationStatus::OperationStatus(const Code& c)
 	: m_code(c)
 {
-
 }
 
 std::string OperationStatus::CodeToString(const OperationStatus::Code& code)
