@@ -4,7 +4,6 @@ import tensorflow as tf
 from tensorflow.keras.layers import Input, Embedding, Dot, Dense, Reshape, Concatenate
 from tensorflow.keras import Model, utils
 
-
 def retrieve_model(path):
     return tf.keras.models.load_model('saved_model/first_train')
 
