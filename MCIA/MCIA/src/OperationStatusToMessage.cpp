@@ -1,8 +1,6 @@
 #include "../include/OperationStatusToMessage.h"
 
-OperationStatusToMessage::OperationStatusToMessage()
-{
-	m_codeToMessage = {
+const std::map<OperationStatus::Code, std::string> OperationStatusToMessage::m_codeToMessage = {
 		{OperationStatus::Code::F_BLANK,
 			"Field % cannot be left blank."},
 		{OperationStatus::Code::F_SIZE,
@@ -11,5 +9,8 @@ OperationStatusToMessage::OperationStatusToMessage()
 			"Field % must only contain %."},
 		{OperationStatus::Code::F_TRIM,
 			"Trailing whitespaces are not allowed in %."}
-	};
+};
+
+OperationStatusToMessage::OperationStatusToMessage()
+{
 }

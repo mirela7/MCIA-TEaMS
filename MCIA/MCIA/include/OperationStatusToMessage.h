@@ -17,7 +17,7 @@ private:
 	std::string GetMessageFromBase(std::string& base, T last);
 
 private:
-	std::map<OperationStatus::Code, std::string> m_codeToMessage;
+	static const std::map<OperationStatus::Code, std::string> m_codeToMessage;
 };
 
 template<typename ...Args>
