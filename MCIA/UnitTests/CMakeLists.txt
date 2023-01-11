@@ -26,7 +26,9 @@ add_executable(
   tests/CodedExceptionTests.cpp
   tests/ConsoleInputControllerTests.cpp
   tests/DBPageTests.cpp
-  Source.cpp "tests/DBValidationTests.cpp")
+  tests/DBValidationTests.cpp
+  tests/MovieIntermediaryTests.cpp
+  Source.cpp)
 
  target_link_libraries(testing 
 	PRIVATE GTest::gtest
