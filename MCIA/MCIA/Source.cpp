@@ -55,6 +55,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			{
 				std::pair<int, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults());
 				WatchedMovie watchedMovie(AuthService::GetConnectedUserId(), movieIdRating.first, movieIdRating.second);
+				system("CLS");
 				try {
 					DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
 					std::cout << "Movie rating saved.\n";

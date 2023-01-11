@@ -99,3 +99,28 @@ TEST(ConsoleInputControllerTest, GatherMovieIdInvalidId_Specialized) {
 	gatherMovieIdInvalidId(moviesInPage);
 }
 
+TEST(ConsoleInputControllerTest, GatherMovieRatingInfo) {
+	std::vector<Movie> moviesInPage;
+	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+	ConsoleInputController cic;
+
+	/* input valid id from start; 
+	- try with rating longer than maximumValueLength
+	- try with rating not convertable to float
+	- try with rating not within [1.0, 5.0]
+	- go with valid rating */
+	std::string userInput("1 1234 f12 0.0 4.5");
+	std::string expectedOutput;
+	expectedOutput.append(cic.OUT_PICK_ID);
+	expectedOutput.append(cic.OUT_PICK_RATING);
+	expectedOutput.append(cic.OUT_RATING_OUT_OF_RANGE);
+	expectedOutput.append(cic.OUT_RATING_OUT_OF_RANGE);
+	expectedOutput.append(cic.OUT_RATING_OUT_OF_RANGE);
+
+	std::istringstream inputStream(userInput);
+	std::ostringstream outputStream;
+
+	std::pair<int, float> movieRating = cic.gatherMovieRatingInfo(moviesInPage, outputStream, inputStream);
+	EXPECT_EQ(movieRating.first, 1);
+	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
+}
