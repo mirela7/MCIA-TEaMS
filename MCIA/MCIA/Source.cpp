@@ -157,12 +157,12 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 
 int main()
 {
-    /*
+    
 	RecomSystem recom;
     auto vec = recom.getRecommendedMovies(0, 10, 5);
     for(auto& el: vec)
         std::cout<<el<<" ";
-		*/
+
 
 	char ch;
 	bool isSearching = false;

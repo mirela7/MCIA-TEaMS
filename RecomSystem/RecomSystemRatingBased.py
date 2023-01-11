@@ -16,7 +16,7 @@ def recommend_movies(user_id, batch_size, num_movie_recom):
     map_item_scores = {}
     # users needed for predictions
     users = np.full(batch_size, user_id, dtype='int32')
-    predictions = model.predict([users, np.array(batch_movies)], verbose=1)
+    predictions = model.predict([users, np.array(batch_movies)], verbose=0)
 
     for x in range(batch_size):
         map_item_scores[x] = predictions[x]

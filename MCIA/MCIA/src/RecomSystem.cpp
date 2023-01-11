@@ -45,6 +45,8 @@ std::vector<int> RecomSystem::getRecommendedMovies(int userId, int batchSize, in
 RecomSystem::RecomSystem()
 {
     Py_Initialize();
+    PyRun_SimpleString("import os");
+    PyRun_SimpleString("os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'");
     m_module = GetModule();
     m_function = GetFunctionToRun();
 
