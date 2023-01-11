@@ -18,7 +18,7 @@ OperationStatus DBValidation::IsUsernameValid(const std::string& username)
     return OperationStatus(OperationStatus::Code::SUCCESS);
 }
 
-std::string DBValidation::UsernameErrorMessage(OperationStatus status)
+std::string DBValidation::UsernameErrorMessage(const OperationStatus& status)
 {
     switch (status.GetCode())
     {
@@ -47,7 +47,7 @@ OperationStatus DBValidation::IsPasswordValid(const std::string& password)
     return OperationStatus(OperationStatus::Code::SUCCESS);
 }
 
-std::string DBValidation::PasswordErrorMessage(OperationStatus status)
+std::string DBValidation::PasswordErrorMessage(const OperationStatus& status)
 {
     switch (status.GetCode())
     {

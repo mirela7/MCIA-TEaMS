@@ -15,7 +15,7 @@ public:
 	int GetNmbPages() const;
 	int GetNmbCurrentPage() const;
 
-	friend std::ostream& operator<<(std::ostream& out, DBPage<TEntity> page)
+	friend std::ostream& operator<<(std::ostream& out, const DBPage<TEntity>& page)
 	{
 		const int fieldWidth = 120;
 		std::string displayed_paginator;
@@ -32,7 +32,7 @@ public:
 			displayed_paginator += " [n] ";
 		}
 
-		int parted_size = (fieldWidth - displayed_paginator.size()) / 2;
+		size_t parted_size = (fieldWidth - displayed_paginator.size()) / 2;
 		std::cout << std::setfill((char)NamedAsciiChars::WHITE_BLOCK) << std::setw(parted_size);
 		std::cout << " " << displayed_paginator << " ";
 		std::cout << std::setfill((char)NamedAsciiChars::WHITE_BLOCK) << std::setw(parted_size);
