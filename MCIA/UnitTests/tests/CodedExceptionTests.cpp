@@ -27,3 +27,13 @@ TEST(CodedExceptionTest, GetterMessage) {
 	CodedException e("cod", "mesaj");
 	EXPECT_STREQ(e.GetMessage().c_str(), "mesaj");
 }
+
+TEST(CodedExceptionTest, GetterWhat) {
+	CodedException e("cod", "mesaj");
+	EXPECT_STREQ(e.GetWhat().c_str(), "[cod]mesaj");
+}
+
+TEST(CodedExceptionTest, What) {
+	CodedException e("cod", "mesaj");
+	EXPECT_STREQ(e.what(), "[cod]mesaj");
+}
