@@ -5,7 +5,7 @@ std::pair<int, float> ConsoleInputController::gatherMovieRatingInfo(const std::v
 	char ch = 0;
 	std::pair<int, float> movieRatingPair;
 	std::string inputString;
-	movieRatingPair.first = gatherMovieIdFromUser(displayedPage);
+	movieRatingPair.first = gatherMovieIdFromUser(displayedPage, out, in);
 
 	out << OUT_PICK_RATING;
 	//This checks if the rating for the movie to add in watched list table is valid or out of range.
@@ -14,8 +14,8 @@ std::pair<int, float> ConsoleInputController::gatherMovieRatingInfo(const std::v
 		in >> inputString;
 		try
 		{
-			size_t maximumRatingValueLenght = 3;
-			if (inputString.size() <= maximumRatingValueLenght)
+			size_t maximumRatingValueLength = 3;
+			if (inputString.size() <= maximumRatingValueLength)
 			{
 				movieRatingPair.second = std::stof(inputString);
 				if (movieRatingPair.second < 1.0f || movieRatingPair.second > 5.0f)
@@ -31,6 +31,5 @@ std::pair<int, float> ConsoleInputController::gatherMovieRatingInfo(const std::v
 			out << OUT_RATING_OUT_OF_RANGE;
 		}
 	}
-	system("CLS");
 	return movieRatingPair;
 }
