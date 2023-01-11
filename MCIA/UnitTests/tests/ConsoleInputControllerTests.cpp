@@ -62,44 +62,44 @@ void gatherMovieIdInvalidId(const std::vector<T>& page)
 	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
 }
 
-TEST(ConsoleInputControllerTest, GatherMovieIdSizeInpage_General) {
+TEST(ConsoleInputControllerTests, GatherMovieIdSizeInpage_General) {
 	std::vector<WatchedMovieDisplayer> moviesInPage;
 	moviesInPage.emplace_back(1, 5.0, "TestTitle");
 	gatherMovieIdSizeInpage(moviesInPage);
 }
 
-TEST(ConsoleInputControllerTest, GatherMovieIdSizeInpage_Specialized) {
+TEST(ConsoleInputControllerTests, GatherMovieIdSizeInpage_Specialized) {
 	std::vector<Movie> moviesInPage;
 	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
 	gatherMovieIdSizeInpage(moviesInPage);
 }
 
-TEST(ConsoleInputControllerTest, GatherMovieIdlStoiNotPage_General) {
+TEST(ConsoleInputControllerTests, GatherMovieIdlStoiNotPage_General) {
 	std::vector<WatchedMovieDisplayer> moviesInPage;
 	moviesInPage.emplace_back(1, 5.0, "TestTitle");
 	gatherMovieIdStoiNotPage(moviesInPage);
 }
 
-TEST(ConsoleInputControllerTest, GatherMovieIdStoiNotPage_Specialized) {
+TEST(ConsoleInputControllerTests, GatherMovieIdStoiNotPage_Specialized) {
 	std::vector<Movie> moviesInPage;
 	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
 	gatherMovieIdStoiNotPage(moviesInPage);
 }
 
-TEST(ConsoleInputControllerTest, GatherMovieIdInvalidId_General) {
+TEST(ConsoleInputControllerTests, GatherMovieIdInvalidId_General) {
 	std::vector<WatchedMovieDisplayer> moviesInPage;
 	moviesInPage.emplace_back(1, 5.0, "TestTitle");
 	gatherMovieIdInvalidId(moviesInPage);
 }
 
 
-TEST(ConsoleInputControllerTest, GatherMovieIdInvalidId_Specialized) {
+TEST(ConsoleInputControllerTests, GatherMovieIdInvalidId_Specialized) {
 	std::vector<Movie> moviesInPage;
 	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
 	gatherMovieIdInvalidId(moviesInPage);
 }
 
-TEST(ConsoleInputControllerTest, GatherMovieRatingInfo) {
+TEST(ConsoleInputControllerTests, GatherMovieRatingInfo) {
 	std::vector<Movie> moviesInPage;
 	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
 	ConsoleInputController cic;
