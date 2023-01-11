@@ -59,3 +59,28 @@ TEST(DBValidationTests, PasswordValid) {
 	OperationStatus result = validator.IsPasswordValid(password);
 	EXPECT_EQ(result.GetCode(), OperationStatus::Code::SUCCESS);
 }
+
+TEST(DBValidationTests, UsernameErrorMessage) {
+	DBValidation validator;
+	EXPECT_STREQ(validator.UsernameErrorMessage(OperationStatus::Code::F_BLANK).c_str(),
+		"Field username cannot be left blank.");
+	EXPECT_STREQ(validator.UsernameErrorMessage(OperationStatus::Code::F_TRIM).c_str(),
+		"Trailing whitespaces are not allowed in username.");
+	EXPECT_STREQ(validator.UsernameErrorMessage(OperationStatus::Code::F_SIZE).c_str(),
+		"Field username must be longer than 3 characters.");
+	EXPECT_STREQ(validator.UsernameErrorMessage(OperationStatus::Code::F_ALPHA_NUMERIC).c_str(),
+		"Field username must only contain alpha-numeric characters and must not begin with a digit.");
+	EXPECT_STREQ(validator.UsernameErrorMessage(OperationStatus::Code::SUCCESS).c_str(),
+		"");
+}
+
+TEST(DBValidationTests, PasswordErrorMessage) {
+	DBValidation validator;
+	EXPECT_STREQ(validator.PasswordErrorMessage(OperationStatus::Code::F_BLANK).c_str(),
+		"Field password cannot be left blank.");
+	EXPECT_STREQ(validator.PasswordErrorMessage(OperationStatus::Code::F_SIZE).c_str(),
+		"Field password must be longer than 3 characters.");
+	EXPECT_STREQ(validator.PasswordErrorMessage(OperationStatus::Code::SUCCESS).c_str(),
+		"");
+
+}
