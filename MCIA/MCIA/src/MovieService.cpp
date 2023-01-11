@@ -71,7 +71,7 @@ MovieInformationDisplayer MovieService::GetMovieInformations(uint32_t id)
 	);
 	MovieInformationDisplayer movieInfoDisplayer(id, std::get<0>(informationRows[0]), std::get<1>(informationRows[0]));
 	for (auto& row : informationRows) {
-		movieInfoDisplayer.addGenre(std::move(std::get<2>(row)));
+		movieInfoDisplayer.AddGenre(std::move(std::get<2>(row)));
 	}
 	return movieInfoDisplayer;
 }

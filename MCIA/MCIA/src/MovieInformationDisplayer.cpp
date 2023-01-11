@@ -1,4 +1,7 @@
 #include "../include/MovieInformationDisplayer.h"
+#include <iomanip>
+#include <vector>
+#include <algorithm>
 
 MovieInformationDisplayer::MovieInformationDisplayer(uint32_t id, const std::string& title, const uint16_t releaseYear, const std::string genres)
 	: m_movieId(id)
@@ -8,7 +11,7 @@ MovieInformationDisplayer::MovieInformationDisplayer(uint32_t id, const std::str
 {
 }
 
-void MovieInformationDisplayer::addGenre(const std::string& genre)
+void MovieInformationDisplayer::AddGenre(const std::string& genre)
 {
 	if (m_genres.size() == 0)
 		m_genres = genre;
@@ -17,6 +20,27 @@ void MovieInformationDisplayer::addGenre(const std::string& genre)
 		m_genres.append(genre);
 	}
 }
+
+uint32_t MovieInformationDisplayer::GetMovieId() const
+{
+	return m_movieId;
+}
+
+std::string MovieInformationDisplayer::GetTitle() const
+{
+	return m_title;
+}
+
+uint16_t MovieInformationDisplayer::GetReleaseYear() const
+{
+	return m_releaseYear;
+}
+
+std::string MovieInformationDisplayer::GetGenres() const
+{
+	return m_genres;
+}
+
 
 std::ostream& operator<<(std::ostream& g, MovieInformationDisplayer mid)
 {
