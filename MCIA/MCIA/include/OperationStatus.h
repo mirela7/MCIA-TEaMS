@@ -29,6 +29,8 @@ public:
 	bool operator==(const OperationStatus& cmp);
 	bool operator!=(const bool cmp);
 	bool operator==(const bool cmp);
+
+	OperationStatus& operator=(const OperationStatus& opStatus);
 	operator bool();
 	operator std::string();
 	

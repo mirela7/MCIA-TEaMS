@@ -33,6 +33,12 @@ bool OperationStatus::operator!=(const bool cmp)
     return m_code == Code::SUCCESS;
 }
 
+OperationStatus& OperationStatus::operator=(const OperationStatus& opStatus)
+{
+	m_code = opStatus.m_code;
+	return *this;
+}
+
 bool OperationStatus::operator==(const bool cmp)
 {
     return !(*this != cmp);
