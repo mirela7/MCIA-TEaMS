@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
 #include <ConsoleInputController.h>
 #include <sstream>
+#include <WatchedMovieDisplayer.h>
 
-TEST(ConsoleInputControllerTest, GatherMovieIdSpecializedSizeInpage) {
-	std::vector<Movie> moviesInPage;
-	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+template<typename T>
+void gatherMovieIdSizeInpage(const std::vector<T>& page)
+{
 	ConsoleInputController cic;
 
 	/* expects invalidId due to size, read the next id that exists in page & in db */
@@ -15,15 +16,15 @@ TEST(ConsoleInputControllerTest, GatherMovieIdSpecializedSizeInpage) {
 
 	std::istringstream inputStream(userInput);
 	std::ostringstream outputStream;
-	
-	int validId = cic.gatherMovieIdFromUser(moviesInPage, outputStream, inputStream);
+
+	int validId = cic.gatherMovieIdFromUser(page, outputStream, inputStream);
 	EXPECT_EQ(validId, 1);
 	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
 }
 
-TEST(ConsoleInputControllerTest, GatherMovieIdSpecializedStoiNotPage) {
-	std::vector<Movie> moviesInPage;
-	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+template<typename T>
+void gatherMovieIdStoiNotPage(const std::vector<T>& page)
+{
 	ConsoleInputController cic;
 
 	/* expects invalidId due to stoi exception, id 2 not in page but is valid */
@@ -36,14 +37,14 @@ TEST(ConsoleInputControllerTest, GatherMovieIdSpecializedStoiNotPage) {
 	std::istringstream inputStream(userInput);
 	std::ostringstream outputStream;
 
-	int validId = cic.gatherMovieIdFromUser(moviesInPage, outputStream, inputStream);
+	int validId = cic.gatherMovieIdFromUser(page, outputStream, inputStream);
 	EXPECT_EQ(validId, 2);
 	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
 }
 
-TEST(ConsoleInputControllerTest, GatherMovieIdSpecializedInvalidId) {
-	std::vector<Movie> moviesInPage;
-	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+template<typename T>
+void gatherMovieIdInvalidId(const std::vector<T>& page)
+{
 	ConsoleInputController cic;
 
 	/* expects invalidId due to id not in page or in db */
@@ -56,7 +57,45 @@ TEST(ConsoleInputControllerTest, GatherMovieIdSpecializedInvalidId) {
 	std::istringstream inputStream(userInput);
 	std::ostringstream outputStream;
 
-	int validId = cic.gatherMovieIdFromUser(moviesInPage, outputStream, inputStream);
+	int validId = cic.gatherMovieIdFromUser(page, outputStream, inputStream);
 	EXPECT_EQ(validId, 1);
 	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
 }
+
+TEST(ConsoleInputControllerTest, GatherMovieIdSizeInpage_General) {
+	std::vector<WatchedMovieDisplayer> moviesInPage;
+	moviesInPage.emplace_back(1, 5.0, "TestTitle");
+	gatherMovieIdSizeInpage(moviesInPage);
+}
+
+TEST(ConsoleInputControllerTest, GatherMovieIdSizeInpage_Specialized) {
+	std::vector<Movie> moviesInPage;
+	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+	gatherMovieIdSizeInpage(moviesInPage);
+}
+
+TEST(ConsoleInputControllerTest, GatherMovieIdlStoiNotPage_General) {
+	std::vector<WatchedMovieDisplayer> moviesInPage;
+	moviesInPage.emplace_back(1, 5.0, "TestTitle");
+	gatherMovieIdStoiNotPage(moviesInPage);
+}
+
+TEST(ConsoleInputControllerTest, GatherMovieIdStoiNotPage_Specialized) {
+	std::vector<Movie> moviesInPage;
+	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+	gatherMovieIdStoiNotPage(moviesInPage);
+}
+
+TEST(ConsoleInputControllerTest, GatherMovieIdInvalidId_General) {
+	std::vector<WatchedMovieDisplayer> moviesInPage;
+	moviesInPage.emplace_back(1, 5.0, "TestTitle");
+	gatherMovieIdInvalidId(moviesInPage);
+}
+
+
+TEST(ConsoleInputControllerTest, GatherMovieIdInvalidId_Specialized) {
+	std::vector<Movie> moviesInPage;
+	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+	gatherMovieIdInvalidId(moviesInPage);
+}
+
