@@ -51,7 +51,7 @@ inline int ConsoleInputController::gatherMovieIdFromUser(const std::vector<Movie
 		{
 			out << OUT_ID_NOT_IN_PAGE_CONFIRM;
 			in >> ch;
-			if (ch == 'y' && !validate.IdExists<Movie>(movieId) || ch != 'y') {
+			if (ch == 'y' && !DatabaseManagement::GetInstance().IdExists<Movie>(movieId) || ch != 'y') {
 				out << OUT_ASK_VALID_ID;
 			}
 			else break;
@@ -91,7 +91,7 @@ int ConsoleInputController::gatherMovieIdFromUser(const std::vector<T>& displaye
 		{
 			out << OUT_ID_NOT_IN_PAGE_CONFIRM;
 			in >> ch;
-			if (ch == 'y' && !validate.IdExists<Movie>(movieId) || ch != 'y') {
+			if (ch == 'y' && !DatabaseManagement::GetInstance().IdExists<Movie>(movieId) || ch != 'y') {
 				out << OUT_ASK_VALID_ID;
 			}
 			else break;

@@ -169,6 +169,9 @@ public:
     template<typename T>
     T GetElementById(const int32_t id, bool throwIfNotFound = false);
 
+    template<class T>
+    OperationStatus IdExists(const int id);
+
     template<typename TEntity, typename TValue>
     TEntity GetElementByColumnValue(TValue (TEntity::*getter)() const, TValue value, bool throwIfNotFound = true);
 
@@ -207,6 +210,15 @@ inline T DatabaseManagement::GetElementById(const int32_t id, bool throwIfNotFou
         if (throwIfNotFound) throw e;
         return nullptr;
     };
+}
+
+template<class T>
+inline OperationStatus DatabaseManagement::IdExists(const int id)
+{
+    auto search_element = m_storage.get_all<T>(where(c(&T::GetId) == id));
+    if (!search_element.size())
+        return OperationStatus::DB_INVALID_ID;
+    return OperationStatus::SUCCESS;
 }
 
 template<typename TEntity, typename TValue>

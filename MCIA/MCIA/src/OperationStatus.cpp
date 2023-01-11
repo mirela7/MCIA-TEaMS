@@ -7,6 +7,7 @@ const std::unordered_map<std::string, OperationStatus::Code> OperationStatus::m_
 	, { "Size", Code::F_SIZE }
 	, { "AlphaNumeric", Code::F_ALPHA_NUMERIC }
 	, { "Trim", Code::F_TRIM }
+	, { "InvalidPattern", Code::F_INVALID_PATTERN }
 	, { "InvalidEntity", Code::DB_INVALID_ENTITY }
 	, { "EntityNotFound", Code::DB_ENTITY_NOT_FOUND }
 	, { "InvalidUser", Code::DB_USER_INVALID_PASSWORD }
@@ -32,6 +33,8 @@ std::string OperationStatus::CodeToString(const OperationStatus::Code& code)
 		return "AlphaNumeric";
 	case Code::F_TRIM:
 		return "Trim";
+	case Code::F_INVALID_PATTERN:
+		return "InvalidPattern";
 	case Code::DB_INVALID_ENTITY:
 		return "InvalidEntity";
 	case Code::DB_ENTITY_NOT_FOUND:

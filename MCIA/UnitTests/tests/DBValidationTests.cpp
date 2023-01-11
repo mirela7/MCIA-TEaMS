@@ -53,9 +53,29 @@ TEST(DBValidationTests, PasswordSize) {
 	EXPECT_EQ(result.GetCode(), OperationStatus::Code::F_SIZE);
 }
 
+TEST(DBValidationTests, PasswordRegex) {
+	DBValidation validator;
+	std::string password("a12");
+	OperationStatus result = validator.IsPasswordValid(password);
+	EXPECT_EQ(result.GetCode(), OperationStatus::Code::F_INVALID_PATTERN);
+	
+	result = validator.IsPasswordValid("aaa@!");
+	EXPECT_EQ(result.GetCode(), OperationStatus::Code::F_INVALID_PATTERN);
+
+	result = validator.IsPasswordValid("aaaaa");
+	EXPECT_EQ(result.GetCode(), OperationStatus::Code::F_INVALID_PATTERN);
+
+	result = validator.IsPasswordValid("!!!!");
+	EXPECT_EQ(result.GetCode(), OperationStatus::Code::F_INVALID_PATTERN);
+
+	result = validator.IsPasswordValid("11111");
+	EXPECT_EQ(result.GetCode(), OperationStatus::Code::F_INVALID_PATTERN);
+}
+
+
 TEST(DBValidationTests, PasswordValid) {
 	DBValidation validator;
-	std::string password("parola");
+	std::string password("parola!1");
 	OperationStatus result = validator.IsPasswordValid(password);
 	EXPECT_EQ(result.GetCode(), OperationStatus::Code::SUCCESS);
 }
@@ -80,6 +100,8 @@ TEST(DBValidationTests, PasswordErrorMessage) {
 		"Field password cannot be left blank.");
 	EXPECT_STREQ(validator.PasswordErrorMessage(OperationStatus::Code::F_SIZE).c_str(),
 		"Field password must be longer than 3 characters.");
+	EXPECT_STREQ(validator.PasswordErrorMessage(OperationStatus::Code::F_INVALID_PATTERN).c_str(),
+		"Invalid pattern. Field password must contain at least:\n- one digit; \n- one letter; \n- one special character (!@#$%^&*).");
 	EXPECT_STREQ(validator.PasswordErrorMessage(OperationStatus::Code::SUCCESS).c_str(),
 		"");
 

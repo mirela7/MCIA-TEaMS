@@ -1,5 +1,9 @@
 #include "../include/DBValidation.h"
 
+/* looks ahead for at least one digit, at least one special character, at least a letter */
+const std::regex DBValidation::kPasswordRegex("^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).*$");
+const std::string DBValidation::kPasswordRegexMessage = "contain at least:\n- one digit; \n- one letter; \n- one special character (!@#$%^&*)";
+
 OperationStatus DBValidation::IsUsernameValid(const std::string& username)
 {
 
@@ -38,6 +42,8 @@ OperationStatus DBValidation::IsPasswordValid(const std::string& password)
         return OperationStatus(OperationStatus::Code::F_BLANK);
     if (password.size() < kMinPasswordLength)
         return OperationStatus(OperationStatus::Code::F_SIZE);
+    if (!std::regex_match(password, kPasswordRegex))
+        return OperationStatus(OperationStatus::Code::F_INVALID_PATTERN);
     return OperationStatus(OperationStatus::Code::SUCCESS);
 }
 
@@ -49,6 +55,8 @@ std::string DBValidation::PasswordErrorMessage(OperationStatus status)
         return m_statusToMessage.GetMessage(status.GetCode(), "password");
     case OperationStatus::Code::F_SIZE:
         return m_statusToMessage.GetMessage(status.GetCode(), "password", kMinPasswordLength);
+    case OperationStatus::Code::F_INVALID_PATTERN:
+        return m_statusToMessage.GetMessage(status.GetCode(), "password", DBValidation::kPasswordRegexMessage);
     default:
         return "";
     }

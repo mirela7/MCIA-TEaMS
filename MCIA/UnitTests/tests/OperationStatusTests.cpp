@@ -20,6 +20,7 @@ TEST(OperationStatusTests, CodeToString) {
 	EXPECT_STREQ(OperationStatus::CodeToString(OpCode::F_SIZE).c_str(), "Size");
 	EXPECT_STREQ(OperationStatus::CodeToString(OpCode::F_ALPHA_NUMERIC).c_str(), "AlphaNumeric");
 	EXPECT_STREQ(OperationStatus::CodeToString(OpCode::F_TRIM).c_str(), "Trim");
+	EXPECT_STREQ(OperationStatus::CodeToString(OpCode::F_INVALID_PATTERN).c_str(), "InvalidPattern");
 
 	EXPECT_STREQ(OperationStatus::CodeToString(OpCode::DB_INVALID_ENTITY).c_str(), "InvalidEntity");
 	EXPECT_STREQ(OperationStatus::CodeToString(OpCode::DB_ENTITY_NOT_FOUND).c_str(), "EntityNotFound");
@@ -53,7 +54,7 @@ TEST(OperationStatusTests, CmpToBool) {
 TEST(OperationStatusTests, BoolConverter) {
 	OperationStatus o(OpCode::SUCCESS);
 	EXPECT_TRUE(bool(o) == true);
-	for (int i = 2; i <= 9; ++i) { // TODO find a better way to get how many elements enum stores
+	for (int i = 2; i <= 10; ++i) { // TODO find a better way to get how many elements enum stores
 		OperationStatus o(static_cast<OpCode>(i));
 		EXPECT_FALSE(bool(o) == true);
 	}
@@ -70,7 +71,7 @@ TEST(OperationStatusTests, EqualOperator) {
 }
 
 TEST(OperationStatusTests, StringConverter) {
-	for (int i = 1; i <= 9; ++i) {
+	for (int i = 1; i <= 10; ++i) {
 		OperationStatus o(static_cast<OpCode>(i));
 		EXPECT_STREQ(OperationStatus::CodeToString(o.GetCode()).c_str(), std::string(o).c_str());
 	}
