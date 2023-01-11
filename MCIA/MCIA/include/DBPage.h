@@ -8,7 +8,7 @@
 template<class TEntity>
 class DBPage {
 public:
-	DBPage() = default;
+	DBPage();
 	DBPage(const std::vector<TEntity>& res, int nPages, int nCurrPage);
 
 	std::vector<TEntity> GetResults() const;
@@ -50,6 +50,15 @@ private:
 	int m_nmbCurrPage;
 
 };
+
+
+template<class TEntity>
+inline DBPage<TEntity>::DBPage()
+	: m_results()
+	, m_nmbPages(0)
+	, m_nmbCurrPage(0)
+{
+}
 
 template<class TEntity>
 DBPage<TEntity>::DBPage(const std::vector<TEntity>& res, int nPages, int nCurrPage)
