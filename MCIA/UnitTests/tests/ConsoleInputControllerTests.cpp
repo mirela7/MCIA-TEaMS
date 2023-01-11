@@ -20,3 +20,43 @@ TEST(ConsoleInputControllerTest, GatherMovieIdSpecializedSizeInpage) {
 	EXPECT_EQ(validId, 1);
 	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
 }
+
+TEST(ConsoleInputControllerTest, GatherMovieIdSpecializedStoiNotPage) {
+	std::vector<Movie> moviesInPage;
+	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+	ConsoleInputController cic;
+
+	/* expects invalidId due to stoi exception, id 2 not in page but is valid */
+	std::string userInput("s 2 y 1");
+	std::string expectedOutput;
+	expectedOutput.append(cic.OUT_PICK_ID);
+	expectedOutput.append(cic.OUT_ASK_VALID_ID);
+	expectedOutput.append(cic.OUT_ID_NOT_IN_PAGE_CONFIRM);
+
+	std::istringstream inputStream(userInput);
+	std::ostringstream outputStream;
+
+	int validId = cic.gatherMovieIdFromUser(moviesInPage, outputStream, inputStream);
+	EXPECT_EQ(validId, 2);
+	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
+}
+
+TEST(ConsoleInputControllerTest, GatherMovieIdSpecializedInvalidId) {
+	std::vector<Movie> moviesInPage;
+	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+	ConsoleInputController cic;
+
+	/* expects invalidId due to id not in page or in db */
+	std::string userInput("0 y 1 4");
+	std::string expectedOutput;
+	expectedOutput.append(cic.OUT_PICK_ID);
+	expectedOutput.append(cic.OUT_ID_NOT_IN_PAGE_CONFIRM);
+	expectedOutput.append(cic.OUT_ASK_VALID_ID);
+
+	std::istringstream inputStream(userInput);
+	std::ostringstream outputStream;
+
+	int validId = cic.gatherMovieIdFromUser(moviesInPage, outputStream, inputStream);
+	EXPECT_EQ(validId, 1);
+	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
+}
