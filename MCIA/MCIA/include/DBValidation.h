@@ -11,9 +11,9 @@ class DBValidation
 {
 public:
 	OperationStatus IsUsernameValid(const std::string& username);
-	std::string UsernameErrorMessage(OperationStatus status);
+	std::string UsernameErrorMessage(const OperationStatus& status);
 	OperationStatus IsPasswordValid(const std::string& password);
-	std::string PasswordErrorMessage(OperationStatus status);
+	std::string PasswordErrorMessage(const OperationStatus& status);
 
 private:
 	static const int kMinUsernameLength = 3;

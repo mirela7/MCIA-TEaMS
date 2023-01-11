@@ -8,7 +8,7 @@ DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(uint32_t user
 		JOIN genre on movie_genre.genre_id = genre.id
 		WHERE user_id = userId */
 
-	int totalPages = std::ceil(DatabaseManagement::GetInstance().GetStorage().count<WatchedMovie>(
+	int totalPages = (int) std::ceil(DatabaseManagement::GetInstance().GetStorage().count<WatchedMovie>(
 		where(c(&WatchedMovie::GetUserId) == userId)) * 1.0 / nmbRowsPerPage
 	);
 

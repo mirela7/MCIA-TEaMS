@@ -1,7 +1,14 @@
 #include "../include/Movie.h"
 #include "../include/DatabaseManagement.h"
 
-Movie::Movie(const uint32_t id, const std::string& title, const uint16_t releaseYear)
+Movie::Movie()
+	:m_id(0)
+	, m_title()
+	, m_releaseYear(0)
+	, m_rating()
+{}
+
+Movie::Movie(const uint32_t id, const std::string& title, const uint16_t releaseYear, const float rating)
 	: m_id(id)
 	, m_title(title)
 	, m_releaseYear(releaseYear)
@@ -79,7 +86,7 @@ void Movie::ParseMovieData()
 		for (int index = 0; index < title.size() - 6; index++)
 			parsedTitle.push_back(title[index]);
 		std::string sreleaseYear = "";
-		for (int index = title.size() - 5; index <= title.size() - 2; index++)
+		for (size_t index = title.size() - 5; index <= title.size() - 2; index++)
 			sreleaseYear.push_back(title[index]);
 		try {
 			int releaseYear = std::stoi(sreleaseYear);
