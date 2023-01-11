@@ -25,7 +25,7 @@ std::string DBValidation::UsernameErrorMessage(OperationStatus status)
     case OperationStatus::Code::F_SIZE:
         return m_statusToMessage.GetMessage(status.GetCode(), "username", kMinUsernameLength);
     case OperationStatus::Code::F_ALPHA_NUMERIC:
-        return m_statusToMessage.GetMessage(status.GetCode(), "username", "alpha-numeric characters and must not begin with a digit.");
+        return m_statusToMessage.GetMessage(status.GetCode(), "username", "alpha-numeric characters and must not begin with a digit");
     default:
         return "";
     }
