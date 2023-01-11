@@ -1,5 +1,6 @@
 #include "../include/AuthService.h"
 #include <sstream>
+#include "../include/MovieService.h"
 
 std::unique_ptr<User> AuthService::m_connectedUser = nullptr;
 
@@ -33,20 +34,24 @@ void AuthService::RegisterUserProcess(User& user)
 
 	std::cout << "Welcome, " << user.GetName() << "! Please rate some movies first: \n\n";
 	std::ifstream f;
-	f.open("Questions.txt");
+	f.open("..\\..\\..\\MCIA\\src\\Questions.txt");
 	if (f.fail() || f.bad()) {
 		DatabaseManagement::GetInstance().GetStorage().rollback();
 		throw std::exception("[ResFileNotOpen] An error occured. Please try again later.\n");
 	}
 	uint32_t id_movie;
-	std::string genre, srating;
+	std::string srating;
 	float rating;
-	
-	while (f >> id_movie && f >> genre)
+
+	while (f >> id_movie)
 	{
+		auto st = DatabaseManagement::GetInstance().GetStorage();
 		auto movie = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(where(c(&Movie::GetId) == id_movie));
 		std::cout << "For the movie\n";
-		std::cout << movie[0].GetTitle() << " with the most relevant genres: " << genre <<"\n";
+		MovieService ms;
+		MovieInformationDisplayer movieInfo = ms.GetMovieInformations(id_movie);
+		std::cout << movieInfo << '\n';
+
 		std::cout << "Please enter the rating between 1 and 5: \n";
 		//This checks if the rating for the movie to add in watched list table is valid or out of range.
 		while (true)
@@ -77,9 +82,11 @@ void AuthService::RegisterUserProcess(User& user)
 				std::cout << "\nOut of range rating.\n";
 				std::cout << "Please enter a valid rating value: ";
 			}
+
+
 		}
 
-		WatchedMovie watchedMovie(m_connectedUser->GetId(),id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
+		WatchedMovie watchedMovie(m_connectedUser->GetId(), id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
 		try {
 			DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
 		}
@@ -87,10 +94,12 @@ void AuthService::RegisterUserProcess(User& user)
 			std::cout << e.what();
 			DatabaseManagement::GetInstance().GetStorage().rollback();
 		}
+		system("CLS");
 	}
 	DatabaseManagement::GetInstance().GetStorage().commit();
 	f.close();
 }
+
 
 void AuthService::LoginUser(User& user)
 {
