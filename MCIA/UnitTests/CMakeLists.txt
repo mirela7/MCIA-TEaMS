@@ -21,14 +21,15 @@ endif()
 
 add_executable(
   testing
-  tests/UserTests.cpp  
   tests/CodedExceptionTests.cpp
   tests/ConsoleInputControllerTests.cpp
   tests/DBPageTests.cpp
   tests/DBValidationTests.cpp
   tests/MovieIntermediaryTests.cpp
+  tests/MovieInformationDisplayerTests.cpp
   tests/OperationStatusTests.cpp
   tests/OperationStatusToMessageTests.cpp
+  tests/UserTests.cpp  
   Source.cpp)
 
  target_link_libraries(testing 
