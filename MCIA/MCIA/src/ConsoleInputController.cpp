@@ -1,17 +1,17 @@
 #include "../include/ConsoleInputController.h"
 
-std::pair<int, float> ConsoleInputController::gatherMovieRatingInfo(const std::vector<Movie>& displayedPage) const
+std::pair<int, float> ConsoleInputController::gatherMovieRatingInfo(const std::vector<Movie>& displayedPage, std::ostream& out, std::istream& in) const
 {
 	char ch = 0;
 	std::pair<int, float> movieRatingPair;
 	std::string inputString;
 	movieRatingPair.first = gatherMovieIdFromUser(displayedPage);
 
-	std::cout << "Please enter the rating between 1 and 5: ";
+	out << OUT_PICK_RATING;
 	//This checks if the rating for the movie to add in watched list table is valid or out of range.
 	while (true)
 	{
-		std::cin >> inputString;
+		in >> inputString;
 		try
 		{
 			size_t maximumRatingValueLenght = 3;
@@ -19,23 +19,16 @@ std::pair<int, float> ConsoleInputController::gatherMovieRatingInfo(const std::v
 			{
 				movieRatingPair.second = std::stof(inputString);
 				if (movieRatingPair.second < 1.0f || movieRatingPair.second > 5.0f)
-				{
-					std::cout << "Out of range rating.\n";
-					std::cout << "Please enter a valid rating value: ";
-				}
+					out << OUT_RATING_OUT_OF_RANGE;
 				else
 					break;
 			}
 			else
-			{
-				std::cout << "Out of range rating.\n";
-				std::cout << "Please enter a valid rating value: ";
-			}
+				out << OUT_RATING_OUT_OF_RANGE;
 		}
 		catch (std::invalid_argument e)
 		{
-			std::cout << "Out of range rating.\n";
-			std::cout << "Please enter a valid rating value: ";
+			out << OUT_RATING_OUT_OF_RANGE;
 		}
 	}
 	system("CLS");

@@ -23,6 +23,7 @@ add_executable(
   testing
   tests/UserTests.cpp  
   tests/CodedExceptionTests.cpp
+  tests/ConsoleInputControllerTests.cpp
   Source.cpp)
 
  target_link_libraries(testing 
