@@ -34,10 +34,10 @@ void AuthService::RegisterUserProcess(User& user)
 
 	std::cout << "Welcome, " << user.GetName() << "! Please rate some movies first: \n\n";
 	std::ifstream f;
-	f.open("..\\..\\..\\MCIA\\src\\Questions.txt");
+	f.open(PATH_QUESTIONS_FILE.c_str());
 	if (f.fail() || f.bad()) {
 		DatabaseManagement::GetInstance().GetStorage().rollback();
-		throw std::exception("[ResFileNotOpen] An error occured. Please try again later.\n");
+		throw std::exception(FILE_NOT_OPENED.c_str());
 	}
 	uint32_t id_movie;
 	std::string srating;
@@ -50,38 +50,28 @@ void AuthService::RegisterUserProcess(User& user)
 		MovieInformationDisplayer movieInfo = ms.GetMovieInformations(id_movie);
 		std::cout << movieInfo << '\n';
 
-		std::cout << "Please enter the rating between 1 and 5: \n";
+		std::cout << PLEASE_ENTER_RATING;
 		//This checks if the rating for the movie to add in watched list table is valid or out of range.
 		while (true)
 		{
 			std::cin >> srating;
-			try
-			{
+			try {
 				size_t maximumRatingValueLenght = 3;
 				if (srating.size() <= maximumRatingValueLenght)
 				{
 					rating = std::stof(srating);
 					if (rating < 1.0f || rating > 5.0f)
-					{
-						std::cout << "\nOut of range rating.\n";
-						std::cout << "Please enter a valid rating value: \n";
-					}
+						std::cout << OUT_OF_RANGE_RATING;
 					else
 						break;
 				}
 				else
-				{
-					std::cout << "\nOut of range rating.\n";
-					std::cout << "Please enter a valid rating value: ";
-				}
+					std::cout << OUT_OF_RANGE_RATING;
 			}
 			catch (std::invalid_argument e)
 			{
-				std::cout << "\nOut of range rating.\n";
-				std::cout << "Please enter a valid rating value: ";
+				std::cout << OUT_OF_RANGE_RATING;
 			}
-
-
 		}
 
 		WatchedMovie watchedMovie(m_connectedUser->GetId(), id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
@@ -113,7 +103,7 @@ void AuthService::StartAuthProcess()
 	std::string name, pw;
 	auto& dbm = DatabaseManagement::GetInstance();
 
-	std::cout << "Please login before entering the application.\n";
+	std::cout << PLEASE_LOGIN;
 
 	while (true)
 	{
@@ -146,7 +136,7 @@ void AuthService::StartAuthProcess()
 				if (e.GetMessage() == "username")
 					std::cout << validate.UsernameErrorMessage(e.GetCode());
 				else std::cout << validate.PasswordErrorMessage(e.GetCode());
-				std::cout << "\n\nPlease retry:\n";
+				std::cout << PLEASE_RETRY;
 			}
 			else std::cout << e.what() << "\n\n";
 		}

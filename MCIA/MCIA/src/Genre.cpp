@@ -2,7 +2,8 @@
 #include "../include/DatabaseManagement.h"
 
 Genre::Genre(const std::string& name)
-	:m_name(name)
+	: m_name(name)
+	, m_id(0)
 {}
 
 Genre::Genre(const uint16_t id, const std::string& name)
