@@ -39,9 +39,9 @@ void MainWindow::LoginBtnClicked()
 {
     std::string username = ui->lneUsername->text().toStdString();
     std::string password = ui->lnePassword->text().toStdString();
-
+    AuthService authService;
     try {
-        AuthService::LoginUser(*(new User(username, password)));
+        authService.LoginUser(*(new User(username, password)));
         this->hide();
         HomeWindow homeWindow;
         homeWindow.setModal(true);
@@ -58,11 +58,12 @@ void MainWindow::RegisterBtnClicked()
 {
     OperationStatusToMessage ostm;
     DBValidation validator;
+    AuthService authService;
     qInfo() << " Register user:";
     std::string username = ui->lneUsername->text().toStdString();
     std::string password = ui->lnePassword->text().toStdString();
     try {
-        AuthService::RegisterUser(*(new User(username, password)));
+        authService.RegisterUser(*(new User(username, password)));
         HomeWindow homeWindow;
         homeWindow.setModal(true);
         homeWindow.exec();
