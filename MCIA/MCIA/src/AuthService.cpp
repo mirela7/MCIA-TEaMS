@@ -159,7 +159,7 @@ void AuthService::LogOut()
 	StartAuthProcess();
 }	
 
-uint32_t AuthService::GetConnectedUserId() // TODO: throw exception if user isnt connected
+uint16_t AuthService::GetConnectedUserId() // TODO: throw exception if user isnt connected
 {
 	return m_connectedUser->GetId();
 }
