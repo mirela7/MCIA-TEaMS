@@ -1,10 +1,10 @@
 #pragma once
 #include <cstdint>
-class WishList
+class WishlistedMovie
 {
 public:
-	WishList() = default;
-	WishList(const uint16_t user_id, const uint32_t movie_id);
+	WishlistedMovie() = default;
+	WishlistedMovie(const uint16_t user_id, const uint32_t movie_id);
 
 	uint16_t GetUserId() const;
 	uint32_t GetMovieId() const;

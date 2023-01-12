@@ -33,7 +33,7 @@ add_executable(
   tests/MovieTests.cpp
   tests/OperationStatusTests.cpp
   tests/OperationStatusToMessageTests.cpp
-  tests/UserTests.cpp  
+  tests/UserTests.cpp
   tests/WatchedMovieDisplayerTests.cpp 
   Source.cpp)
 

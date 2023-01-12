@@ -14,7 +14,7 @@
 #include "MovieIntermediary.h"
 #include "Genre.h"
 #include "WatchedMovie.h"
-#include "WishList.h"
+#include "WishlistedMovie.h"
 #include "MovieGenre.h"
 
 /* Others */
@@ -123,14 +123,14 @@ namespace {
     {
         static auto el = make_table("wishlist"
             , make_column("user_id",
-                &WishList::GetUserId,
-                &WishList::SetUserId,
-                foreign_key(&WishList::GetUserId).references(&User::GetId))
+                &WishlistedMovie::GetUserId,
+                &WishlistedMovie::SetUserId,
+                foreign_key(&WishlistedMovie::GetUserId).references(&User::GetId))
             , make_column("movie_id",
-                &WishList::GetMovieId,
-                &WishList::SetMovieId,
-                foreign_key(&WishList::GetMovieId).references(&Movie::GetId))
-            , primary_key(&WishList::GetUserId, &WishList::GetMovieId)
+                &WishlistedMovie::GetMovieId,
+                &WishlistedMovie::SetMovieId,
+                foreign_key(&WishlistedMovie::GetMovieId).references(&Movie::GetId))
+            , primary_key(&WishlistedMovie::GetUserId, &WishlistedMovie::GetMovieId)
         );
 
         return el;
