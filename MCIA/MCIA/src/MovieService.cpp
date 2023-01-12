@@ -29,6 +29,32 @@ DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(uint32_t user
 	return DBPage<WatchedMovieDisplayer>(simplifiedPageResults, totalPages, page);
 }
 
+DBPage<WishListDisplayer> MovieService::GetWishListOfUser(uint32_t userId, int page, int nmbRowsPerPage)
+{
+	int totalPages = std::ceil(DatabaseManagement::GetInstance().GetStorage().count<WishList>(
+		where(c(&WishList::GetUserId) == userId)) * 1.0 / nmbRowsPerPage
+	);
+
+	auto wishList = DatabaseManagement::GetInstance().GetStorage().select(
+		columns(&WishList::GetMovieId, &WishList::GetUserId, &Movie::GetTitle),
+		left_join<Movie>(on(c(&Movie::GetId) == &WishList::GetMovieId)),
+		where(c(&WishList::GetUserId) == userId),
+		limit(nmbRowsPerPage, offset(page * nmbRowsPerPage))
+	);
+
+	std::vector<WishListDisplayer> simplifiedPageResults;
+
+	for (auto& movieTuple : wishList)
+	{
+		simplifiedPageResults.emplace_back(
+			std::move(std::get<0>(movieTuple)),
+			std::move(std::get<2>(movieTuple))
+		);
+	}
+
+	return DBPage<WishListDisplayer>(simplifiedPageResults, totalPages, page);
+}
+
 MovieInformationDisplayer MovieService::GetMovieInformations(uint32_t id)
 {
 	/*
