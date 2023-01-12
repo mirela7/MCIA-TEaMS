@@ -3,9 +3,9 @@
 
 TEST(MovieGenreTests, MovieGenreTest)
 {
-	MovieGenre moviegenre(1, 1);
-	EXPECT_EQ(moviegenre.GetGenreId(), 1);
+	MovieGenre moviegenre(1, 2);
 	EXPECT_EQ(moviegenre.GetMovieId(), 1);
+	EXPECT_EQ(moviegenre.GetGenreId(), 2);
 }
 
 TEST(MovieGenreTests, SetterGenreId)
