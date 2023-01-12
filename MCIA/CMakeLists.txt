@@ -7,6 +7,7 @@ project ("MCIA")
 enable_testing()
 
 set(CMAKE_CXX_STANDARD 14)
+message(STATUS "Compiler: ${CMAKE_CXX_COMPILER}")
 # set(COVERAGE_FLAGS " -coverage -fprofile-arcs -ftest-coverage")
 # SET(LCOV_COVERAGE_LINK_FLAGS " -lgcov --coverage")
 
