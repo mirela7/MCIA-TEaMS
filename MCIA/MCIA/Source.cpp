@@ -170,8 +170,8 @@ int main()
 	std::string movieName;
 	DBValidation validate;
 	ConsoleInputController consoleInputController;
-	
-	AuthService::StartAuthProcess();
+	AuthService authService;
+	authService.StartAuthProcess();
 	system("CLS");
 	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
 	while (true)
@@ -217,7 +217,7 @@ Enter an option: ";
 			 */
 			break;
 		case 'x':
-			AuthService::LogOut();
+			authService.LogOut();
 			break;
 		default:
 			std::cout << "Invalid option.\n";
