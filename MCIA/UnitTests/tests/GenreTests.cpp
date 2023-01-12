@@ -3,6 +3,7 @@
 
 TEST(GenreTests, GenreTestNoId) {
 	Genre genre("nume");
+	EXPECT_EQ(genre.GetId(), 0);
 	EXPECT_STREQ(genre.GetName().c_str(),"nume");
 }
 
