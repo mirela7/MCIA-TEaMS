@@ -28,6 +28,7 @@ set(BACKEND_SOURCES
 		src/MovieIntermediary.cpp
 		src/OperationStatus.cpp
 		src/OperationStatusToMessage.cpp
+		src/PyObjectWrapper.cpp
 		src/RecomSystem.cpp
 		src/User.cpp
 		src/WatchedMovie.cpp

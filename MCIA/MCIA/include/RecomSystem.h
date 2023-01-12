@@ -4,7 +4,8 @@
 
 #ifndef MCIA_RECOMSYSTEM_H
 #define MCIA_RECOMSYSTEM_H
-#include <Python.h>
+//#include <Python.h>
+#include "../include/PyObjectWrapper.h"
 #include <vector>
 
 class RecomSystem {
@@ -14,13 +15,12 @@ public:
     std::vector<int> getRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend);
 
     ~RecomSystem();
-private:
-    PyObject *GetModule();
-    PyObject *GetFunctionToRun();
 
 private:
-    PyObject* m_module; // the module
-    PyObject* m_function; // the function from the module : recommend_movies
+    PyObjectWrapper m_moduleName; // the module
+    PyObjectWrapper m_module; // the module
+    PyObjectWrapper m_moduleDict; // the module
+    PyObjectWrapper m_function; // the function from the module : recommend_movies
 
 private:
     const char* k_module_name = "RecomSystemRatingBased"; //TODO: naming ref

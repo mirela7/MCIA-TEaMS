@@ -4,19 +4,6 @@
 #include <iostream>
 #include "../include/RecomSystem.h"
 
-PyObject *RecomSystem::GetModule() {
-    PyObject* modname = PyUnicode_FromString("RecomSystemRatingBased");
-    PyObject* module = PyImport_Import(modname);
-    //Py_DECREF(modname);
-    return module;
-}
-
-PyObject *RecomSystem::GetFunctionToRun() {
-    PyObject* mdict = PyModule_GetDict(m_module);
-    PyObject* function = PyDict_GetItemString(mdict, "recommend_movies");
-    return function;
-}
-
 std::vector<int> RecomSystem::getRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend) {
     std::vector<int> res;
     Py_Initialize();
@@ -28,32 +15,34 @@ std::vector<int> RecomSystem::getRecommendedMovies(int userId, int batchSize, in
         std::cout<<"Function does not exist!";
     }
 
-    PyObject* result = PyObject_CallFunction(m_function, "iii", userId, batchSize, numMoviesToRecommend);
+    PyObjectWrapper result{PyObject_CallFunction(m_function, "iii", userId, batchSize, numMoviesToRecommend)};
     if(PyList_Check(result)){
         // okay, it's a list
         for (Py_ssize_t i = 0; i < PyList_Size(result); ++i) {
-            PyObject* next = PyList_GetItem(result, i);
+            PyObjectWrapper next{PyList_GetItem(result, i)};
             double value = PyFloat_AsDouble(next);
             res.push_back(value);
         }
     }
-    //Py_DECREF(result);
 
-    return std::move(res);
+    return res;
 }
 
 RecomSystem::RecomSystem()
 {
     Py_Initialize();
+
+    //surpress tensorflow warnings:
     PyRun_SimpleString("import os");
     PyRun_SimpleString("os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'");
-    m_module = GetModule();
-    m_function = GetFunctionToRun();
+
+    m_moduleName.SetPyObj(PyUnicode_FromString(k_module_name));
+    m_module.SetPyObj(PyImport_Import(m_moduleName));
+    m_moduleDict.SetPyObj(PyModule_GetDict(m_module));
+    m_function.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_function_name));
 
 }
 
 RecomSystem::~RecomSystem() {
     Py_Finalize();
-    //Py_DECREF(module);
-    //Py_DECREF(mdict);
 }
