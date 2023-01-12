@@ -6,7 +6,7 @@ WishListDisplayer::WishListDisplayer(uint32_t mvId, const std::string& mvTitle)
 {
 }
 
-uint32_t WishListDisplayer::GetMovieId()
+uint32_t WishListDisplayer::GetMovieId() const
 {
 	return m_movieId;
 }

@@ -8,7 +8,7 @@ class WishListDisplayer
 public:
 	WishListDisplayer(uint32_t mvId, const std::string& mvTitle);
 
-	uint32_t GetMovieId();
+	uint32_t GetMovieId() const;
 
 	friend std::ostream& operator<<(std::ostream& g, WishListDisplayer wld);
 private:

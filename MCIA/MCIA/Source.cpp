@@ -22,7 +22,7 @@ template<typename T>
 void displayTable(T filter, const ConsoleInputController& consoleInputController) 
 {
 	auto showInstructions = []() {
-		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist.\n [i] info about movie\n [x] back to menu\n";
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist\n [i] info about movie\n [x] back to menu\n";
 		std::cout << "Input character: ";
 	};
 
@@ -80,7 +80,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 				try {
 					DatabaseManagement::GetInstance().GetStorage().replace(wishlist);
 					system("CLS");
-					std::cout << "Movie added to watchlist.\n";
+					std::cout << "Movie added to wishlist.\n";
 				}
 				catch (std::exception e) {
 					std::cout << e.what();
@@ -154,6 +154,73 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 	}
 }
 
+void displayWishList(const ConsoleInputController& consoleInputController)
+{
+	auto showInstructions = []() {
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [i] info about movie\n [r] rate movie\n [x] back to menu\n";
+		std::cout << "Input character: ";
+	};
+	MovieService ms;
+	char ch;
+	uint32_t connectedUserId = AuthService::GetConnectedUserId();
+	int wantedPage = 0;
+	auto result = ms.GetWishListOfUser(connectedUserId, wantedPage, kNmbRows);
+	std::cout << result;
+	showInstructions();
+	while (std::cin >> ch)
+	{
+		switch (ch)
+		{
+		case 'b':
+			system("CLS");
+			wantedPage = std::max(wantedPage - 1, 0);
+			break;
+		case 'n':
+			system("CLS");
+			wantedPage = std::min(wantedPage + 1, result.GetNmbPages() - 1);
+			break;
+		case 'j':
+			std::cout << "Choose page number: ";
+			std::cin >> wantedPage;
+			system("CLS");
+			wantedPage = std::min(wantedPage, result.GetNmbPages() - 1);
+			wantedPage = std::max(wantedPage, 0);
+			break;
+		case 'i':
+		{
+			int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+			MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
+			std::cout << movieInfo << '\n';
+			showInstructions();
+			continue;
+		}
+		break;
+		case 'r':
+		{
+			std::pair<int, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults());
+			WatchedMovie watchedMovie(AuthService::GetConnectedUserId(), movieIdRating.first, movieIdRating.second);
+			try {
+				DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
+				std::cout << "Movie rating saved.\n";
+			}
+			catch (std::exception e) {
+				std::cout << e.what();
+			}
+		}
+		break;
+		case 'x':
+			system("CLS");
+			return;
+		default:
+			std::cout << "Input character: ";
+			continue;
+		}
+		result = ms.GetWishListOfUser(connectedUserId, wantedPage, kNmbRows);
+		std::cout << result;
+		showInstructions();
+	}
+}
+
 int main()
 {
 	/*Py_Initialize();
@@ -177,7 +244,7 @@ int main()
 	while (true)
 	{
 		std::cout << "Please choose what to do : \n \
-[a] all movies browising\n \
+[a] all movies browsing\n \
 [s] search movie by name\n \
 [v] my watched list\n \
 [w] my wishlist\n \
@@ -212,9 +279,7 @@ Enter an option: ";
 			displayWatchedList(consoleInputController);
 			break;
 		case 'w':
-			/*
-			 * wishlist 
-			 */
+			displayWishList(consoleInputController);
 			break;
 		case 'x':
 			AuthService::LogOut();
