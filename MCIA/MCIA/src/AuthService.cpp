@@ -16,7 +16,7 @@ void AuthService::RegisterUser(User& user)
 		throw CodedException(pw_valid.GetCode(), "password");
 	if (ExistsUserWithUsername(user.GetName()))
 		throw CodedException("username", "A user with this username already exists.");
-	int insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
+	uint16_t insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
 	m_connectedUser = std::make_unique<User>(user);
 	m_connectedUser->SetId(insertedUserId);
 }
@@ -158,7 +158,7 @@ void AuthService::LogOut()
 	StartAuthProcess();
 }	
 
-int AuthService::GetConnectedUserId() // TODO: throw exception if user isnt connected
+uint32_t AuthService::GetConnectedUserId() // TODO: throw exception if user isnt connected
 {
 	return m_connectedUser->GetId();
 }

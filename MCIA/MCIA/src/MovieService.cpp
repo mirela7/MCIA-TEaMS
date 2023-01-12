@@ -1,6 +1,6 @@
 #include "../include/MovieService.h"
 
-DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(const uint32_t userId, const int page, const int nmbRowsPerPage)
+DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(const uint16_t userId, const int page, const int nmbRowsPerPage)
 {
 	/* SELECT watched_movie.movie_id as mid, watched_movie.user_id as uid, movie.title, genre.name FROM watched_movie
 		JOIN movie ON watched_movie.movie_id = movie.id
@@ -29,7 +29,7 @@ DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(const uint32_
 	return DBPage<WatchedMovieDisplayer>(simplifiedPageResults, totalPages, page);
 }
 
-DBPage<WishlistedMovieDisplayer> MovieService::GetWishListOfUser(const uint32_t userId, const int page, const int nmbRowsPerPage)
+DBPage<WishlistedMovieDisplayer> MovieService::GetWishListOfUser(const uint16_t userId, const int page, const int nmbRowsPerPage)
 {
 	int totalPages = std::ceil(DatabaseManagement::GetInstance().GetStorage().count<WishlistedMovie>(
 		where(c(&WishlistedMovie::GetUserId) == userId)) * 1.0 / nmbRowsPerPage
@@ -76,29 +76,29 @@ MovieInformationDisplayer MovieService::GetMovieInformations(const uint32_t id)
 	return movieInfoDisplayer;
 }
 
-void MovieService::AddMovieToWatchlist(const uint32_t userId, const uint32_t movieId, const float rating)
+void MovieService::AddMovieToWatchlist(const uint16_t userId, const uint32_t movieId, const float rating)
 {
 	WatchedMovie watchedMovie(userId, movieId, rating);
 	DatabaseManagement::GetInstance().GetStorage().replace<WatchedMovie>(watchedMovie);
 }
 
-void MovieService::RemoveMovieFromWatchlist(const uint32_t userId, const uint32_t movieId)
+void MovieService::RemoveMovieFromWatchlist(const uint16_t userId, const uint32_t movieId)
 {
 	DatabaseManagement::GetInstance().GetStorage().remove<WatchedMovie>(userId, movieId);
 }
 
-void MovieService::AddMovieToWishlist(const uint32_t userId, const uint32_t movieId)
+void MovieService::AddMovieToWishlist(const uint16_t userId, const uint32_t movieId)
 {
 	WishlistedMovie wishlistMovie(userId, movieId);
 	DatabaseManagement::GetInstance().GetStorage().replace<WishlistedMovie>(wishlistMovie);
 }
 
-void MovieService::RemoveMovieFromWishlist(const uint32_t userId, const uint32_t movieId)
+void MovieService::RemoveMovieFromWishlist(const uint16_t userId, const uint32_t movieId)
 {
 	DatabaseManagement::GetInstance().GetStorage().remove<WishlistedMovie>(userId, movieId);
 }
 
-void MovieService::MoveMovieFromWishlistToWatched(const uint32_t userId, const uint32_t movieId, const float rating)
+void MovieService::MoveMovieFromWishlistToWatched(const uint16_t userId, const uint32_t movieId, const float rating)
 {
 	WatchedMovie watchedMovie(userId, movieId, rating);
 	DatabaseManagement::GetInstance().GetStorage().begin_transaction();
