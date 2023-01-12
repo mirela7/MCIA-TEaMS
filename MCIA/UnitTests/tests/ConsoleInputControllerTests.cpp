@@ -17,7 +17,7 @@ void gatherMovieIdSizeInpage(const std::vector<T>& page)
 	std::istringstream inputStream(userInput);
 	std::ostringstream outputStream;
 
-	int validId = cic.gatherMovieIdFromUser(page, outputStream, inputStream);
+	int validId = cic.gatherMovieIdFromUser(page, true, outputStream, inputStream);
 	EXPECT_EQ(validId, 1);
 	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
 }
@@ -37,7 +37,7 @@ void gatherMovieIdStoiNotPage(const std::vector<T>& page)
 	std::istringstream inputStream(userInput);
 	std::ostringstream outputStream;
 
-	int validId = cic.gatherMovieIdFromUser(page, outputStream, inputStream);
+	int validId = cic.gatherMovieIdFromUser(page, true, outputStream, inputStream);
 	EXPECT_EQ(validId, 2);
 	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
 }
@@ -57,7 +57,7 @@ void gatherMovieIdInvalidId(const std::vector<T>& page)
 	std::istringstream inputStream(userInput);
 	std::ostringstream outputStream;
 
-	int validId = cic.gatherMovieIdFromUser(page, outputStream, inputStream);
+	int validId = cic.gatherMovieIdFromUser(page, true, outputStream, inputStream);
 	EXPECT_EQ(validId, 1);
 	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
 }
@@ -120,7 +120,7 @@ TEST(ConsoleInputControllerTests, GatherMovieRatingInfo) {
 	std::istringstream inputStream(userInput);
 	std::ostringstream outputStream;
 
-	std::pair<int, float> movieRating = cic.gatherMovieRatingInfo(moviesInPage, outputStream, inputStream);
+	std::pair<int, float> movieRating = cic.gatherMovieRatingInfo(moviesInPage, true, outputStream, inputStream);
 	EXPECT_EQ(movieRating.first, 1);
 	EXPECT_STREQ(outputStream.str().c_str(), expectedOutput.c_str());
 }

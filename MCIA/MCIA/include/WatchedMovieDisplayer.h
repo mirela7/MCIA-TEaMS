@@ -10,7 +10,7 @@ public:
 
 	uint32_t GetMovieId() const;
 
-	friend std::ostream& operator<<(std::ostream& g, WatchedMovieDisplayer wmd);
+	friend std::ostream& operator<<(std::ostream& g, const WatchedMovieDisplayer& wmd);
 private:
 	uint32_t m_movieId;
 	std::string m_movieTitle;
