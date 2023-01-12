@@ -3,9 +3,7 @@
 
 Genre::Genre(const std::string& name)
 	:m_name(name)
-{
-	m_id = 0; //Added for the test
-}
+{}
 
 Genre::Genre(const uint16_t id, const std::string& name)
 	: m_id(id)

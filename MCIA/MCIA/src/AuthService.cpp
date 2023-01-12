@@ -45,8 +45,6 @@ void AuthService::RegisterUserProcess(User& user)
 
 	while (f >> id_movie)
 	{
-		auto st = DatabaseManagement::GetInstance().GetStorage();
-		auto movie = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(where(c(&Movie::GetId) == id_movie));
 		std::cout << "For the movie\n";
 		MovieService ms;
 		MovieInformationDisplayer movieInfo = ms.GetMovieInformations(id_movie);
