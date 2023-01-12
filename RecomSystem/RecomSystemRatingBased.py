@@ -2,12 +2,13 @@ import heapq
 import tensorflow
 from NeuralNetwork import retrieve_model
 import numpy as np
+import csv
 
 
 def recommend_movies(user_id, batch_size, num_movie_recom):
     # get model
     # TODO: send path as argument
-    model = tensorflow.keras.models.load_model('../../../../RecomSystem/saved_model/first_train')
+    model = tensorflow.keras.models.load_model('saved_model/train600')
 
     # the pool of movies from which we recommend
     # TODO: select random movies from available pool
@@ -35,6 +36,19 @@ def test_import_functio():
     print('yay here:)')
 
 
+def train_for_user(userId, movieId, rating):
+    userId += 500  # first 500 users are our "base" value
+    with open('data/rating_first500.csv', 'a', newline='') as fd:
+        writer = csv.writer(fd)
+        writer.writerow([userId, movieId, rating])
+    model = tensorflow.keras.models.load_model('saved_model/train600')
+    model.compile(optimizer='adam', loss='mean_absolute_error', metrics=['mean_absolute_percentage_error'])
+    model.fit(x=(np.array([userId]), np.array([movieId])), y=np.array([rating]), verbose=0)
+    model.save('saved_model/train600')
+    print('updated model!')
+
+
 if __name__ == '__main__':
     # print(recommend_movies(0))
-    print(dummy_return_function('a'))
+    # print(recommend_movies(0, 100, 10))
+    train_for_user(1, 1, 1)
