@@ -10,8 +10,6 @@ public:
 
 	template<class T>
 	int gatherMovieIdFromUser(const std::vector<T>& displayedPage) const;
-	
-	std::pair<int, float> gatherMovieRatingInfo(const std::vector<Movie>& displayedPage) const;
 
 	template <class T>
 	std::pair<int, float> gatherMovieRatingInfo(const std::vector<T>& displayedPage) const;
