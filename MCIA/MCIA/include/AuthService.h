@@ -6,7 +6,6 @@
 #include "User.h"
 #include "DatabaseManagement.h"
 #include "DBValidation.h"
-#include "MovieInformationDisplayer.h"
 
 class AuthService
 {
@@ -16,7 +15,7 @@ public:
 	void LoginUser(User& user);
 	void LogOut();
 	bool ExistsUserWithUsername(const std::string& username);
-	static int GetConnectedUserId();
+	static uint16_t GetConnectedUserId();
 	static std::string GetConnectedUserName();
 	void StartAuthProcess();
 

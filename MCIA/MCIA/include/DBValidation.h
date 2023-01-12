@@ -5,33 +5,22 @@
 #include "DatabaseManagement.h"
 #include "OperationStatusToMessage.h"
 #include <Validator.h>
+#include <regex>
 
 class DBValidation
 {
 public:
 	OperationStatus IsUsernameValid(const std::string& username);
-	std::string UsernameErrorMessage(OperationStatus status);
+	std::string UsernameErrorMessage(const OperationStatus& status);
 	OperationStatus IsPasswordValid(const std::string& password);
-	std::string PasswordErrorMessage(OperationStatus status);
-
-	template <class T> 
-	OperationStatus IdExists(const int id);
+	std::string PasswordErrorMessage(const OperationStatus& status);
 
 private:
 	static const int kMinUsernameLength = 3;
 	static const int kMinPasswordLength = 3;
+	static const std::regex kPasswordRegex;
+	static const std::string kPasswordRegexMessage;
 private:
 	Validator m_validator;
 	OperationStatusToMessage m_statusToMessage;
 };
-
-template<class T>
-inline OperationStatus DBValidation::IdExists(const int id)
-{
-	auto& st = DatabaseManagement::GetInstance().GetStorage();
-	auto search_element = st.get_all<T>(where(c(&T::GetId) == id));
-	if (!search_element.size())
-		return OperationStatus::DB_INVALID_ID;
-	return OperationStatus::SUCCESS;
-}
-

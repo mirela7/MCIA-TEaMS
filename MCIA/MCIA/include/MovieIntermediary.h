@@ -6,7 +6,7 @@
 class MovieIntermediary
 {
 public:
-	MovieIntermediary() = default;
+	MovieIntermediary();
 	MovieIntermediary(uint32_t id, const std::string& title, const std::string& genres);
 
 	void SetId(uint32_t id);

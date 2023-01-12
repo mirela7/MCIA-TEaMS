@@ -17,7 +17,7 @@ private:
 	std::string GetMessageFromBase(std::string& base, T last);
 
 private:
-	std::map<OperationStatus::Code, std::string> m_codeToMessage;
+	static const std::map<OperationStatus::Code, std::string> m_codeToMessage;
 };
 
 template<typename ...Args>
@@ -30,7 +30,7 @@ inline std::string OperationStatusToMessage::GetMessage(OperationStatus::Code co
 template<typename T, typename ...Args>
 std::string OperationStatusToMessage::GetMessageFromBase(std::string& base, T value, Args ...args)
 {
-	int posOfMod = base.find_first_of("%");
+	size_t posOfMod = base.find_first_of("%");
 	if (posOfMod == -1)
 		return base;
 	base.erase(posOfMod, 1);
@@ -43,7 +43,7 @@ std::string OperationStatusToMessage::GetMessageFromBase(std::string& base, T va
 
 template<typename T, typename ...Args>
 std::string OperationStatusToMessage::GetMessageFromBase(std::string& base, T last) {
-	int posOfMod = base.find_first_of("%");
+	size_t posOfMod = base.find_first_of("%");
 	if (posOfMod == -1)
 		return base;
 	base.erase(posOfMod, 1);
