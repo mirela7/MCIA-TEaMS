@@ -34,7 +34,10 @@ add_executable(
   tests/OperationStatusTests.cpp
   tests/OperationStatusToMessageTests.cpp
   tests/UserTests.cpp
-  tests/WatchedMovieDisplayerTests.cpp 
+  tests/WatchedMovieDisplayerTests.cpp
+  tests/WatchedMovieTests.cpp
+  tests/WishlistedMovieDisplayerTests.cpp
+  tests/WishlistedMovieTests.cpp
   Source.cpp)
 
  target_link_libraries(testing 

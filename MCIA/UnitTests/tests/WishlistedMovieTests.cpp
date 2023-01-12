@@ -1,23 +1,23 @@
 #include <gtest/gtest.h>
-#include <WishList.h>
+#include <WishlistedMovie.h>
 
-TEST(WishListTests, WishListTests)
+TEST(WishlistedMovieTests, Constructor)
 {
-	WishList wishList(1, 2);
+	WishlistedMovie wishList(1, 2);
 	EXPECT_EQ(wishList.GetUserId(), 1);
 	EXPECT_EQ(wishList.GetMovieId(), 2);
 }
 
-TEST(WishListTests, SetterUserId)
+TEST(WishlistedMovieTests, SetterUserId)
 {
-	WishList wishList;
+	WishlistedMovie wishList;
 	wishList.SetUserId(1);
 	EXPECT_EQ(wishList.GetUserId(), 1);
 }
 
-TEST(WishListTests, SetterMovieId)
+TEST(WishlistedMovieTests, SetterMovieId)
 {
-	WishList wishList;
+	WishlistedMovie wishList;
 	wishList.SetMovieId(1);
 	EXPECT_EQ(wishList.GetMovieId(), 1);
 }
