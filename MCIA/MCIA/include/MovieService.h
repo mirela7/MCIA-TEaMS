@@ -2,8 +2,8 @@
 #include "DBPage.h"
 #include "DatabaseManagement.h"
 #include "WatchedMovieDisplayer.h"
-#include "MovieInformationDisplayer.h"
 #include "WishListDisplayer.h"
+#include "MovieInformationDisplayer.h"
 
 class MovieService {
 public:	
