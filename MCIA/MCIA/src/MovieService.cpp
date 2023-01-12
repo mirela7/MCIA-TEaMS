@@ -52,7 +52,7 @@ DBPage<WishListDisplayer> MovieService::GetWishListOfUser(uint32_t userId, int p
 		);
 	}
 
-	return DBPage<WishListDisplayer>(simplifiedPageResults, totalPages, page);
+	return DBPage<WishListDisplayer>(simplifiedPageResults, 0, page);
 }
 
 MovieInformationDisplayer MovieService::GetMovieInformations(uint32_t id)

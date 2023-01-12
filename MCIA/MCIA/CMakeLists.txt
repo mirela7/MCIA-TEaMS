@@ -42,7 +42,8 @@ set(BACKEND_SOURCES
 		src/User.cpp
 		src/WatchedMovie.cpp
 		src/WatchedMovieDisplayer.cpp
-		src/WishList.cpp	)
+		src/WishList.cpp
+		src/WishListDisplayer.cpp)
 
 add_executable (MCIA 
 	${BACKEND_SOURCES}

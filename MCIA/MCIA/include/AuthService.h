@@ -12,7 +12,6 @@
 /* Others */
 #include "DatabaseManagement.h"
 #include "DBValidation.h"
-#include "MovieInformationDisplayer.h"
 
 class AuthService
 {

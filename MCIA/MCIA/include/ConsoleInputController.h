@@ -10,8 +10,9 @@ public:
 
 	template<class T>
 	int gatherMovieIdFromUser(const std::vector<T>& displayedPage, std::ostream& out = std::cout, std::istream& in = std::cin) const;
-	
-	std::pair<int, float> gatherMovieRatingInfo(const std::vector<Movie>& displayedPage, std::ostream& out = std::cout, std::istream& in = std::cin) const;
+
+	template <class T>
+	std::pair<int, float> gatherMovieRatingInfo(const std::vector<T>& displayedPage, std::ostream& out = std::cout, std::istream& in = std::cin) const;
 
 public:
 	const std::string OUT_PICK_ID = "Please enter the id of the movie you want to pick: ";
@@ -23,7 +24,8 @@ public:
 };
 
 template<class T>
-std::pair<int, float> ConsoleInputController::gatherMovieRatingInfo(const std::vector<T>& displayedPage) const
+
+std::pair<int, float> ConsoleInputController::gatherMovieRatingInfo(const std::vector<T>& displayedPage, std::ostream& out, std::istream& in) const
 {
 	char ch = 0;
 	std::pair<int, float> movieRatingPair;
