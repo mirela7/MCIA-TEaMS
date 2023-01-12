@@ -3,7 +3,7 @@
     "configurePresets": [
       {
         "name": "windows-base",
-        "toolchainFile": "C:\\src\\vcpkg\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
+        "toolchainFile": "C:\\Users\\sorana\\src\\vcpkg\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
         "hidden": true,
         "generator": "Ninja",
         "binaryDir": "${sourceDir}/build/${presetName}",
@@ -12,10 +12,32 @@
           "CMAKE_C_COMPILER": "cl.exe",
           "CMAKE_CXX_COMPILER": "cl.exe"
         },
+        "environment": {
+          "PYTHONHOME": "C:\\Users\\sorana\\.conda\\envs\\recomsys",
+          "PYTHONPATH": "C:\\Users\\sorana\\.conda\\envs\\recomsys;D:\\facultate\\Sem3\\MCIA\\MCIA-TEaMS\\MCIA-TEaMS\\RecomSystem",
+          "PYTHON_INCLUDE_DIR": "C:\\Users\\sorana\\.conda\\envs\\recomsys\\include",
+          "PYTHON_LIBRARY": "C:\\Users\\sorana\\.conda\\envs\\recomsys\\libs"
+        },
         "condition": {
           "type": "equals",
           "lhs": "${hostSystemName}",
           "rhs": "Windows"
+        }
+      },
+      {
+        "name": "x64-debug-coverage-gcc",
+        "displayName": "x64 Debug coverage gcc",
+        "inherits": "windows-base",
+        "architecture": {
+          "value": "x64",
+          "strategy": "external"
+        },
+        "cacheVariables": {
+          "CMAKE_C_COMPILER": "C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/gcc.exe",
+          "CMAKE_CXX_COMPILER": "C:/Program Files/JetBrains/CLion 2022.2.4/bin/mingw/bin/g++.exe",
+          "CMAKE_BUILD_TYPE": "Debug",
+          "CMAKE_CXX_FLAGS": "--coverage -fno-inline-small-functions",
+          "CMAKE_C_FLAGS": "--coverage -fno-inline-small-functions"
         }
       },
         {

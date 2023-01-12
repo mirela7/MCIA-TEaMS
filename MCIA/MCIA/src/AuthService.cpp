@@ -1,5 +1,6 @@
 #include "../include/AuthService.h"
 #include <sstream>
+#include <exception>
 #include "../include/MovieService.h"
 
 std::unique_ptr<User> AuthService::m_connectedUser = nullptr;
@@ -37,7 +38,7 @@ void AuthService::RegisterUserProcess(User& user)
 	f.open(PATH_QUESTIONS_FILE.c_str());
 	if (f.fail() || f.bad()) {
 		DatabaseManagement::GetInstance().GetStorage().rollback();
-		throw std::exception(FILE_NOT_OPENED.c_str());
+		throw std::runtime_error(FILE_NOT_OPENED.c_str());
 	}
 	uint32_t id_movie;
 	std::string srating;
