@@ -29,7 +29,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 	char ch;
 	int wantedPage = 0;
 	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
-	uint32_t connectedUserId = AuthService::GetConnectedUserId();
+	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	MovieService ms;
 	std::cout << result;
 	showInstructions();
@@ -108,7 +108,7 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 	};
 	MovieService ms;
 	char ch;
-	uint32_t connectedUserId = AuthService::GetConnectedUserId();
+	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	int wantedPage = 0;
 	auto result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
 	std::cout << result;
@@ -174,7 +174,7 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 	};
 	MovieService ms;
 	char ch;
-	uint32_t connectedUserId = AuthService::GetConnectedUserId();
+	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	int wantedPage = 0;
 	auto result = ms.GetWishListOfUser(connectedUserId, wantedPage, kNmbRows);
 	std::cout << result;

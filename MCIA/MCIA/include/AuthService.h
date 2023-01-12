@@ -15,7 +15,7 @@ public:
 	void LoginUser(User& user);
 	void LogOut();
 	bool ExistsUserWithUsername(const std::string& username);
-	static int GetConnectedUserId();
+	static uint32_t GetConnectedUserId();
 	static std::string GetConnectedUserName();
 	void StartAuthProcess();
 
