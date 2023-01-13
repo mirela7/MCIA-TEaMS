@@ -89,7 +89,8 @@ std::ostream& operator<<(std::ostream& g, const User& u)
 
 void User::StartPopulatingRecommendedMovies() {
     auto getRecommendedMoviesTask = [&](){
-        std::this_thread::sleep_for(std::chrono::seconds(5));
+        //std::this_thread::sleep_for(std::chrono::seconds(5));
+        std::cout<<"recom"<<std::this_thread::get_id()<<"\n";
         return RecomSystem::GetInstance().getRecommendedMovies(GetId(), 100, 10);
     };
     m_recommendedMoviesFuture = std::async(std::launch::async, getRecommendedMoviesTask);

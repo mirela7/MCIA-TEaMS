@@ -165,6 +165,8 @@ int main()
 //    auto vec = recom.getRecommendedMovies(0, 10, 5);
 //    for(auto& el: vec)
 //        std::cout<<el<<" ";
+
+    std::cout<<"source"<<std::this_thread::get_id()<<"\n";
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
