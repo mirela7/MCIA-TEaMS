@@ -33,9 +33,9 @@ void MovieGenre::LinkGenreMovie()
 	auto moviesGenres = storage.select(columns(&MovieIntermediary::GetId, &MovieIntermediary::GetGenre));
 	auto genres = storage.select(columns(&Genre::GetId, &Genre::GetName));
 	int count = 0;
+	uint32_t movieId = 0;
 	for (auto& tpl : moviesGenres)
 	{
-		uint32_t movieId = get<0>(tpl);
 		std::string name = get<1>(tpl);
 		std::string genre = "";
 		for (int i = 0; i < name.size(); i++)
@@ -76,6 +76,7 @@ void MovieGenre::LinkGenreMovie()
 				}
 			}
 		}
+		movieId++;
 		count++;
 		std::cout << count << '\n';
 	}
