@@ -18,7 +18,12 @@ public:
 		DB_ENTITY_NOT_FOUND,
 
 		DB_USER_INVALID_PASSWORD,
-		DB_INVALID_ID
+		DB_INVALID_ID,
+
+		RES_NOT_FOUND,
+
+		PY_MODULE_NOT_FOUND,
+		PY_FUNCTION_NOT_FOUND,
 	};
 public:
 	OperationStatus(const Code& c);
