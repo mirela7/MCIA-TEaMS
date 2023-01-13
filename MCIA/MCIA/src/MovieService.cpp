@@ -52,7 +52,15 @@ DBPage<WishlistedMovieDisplayer> MovieService::GetWishListOfUser(const uint16_t 
 		);
 	}
 
-	return DBPage<WishlistedMovieDisplayer>(simplifiedPageResults, 0, page);
+	return DBPage<WishlistedMovieDisplayer>(simplifiedPageResults, totalPages, page);
+}
+
+DBPage<Movie> MovieService::GetMovieListFromListOfIndices(const std::vector<uint32_t>& movieIds, const int page)
+{
+	auto movieVector = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(
+		where(in(&Movie::GetId, movieIds))
+	);
+	return DBPage<Movie>(movieVector, DBPage<Movie>::NMB_PAGES_VALUE_NOT_NUMBERED, page);
 }
 
 MovieInformationDisplayer MovieService::GetMovieInformations(const uint32_t id)
