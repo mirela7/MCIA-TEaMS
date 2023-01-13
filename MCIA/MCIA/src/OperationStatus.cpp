@@ -12,6 +12,9 @@ const std::unordered_map<std::string, OperationStatus::Code> OperationStatus::m_
 	, { "EntityNotFound", Code::DB_ENTITY_NOT_FOUND }
 	, { "InvalidUser", Code::DB_USER_INVALID_PASSWORD }
 	, { "InvalidId", Code::DB_INVALID_ID }
+	, { "ResNotFound", Code::RES_NOT_FOUND }
+	, { "PyModuleNotFound", Code::PY_MODULE_NOT_FOUND }
+	, { "PyFunctionNotFound", Code::PY_FUNCTION_NOT_FOUND }
 };
 
 
@@ -43,6 +46,12 @@ std::string OperationStatus::CodeToString(const OperationStatus::Code& code)
 		return "InvalidUser";
 	case Code::DB_INVALID_ID:
 		return "InvalidId";
+	case Code::RES_NOT_FOUND:
+		return "ResNotFound";
+	case Code::PY_MODULE_NOT_FOUND:
+		return "PyModuleNotFound";
+	case Code::PY_FUNCTION_NOT_FOUND:
+		return "PyFunctionNotFound";
 	default:
 		return "Err";
 	}
