@@ -42,7 +42,7 @@ std::string MovieInformationDisplayer::GetGenres() const
 }
 
 
-std::ostream& operator<<(std::ostream& g, MovieInformationDisplayer mid)
+std::ostream& operator<<(std::ostream& g, const MovieInformationDisplayer& mid)
 {
 	std::vector<std::string> propertyRows;
 	propertyRows.emplace_back(" Movie id: " + std::to_string(mid.m_movieId));

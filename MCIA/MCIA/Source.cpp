@@ -264,7 +264,6 @@ int main()
 	PyRun_SimpleString("print('Hello din acest fisier')");
 
 	Py_Finalize();*/
-
 	char ch;
 	bool isSearching = false;
 	std::string movieName;

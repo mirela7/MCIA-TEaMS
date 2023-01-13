@@ -20,7 +20,7 @@ public:
 	void StartAuthProcess();
 
 protected:
-	const std::string PATH_QUESTIONS_FILE = "..\\..\\..\\MCIA\\src\\Questions.txt";
+	const std::string PATH_QUESTIONS_FILE = "..\\..\\..\\MCIA\\resources\\Questions.txt";
 	const std::string PLEASE_ENTER_RATING = "Please enter the rating between 1 and 5: ";
 	const std::string OUT_OF_RANGE_RATING = "Out of range rating.\nPlease enter a valid rating value: ";
 	const std::string PLEASE_LOGIN = "Please login before entering the application.\n";
