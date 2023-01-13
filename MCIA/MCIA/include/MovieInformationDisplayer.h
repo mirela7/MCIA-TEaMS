@@ -16,7 +16,7 @@ public:
 	uint16_t GetReleaseYear() const;
 	std::string GetGenres() const;
 
-	friend std::ostream& operator<<(std::ostream& g, MovieInformationDisplayer mid);
+	friend std::ostream& operator<<(std::ostream& g, const MovieInformationDisplayer& mid);
 private:
 	uint32_t m_movieId;
 	std::string m_title;

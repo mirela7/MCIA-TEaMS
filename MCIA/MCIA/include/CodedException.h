@@ -18,6 +18,5 @@ public:
 
 protected:
 	OperationStatus::Code m_code;
-	char* m_message;
 };
 

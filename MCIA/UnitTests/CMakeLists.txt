@@ -17,6 +17,9 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	FetchContent_MakeAvailable(googletest)
 	add_library(GTest::GTest INTERFACE IMPORTED)
 	target_link_libraries(GTest::GTest INTERFACE gtest_main)
+else()
+	find_package(GTest REQUIRED)
+	include(GoogleTest)
 endif()
 
 add_executable(
