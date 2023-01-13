@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 3.8)
 
 message(STATUS "COMPILER ID: ${CMAKE_CXX_COMPILER_ID}")
+find_package(SqliteOrm REQUIRED)
 
 # linking based on compiler used:
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
@@ -41,6 +42,7 @@ add_executable(
 
  target_link_libraries(testing 
 	PRIVATE GTest::gtest
+	PRIVATE sqlite_orm::sqlite_orm
 	PUBLIC MCIALib
 		 )
 
