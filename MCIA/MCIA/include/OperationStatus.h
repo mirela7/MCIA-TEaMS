@@ -24,6 +24,8 @@ public:
 
 		PY_MODULE_NOT_FOUND,
 		PY_FUNCTION_NOT_FOUND,
+
+		COUNT /* necessary to know how many error codes we have; only works if they have implicit values */
 	};
 public:
 	OperationStatus(const Code& c);
