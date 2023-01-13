@@ -45,7 +45,7 @@ void Genre::ParseGenres()
 		std::string genre = "";
 		for (int i = 0; i < name.size(); i++)
 		{
-			if (name[i] == '|')
+			if (name[i] == '|') // ( [...] || name[i] == name.size() - 1)
 			{
 				Genre g(id, genre);
 				auto genres = storage.select(columns(&Genre::GetName));

@@ -7,19 +7,17 @@ class Movie
 {
 public:
 	Movie() = default;
-	Movie(const uint32_t id, const std::string& title, const uint16_t releaseYear, const float rating);
+	Movie(const uint32_t id, const std::string& title, const uint16_t releaseYear);
 	Movie(const Movie& movie);
 	Movie(Movie&& movie) noexcept;
 
 	void SetId(const uint32_t id);
 	void SetTitle(const std::string& title);
 	void SetReleaseYear(const uint16_t releaseYear);
-	void SetRating(const float rating);
 
 	uint32_t GetId() const;
 	std::string GetTitle() const;
 	uint16_t GetReleaseYear() const;
-	float GetRating() const;
 
 	static void ParseMovieData();
 	
