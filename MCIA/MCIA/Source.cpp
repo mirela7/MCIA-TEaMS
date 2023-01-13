@@ -245,6 +245,15 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 	}
 }
 
+void recommendToUser()
+{
+	MovieService ms;
+	std::vector<uint32_t> mvIdsTest{ 1, 5, 10, 20 };
+	auto page = ms.GetMovieListFromListOfIndices(mvIdsTest, 1);
+	std::cout << page;
+}
+
+
 int main()
 {
 	/*Py_Initialize();
@@ -255,7 +264,6 @@ int main()
 	PyRun_SimpleString("print('Hello din acest fisier')");
 
 	Py_Finalize();*/
-
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
@@ -301,6 +309,9 @@ Enter an option: ";
 			break;
 		case 'v':
 			displayWatchedList(consoleInputController);
+			break;
+		case 'r':
+			recommendToUser();
 			break;
 		case 'w':
 			displayWishList(consoleInputController);

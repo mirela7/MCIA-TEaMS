@@ -25,7 +25,11 @@ public:
 			displayed_paginator.push_back(NamedAsciiChars::GUILLEMET_LEFT);
 			displayed_paginator.push_back(' ');
 		}
-		displayed_paginator = displayed_paginator + "Page " + std::to_string(page.GetNmbCurrentPage() + 1) + "/" + std::to_string(page.GetNmbPages()) + " ";
+
+		displayed_paginator = displayed_paginator + "Page " + std::to_string(page.GetNmbCurrentPage() + 1);
+		if (page.GetNmbPages() != DBPage<TEntity>::NMB_PAGES_VALUE_NOT_NUMBERED)
+			displayed_paginator = displayed_paginator + "/" + std::to_string(page.GetNmbPages()) + " ";
+		else displayed_paginator.push_back(' ');
 		if (page.GetNmbCurrentPage() != page.GetNmbPages() - 1)
 		{
 			displayed_paginator.push_back(NamedAsciiChars::GUILLEMET_RIGHT);
@@ -44,6 +48,9 @@ public:
 		out << '\n';
 		return out;
 	}
+
+public:
+	static const uint8_t NMB_PAGES_VALUE_NOT_NUMBERED = -1;
 private:
 	std::vector<TEntity> m_results;
 	int m_nmbPages;

@@ -33,13 +33,14 @@ void AuthService::RegisterUserProcess(User& user)
 		throw e;
 	}
 
-	std::cout << "Welcome, " << user.GetName() << "! Please rate some movies first: \n\n";
 	std::ifstream f;
 	f.open(PATH_QUESTIONS_FILE.c_str());
 	if (f.fail() || f.bad()) {
 		DatabaseManagement::GetInstance().GetStorage().rollback();
-		throw std::runtime_error(FILE_NOT_OPENED.c_str());
+		throw CodedException(OperationStatus::Code::RES_NOT_FOUND, "An error occured. Please try again later.");
 	}
+
+	std::cout << "Welcome, " << user.GetName() << "! Please rate some movies first: \n\n";
 	uint32_t id_movie;
 	std::string srating;
 	float rating;
@@ -136,7 +137,9 @@ void AuthService::StartAuthProcess()
 			if (isRegistering) {
 				if (e.GetMessage() == "username")
 					std::cout << validate.UsernameErrorMessage(e.GetCode());
-				else std::cout << validate.PasswordErrorMessage(e.GetCode());
+				else if (e.GetMessage() == "password")
+					std::cout << validate.PasswordErrorMessage(e.GetCode());
+				else std::cout << e.what();
 				std::cout << PLEASE_RETRY;
 			}
 			else std::cout << e.what() << "\n\n";
