@@ -7,7 +7,8 @@ class Movie
 {
 public:
 	Movie();
-	Movie(const uint32_t id, const std::string& title, const uint16_t releaseYear, const float rating);
+	Movie(const uint32_t id, const std::string& title, const uint16_t releaseYear);
+
 	Movie(const Movie& movie);
 	Movie(Movie&& movie) noexcept;
 
