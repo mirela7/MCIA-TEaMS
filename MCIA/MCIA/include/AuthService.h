@@ -18,7 +18,7 @@ public:
 	static int GetConnectedUserId();
 	static std::string GetConnectedUserName();
 	static void StartAuthProcess();
-
+    static std::vector<uint16_t> GetRecommendedMoviesForCurrentUser();
 private:
 	static std::unique_ptr<User> m_connectedUser;
 };

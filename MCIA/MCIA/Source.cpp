@@ -13,6 +13,8 @@
 #include "include/ConsoleInputController.h"
 #include "include/RecomSystem.h"
 #include <cstdlib>
+#include <thread>
+#include <future>
 #include <Python.h>
 
 using namespace sqlite_orm;
@@ -158,12 +160,11 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 int main()
 {
     
-	RecomSystem recom;
-    auto vec = recom.getRecommendedMovies(0, 10, 5);
-    for(auto& el: vec)
-        std::cout<<el<<" ";
-
-
+//	RecomSystem recom;
+//	recom.updateModelByUserReview(1, 1, 2.6);
+//    auto vec = recom.getRecommendedMovies(0, 10, 5);
+//    for(auto& el: vec)
+//        std::cout<<el<<" ";
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
@@ -173,6 +174,7 @@ int main()
 	AuthService::StartAuthProcess();
 	system("CLS");
 	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
+
 	while (true)
 	{
 		std::cout << "Please choose what to do : \n \
@@ -218,6 +220,15 @@ Enter an option: ";
 		case 'x':
 			AuthService::LogOut();
 			break;
+        case 'r': {
+
+            auto moviesId = AuthService::GetRecommendedMoviesForCurrentUser();
+            std::cout << "[" << " ";
+            for (auto &id: moviesId)
+                std::cout << id << " ";
+            std::cout << "]" << " ";
+            break;
+        }
 		default:
 			std::cout << "Invalid option.\n";
 			break;

@@ -7,7 +7,7 @@
 PyObjectWrapper::PyObjectWrapper(PyObject *pyObject) { m_pobj = pyObject; }
 
 PyObjectWrapper::~PyObjectWrapper() {
-    Py_DECREF(m_pobj);
+    //Py_DECREF(m_pobj);
 }
 
 PyObject *PyObjectWrapper::GetPyObj() const {

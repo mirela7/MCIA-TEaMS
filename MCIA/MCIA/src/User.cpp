@@ -1,4 +1,7 @@
 #include "../include/User.h"
+#include "../include/RecomSystem.h"
+#include <thread>
+#include <iostream>
 
 User::User(const uint16_t& id, const std::string& name, const std::string& password)
 	: m_id(id)
@@ -82,4 +85,20 @@ void User::SetId(uint16_t id)
 std::ostream& operator<<(std::ostream& g, const User& u)
 {
 	return g << u.m_id << " " << u.m_name;
+}
+
+void User::StartPopulatingRecommendedMovies() {
+    auto getRecommendedMoviesTask = [&](){
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+        return RecomSystem::GetInstance().getRecommendedMovies(GetId(), 100, 10);
+    };
+    m_recommendedMoviesFuture = std::async(std::launch::async, getRecommendedMoviesTask);
+}
+
+
+std::vector<uint16_t> User::GetRecommendedMovies() {
+    //either return the result, or wait for the thread to finish
+    if(m_recommendedMovies.empty())
+        m_recommendedMovies = std::move(m_recommendedMoviesFuture.get());
+    return m_recommendedMovies;
 }

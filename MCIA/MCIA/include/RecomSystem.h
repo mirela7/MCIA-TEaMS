@@ -7,16 +7,21 @@
 //#include <Python.h>
 #include "../include/PyObjectWrapper.h"
 #include <vector>
+#include <cstdint>
 
 class RecomSystem {
 public:
-    RecomSystem();
+    RecomSystem(RecomSystem&) = delete;
 
-    std::vector<int> getRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend);
+    static RecomSystem& GetInstance();
+
+    std::vector<uint16_t> getRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend);
     void updateModelByUserReview(int userId, int movieId, float rating);
     ~RecomSystem();
 
 private:
+    RecomSystem();
+
     PyObjectWrapper m_moduleName; // the module
     PyObjectWrapper m_module; // the module
     PyObjectWrapper m_moduleDict; // the module

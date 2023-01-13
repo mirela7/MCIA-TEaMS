@@ -4,8 +4,8 @@
 #include <iostream>
 #include "../include/RecomSystem.h"
 
-std::vector<int> RecomSystem::getRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend) {
-    std::vector<int> res;
+std::vector<uint16_t> RecomSystem::getRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend) {
+    std::vector<uint16_t> res;
 
     PyObjectWrapper result{PyObject_CallFunction(m_recommendFunction, "iii", userId, batchSize, numMoviesToRecommend)};
     if(PyList_Check(result)){
@@ -51,4 +51,9 @@ RecomSystem::RecomSystem()
 
 RecomSystem::~RecomSystem() {
     Py_Finalize();
+}
+
+RecomSystem &RecomSystem::GetInstance() {
+    static RecomSystem recomSystem;
+    return recomSystem;
 }

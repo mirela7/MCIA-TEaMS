@@ -98,6 +98,7 @@ void AuthService::LoginUser(User& user)
 	if (user.GetPassword() != DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()).GetPassword())
 		throw CodedException(OperationStatus::Code::DB_USER_INVALID_PASSWORD, "Incorrect password.");
 	m_connectedUser = std::make_unique<User>(DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()));
+    m_connectedUser->StartPopulatingRecommendedMovies();
 }
 
 void AuthService::StartAuthProcess()
@@ -170,4 +171,8 @@ int AuthService::GetConnectedUserId() // TODO: throw exception if user isnt conn
 std::string AuthService::GetConnectedUserName()
 {
 	return m_connectedUser->GetName();
+}
+
+std::vector<uint16_t> AuthService::GetRecommendedMoviesForCurrentUser() {
+    return m_connectedUser->GetRecommendedMovies();
 }
