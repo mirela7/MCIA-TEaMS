@@ -15,18 +15,18 @@ public:
 
     static RecomSystem& GetInstance();
 
-    std::vector<uint16_t> getRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend);
-    void updateModelByUserReview(int userId, int movieId, float rating);
+    std::vector<uint16_t> GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend);
+    void UpdateModelByUserReview(int userId, int movieId, float rating);
     ~RecomSystem();
 
 private:
     RecomSystem();
 
-    PyObjectWrapper m_moduleName; // the module
+    PyObjectWrapper m_moduleName; // the module name
     PyObjectWrapper m_module; // the module
-    PyObjectWrapper m_moduleDict; // the module
+    PyObjectWrapper m_moduleDict; // the module dictionary
     PyObjectWrapper m_recommendFunction; // the function from the module : recommend_movies
-    PyObjectWrapper m_updateModelFunction; // the function from the module : recommend_movies
+    PyObjectWrapper m_updateModelFunction; // the function from the module : train_for_user
 
 private:
     const char* k_moduleName = "RecomSystemRatingBased"; //TODO: naming ref

@@ -4,7 +4,7 @@
 #include <iostream>
 #include "../include/RecomSystem.h"
 
-std::vector<uint16_t> RecomSystem::getRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend) {
+std::vector<uint16_t> RecomSystem::GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend) {
     std::vector<uint16_t> res;
 
     PyObjectWrapper result{PyObject_CallFunction(m_recommendFunction, "iii", userId, batchSize, numMoviesToRecommend)};
@@ -20,7 +20,7 @@ std::vector<uint16_t> RecomSystem::getRecommendedMovies(int userId, int batchSiz
     return res;
 }
 
-void RecomSystem::updateModelByUserReview(int userId, int movieId, float rating) {
+void RecomSystem::UpdateModelByUserReview(int userId, int movieId, float rating) {
     PyObjectWrapper result{PyObject_CallFunction(m_updateModelFunction, "iif", userId, movieId, rating)};
 }
 
