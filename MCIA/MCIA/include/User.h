@@ -26,7 +26,7 @@ public:
 	void SetId(uint16_t id);
 
     void StartPopulatingRecommendedMovies();
-
+    void StartUpdatingMovie(const uint32_t movieId, const float rating);
 
 	User& operator=(const User& user);
 	User& operator=(User&& other) noexcept;
@@ -42,5 +42,7 @@ private:
 	
 	std::future<std::vector<uint16_t>> m_recommendedMoviesFuture;
 	std::vector<uint16_t> m_recommendedMovies;
+
+    std::mutex m_mutexUpdateMovies;
 };
 

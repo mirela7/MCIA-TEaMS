@@ -25,13 +25,16 @@ private:
     PyObjectWrapper m_moduleName; // the module name
     PyObjectWrapper m_module; // the module
     PyObjectWrapper m_moduleDict; // the module dictionary
+
     PyObjectWrapper m_recommendFunction; // the function from the module : recommend_movies
-    PyObjectWrapper m_updateModelFunction; // the function from the module : train_for_user
+    PyObjectWrapper m_updateValuesForTrainFunction; // the function that updates the data for train : train_for_user
+    PyObjectWrapper m_retrainModel; // the function that retrains the model : retrain_last_values
 
 private:
     const char* k_moduleName = "RecomSystemRatingBased"; //TODO: naming ref
     const char* k_recommendFunctionName="recommend_movies";
-    const char* k_updateModelFunctionName="train_for_user";
+    const char* k_updateValuesForTrainFunctionName="train_for_user";
+    const char* k_updateModelFunctionName="retrain_last_values";
 };
 
 

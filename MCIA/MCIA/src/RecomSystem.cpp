@@ -21,7 +21,7 @@ std::vector<uint16_t> RecomSystem::GetRecommendedMovies(int userId, int batchSiz
 }
 
 void RecomSystem::UpdateModelByUserReview(int userId, int movieId, float rating) {
-    PyObjectWrapper result{PyObject_CallFunction(m_updateModelFunction, "iif", userId, movieId, rating)};
+    PyObjectWrapper result{PyObject_CallFunction(m_updateValuesForTrainFunction, "iif", userId, movieId, rating)};
 }
 
 RecomSystem::RecomSystem()
@@ -36,16 +36,20 @@ RecomSystem::RecomSystem()
     m_module.SetPyObj(PyImport_Import(m_moduleName));
     m_moduleDict.SetPyObj(PyModule_GetDict(m_module));
     m_recommendFunction.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_recommendFunctionName));
-    m_updateModelFunction.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_updateModelFunctionName));
+    m_retrainModel.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_updateModelFunctionName));
+    m_updateValuesForTrainFunction.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_updateValuesForTrainFunctionName));
 
     if(!m_module)
         PyErr_Print();
 
     if(!m_recommendFunction){
-        std::cout<<"Function does not exist!";
+        std::cout<<"Function" << k_recommendFunctionName<<" does not exist!";
     }
-    if(!m_updateModelFunction){
-        std::cout<<"Function does not exist!";
+    if(!m_updateValuesForTrainFunction){
+        std::cout<<"Function " << k_updateValuesForTrainFunctionName << " does not exist!";
+    }
+    if(!m_retrainModel){
+        std::cout<<"Function " << k_updateModelFunctionName << " does not exist!";
     }
 }
 

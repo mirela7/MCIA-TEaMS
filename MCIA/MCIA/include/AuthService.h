@@ -19,6 +19,7 @@ public:
 	static std::string GetConnectedUserName();
 	static void StartAuthProcess();
     static std::vector<uint16_t> GetRecommendedMoviesForCurrentUser();
+    static void UpdateRecomMoviesForCurrentUser(uint32_t movieId, float rating);
 private:
 	static std::unique_ptr<User> m_connectedUser;
 };

@@ -176,3 +176,7 @@ std::string AuthService::GetConnectedUserName()
 std::vector<uint16_t> AuthService::GetRecommendedMoviesForCurrentUser() {
     return m_connectedUser->GetRecommendedMovies();
 }
+
+void AuthService::UpdateRecomMoviesForCurrentUser(uint32_t movieId, float rating) {
+    m_connectedUser->StartUpdatingMovie(movieId, rating);
+}
