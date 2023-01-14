@@ -2,7 +2,13 @@
 // Created by sorana on 1/11/2023.
 //
 #include <iostream>
+#include <fstream>
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 #include "../include/RecomSystem.h"
+
+const char* RecomSystem::RecomLogParser::k_pathToLogFile = "../../../../RecomSystem/logs/train_logs.txt";
 
 std::vector<uint16_t> RecomSystem::GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend) {
     std::vector<uint16_t> res;
@@ -22,6 +28,9 @@ std::vector<uint16_t> RecomSystem::GetRecommendedMovies(int userId, int batchSiz
 
 void RecomSystem::UpdateModelByUserReview(int userId, int movieId, float rating) {
     PyObjectWrapper result{PyObject_CallFunction(m_updateValuesForTrainFunction, "iif", userId, movieId, rating)};
+
+    if (RecomLogParser::toHours(RecomLogParser::getTimeSinceLastTrain()) > 2.0)
+        std::cout << "I shall start training;";
 }
 
 RecomSystem::RecomSystem()
@@ -60,4 +69,62 @@ RecomSystem::~RecomSystem() {
 RecomSystem &RecomSystem::GetInstance() {
     static RecomSystem recomSystem;
     return recomSystem;
+}
+
+std::string RecomSystem::RecomLogParser::getLastTrainingDate(char line[])
+{
+    std::string posInDay; // %H:%M:%S
+    std::string posInYear; // %Y-%m-%d
+
+    std::string fullLine(line);
+    size_t idxStartPosInDay = fullLine.find_last_of(' ');
+    size_t milliseconds = fullLine.find_last_of('.');
+    posInDay = fullLine.substr(idxStartPosInDay + 1, milliseconds - idxStartPosInDay - 1);
+    size_t idxStartYear = (fullLine.substr(0, idxStartPosInDay)).find_last_of(' ');
+    posInYear = fullLine.substr(idxStartYear + 1, idxStartPosInDay - idxStartYear);
+    return posInYear + " " + posInDay;
+}
+
+int RecomSystem::RecomLogParser::getTimeSinceLastTrain()
+{
+    std::ifstream f(k_pathToLogFile);
+    int timeSinceLastTrain = 0;
+
+    std::tm now{}; // current time
+    std::tm lastTrainTM{}; // last train time
+
+    // get last line from log file
+    char* buff = new char[78];
+    char* lastLine = new char[80];
+
+    while (f.getline(buff, 78)) {
+        strcpy_s(lastLine, 78, buff);
+    }
+
+    // get last train time
+    std::string lastTrainStr = getLastTrainingDate(lastLine);
+    std::istringstream ss(lastTrainStr);
+    ss >> std::get_time(&lastTrainTM, "%Y-%m-%d %H:%M:%S");
+
+    // get current time
+    std::time_t tNow = std::time(0);   // get time now
+    now = *std::localtime(&tNow);
+
+    // convert to time since epoch
+    std::time_t lastTrainDate = std::mktime(&lastTrainTM);
+    std::time_t nowTime = std::mktime(&now);
+
+    // check conversion error
+    if (lastTrainDate == -1 || nowTime == -1) {
+        std::cout << "Error converting time"; //TODO: ADD EXCEPTION
+    }
+    else {
+        timeSinceLastTrain = std::difftime(nowTime, lastTrainDate);
+    }
+    return timeSinceLastTrain;
+}
+
+double RecomSystem::RecomLogParser::toHours(int epochTime)
+{
+    return epochTime / 3600.0;
 }

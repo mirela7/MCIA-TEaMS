@@ -31,6 +31,18 @@ private:
     PyObjectWrapper m_retrainModel; // the function that retrains the model : retrain_last_values
 
 private:
+    
+    class RecomLogParser {
+    public:
+        static std::string getLastTrainingDate(char line[]);
+        static int getTimeSinceLastTrain();
+        static double toHours(int epochTime);
+    private:
+        static const char* k_pathToLogFile;
+    };
+
+
+private:
     const char* k_moduleName = "RecomSystemRatingBased"; //TODO: naming ref
     const char* k_recommendFunctionName="recommend_movies";
     const char* k_updateValuesForTrainFunctionName="train_for_user";

@@ -46,7 +46,7 @@ def train_for_user(userId, movieId, rating):
 
 
 def retrain_last_values():
-    train_file = open('data/new_data.csv')
+    train_file = open('../../../../RecomSystem/data/new_data.csv')
     csvreader = csv.reader(train_file)
     userIds = []
     movieIds = []
@@ -58,15 +58,15 @@ def retrain_last_values():
         ratings.append(float(row[2]))
     train_file.close()
     train_started = datetime.now()
-    model = tensorflow.keras.models.load_model('saved_model/train600')
+    model = tensorflow.keras.models.load_model('../../../../RecomSystem/saved_model/train600')
     model.compile(optimizer='adam', loss='mean_absolute_error', metrics=['mean_absolute_percentage_error'])
     model.fit(x=(np.array(userIds), np.array(movieIds)), y=np.array(ratings), verbose=1)
-    model.save('saved_model/train600')
+    model.save('../../../../RecomSystem/saved_model/train600')
     train_ended = datetime.now()
 
-    with open('logs/train_logs.txt', 'a') as file:
+    with open('../../../../RecomSystem/logs/train_logs.txt', 'a') as file:
         file.write('Train started %s and ended %s\n' % (train_started, train_ended))
-    print('trained model!')
+    # print('trained model!')
 
 
 if __name__ == '__main__':
