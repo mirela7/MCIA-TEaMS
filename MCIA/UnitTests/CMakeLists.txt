@@ -17,12 +17,29 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 	FetchContent_MakeAvailable(googletest)
 	add_library(GTest::GTest INTERFACE IMPORTED)
 	target_link_libraries(GTest::GTest INTERFACE gtest_main)
+else()
+	find_package(GTest REQUIRED)
+	include(GoogleTest)
 endif()
 
 add_executable(
   testing
-  tests/UserTests.cpp  
   tests/CodedExceptionTests.cpp
+  tests/ConsoleInputControllerTests.cpp
+  tests/DBPageTests.cpp
+  tests/DBValidationTests.cpp
+  tests/GenreTests.cpp
+  tests/MovieGenreTests.cpp
+  tests/MovieInformationDisplayerTests.cpp
+  tests/MovieIntermediaryTests.cpp
+  tests/MovieTests.cpp
+  tests/OperationStatusTests.cpp
+  tests/OperationStatusToMessageTests.cpp
+  tests/UserTests.cpp
+  tests/WatchedMovieDisplayerTests.cpp
+  tests/WatchedMovieTests.cpp
+  tests/WishlistedMovieDisplayerTests.cpp
+  tests/WishlistedMovieTests.cpp
   Source.cpp)
 
  target_link_libraries(testing 

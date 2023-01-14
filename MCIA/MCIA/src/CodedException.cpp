@@ -1,23 +1,21 @@
 #include "../include/CodedException.h"
+#include <cstring>
 
 CodedException::CodedException(const char* code, const char* message)
+	:exception(std::string("[" + std::string(code) + "]" + message).c_str())
 {
-	m_message = "[" + std::string(code) + "]" + message;
+	m_code = OperationStatus::StringToCode(code);
 }
 
 CodedException::CodedException(const OperationStatus::Code code, const std::string& message)
+	:exception(std::string("[" + OperationStatus::CodeToString(code) + "]" + message).c_str())
 {
-	m_message = "[" + std::string(OperationStatus(code)) + "]" + message;
+	m_code = code;
 }
 
-CodedException::CodedException(const std::string& code, const std::string& message)
-	: m_message("[" + code + "]" + message)
+OperationStatus::Code CodedException::GetCode() const
 {
-}
-
-std::string CodedException::GetCode() const
-{
-	return m_message.substr(1, m_message.find_first_of("]") - 1);
+	return m_code;
 }
 
 std::string CodedException::GetWhat() const
@@ -34,9 +32,10 @@ std::string CodedException::GetMessage() const
 
 CodedException::~CodedException() noexcept
 {
+
 }
 
 const char* CodedException::what() const noexcept
 {
-	return m_message.c_str();
+	return exception::what();
 }

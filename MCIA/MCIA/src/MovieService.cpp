@@ -1,6 +1,6 @@
 #include "../include/MovieService.h"
 
-DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(uint32_t userId, int page, int nmbRowsPerPage)
+DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(const uint16_t userId, const int page, const int nmbRowsPerPage)
 {
 	/* SELECT watched_movie.movie_id as mid, watched_movie.user_id as uid, movie.title, genre.name FROM watched_movie
 		JOIN movie ON watched_movie.movie_id = movie.id
@@ -8,7 +8,7 @@ DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(uint32_t user
 		JOIN genre on movie_genre.genre_id = genre.id
 		WHERE user_id = userId */
 
-	int totalPages = std::ceil(DatabaseManagement::GetInstance().GetStorage().count<WatchedMovie>(
+	int totalPages = (int) std::ceil(DatabaseManagement::GetInstance().GetStorage().count<WatchedMovie>(
 		where(c(&WatchedMovie::GetUserId) == userId)) * 1.0 / nmbRowsPerPage
 	);
 
@@ -29,7 +29,41 @@ DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(uint32_t user
 	return DBPage<WatchedMovieDisplayer>(simplifiedPageResults, totalPages, page);
 }
 
-MovieInformationDisplayer MovieService::GetMovieInformations(uint32_t id)
+DBPage<WishlistedMovieDisplayer> MovieService::GetWishListOfUser(const uint16_t userId, const int page, const int nmbRowsPerPage)
+{
+	int totalPages = std::ceil(DatabaseManagement::GetInstance().GetStorage().count<WishlistedMovie>(
+		where(c(&WishlistedMovie::GetUserId) == userId)) * 1.0 / nmbRowsPerPage
+	);
+
+	auto wishList = DatabaseManagement::GetInstance().GetStorage().select(
+		columns(&WishlistedMovie::GetMovieId, &WishlistedMovie::GetUserId, &Movie::GetTitle),
+		left_join<Movie>(on(c(&Movie::GetId) == &WishlistedMovie::GetMovieId)),
+		where(c(&WishlistedMovie::GetUserId) == userId),
+		limit(nmbRowsPerPage, offset(page * nmbRowsPerPage))
+	);
+
+	std::vector<WishlistedMovieDisplayer> simplifiedPageResults;
+
+	for (auto& movieTuple : wishList)
+	{
+		simplifiedPageResults.emplace_back(
+			std::move(std::get<0>(movieTuple)),
+			std::move(std::get<2>(movieTuple))
+		);
+	}
+
+	return DBPage<WishlistedMovieDisplayer>(simplifiedPageResults, totalPages, page);
+}
+
+DBPage<Movie> MovieService::GetMovieListFromListOfIndices(const std::vector<uint32_t>& movieIds, const int page)
+{
+	auto movieVector = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(
+		where(in(&Movie::GetId, movieIds))
+	);
+	return DBPage<Movie>(movieVector, DBPage<Movie>::NMB_PAGES_VALUE_NOT_NUMBERED, page);
+}
+
+MovieInformationDisplayer MovieService::GetMovieInformations(const uint32_t id)
 {
 	/*
 	SELECT *  movie.title, movie.release_year, genre.name FROM movie
@@ -45,7 +79,44 @@ MovieInformationDisplayer MovieService::GetMovieInformations(uint32_t id)
 	);
 	MovieInformationDisplayer movieInfoDisplayer(id, std::get<0>(informationRows[0]), std::get<1>(informationRows[0]));
 	for (auto& row : informationRows) {
-		movieInfoDisplayer.addGenre(std::move(std::get<2>(row)));
+		movieInfoDisplayer.AddGenre(std::move(std::get<2>(row)));
 	}
 	return movieInfoDisplayer;
+}
+
+void MovieService::AddMovieToWatchlist(const uint16_t userId, const uint32_t movieId, const float rating)
+{
+	WatchedMovie watchedMovie(userId, movieId, rating);
+	DatabaseManagement::GetInstance().GetStorage().replace<WatchedMovie>(watchedMovie);
+}
+
+void MovieService::RemoveMovieFromWatchlist(const uint16_t userId, const uint32_t movieId)
+{
+	DatabaseManagement::GetInstance().GetStorage().remove<WatchedMovie>(userId, movieId);
+}
+
+void MovieService::AddMovieToWishlist(const uint16_t userId, const uint32_t movieId)
+{
+	WishlistedMovie wishlistMovie(userId, movieId);
+	DatabaseManagement::GetInstance().GetStorage().replace<WishlistedMovie>(wishlistMovie);
+}
+
+void MovieService::RemoveMovieFromWishlist(const uint16_t userId, const uint32_t movieId)
+{
+	DatabaseManagement::GetInstance().GetStorage().remove<WishlistedMovie>(userId, movieId);
+}
+
+void MovieService::MoveMovieFromWishlistToWatched(const uint16_t userId, const uint32_t movieId, const float rating)
+{
+	WatchedMovie watchedMovie(userId, movieId, rating);
+	DatabaseManagement::GetInstance().GetStorage().begin_transaction();
+	try {
+		DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
+		DatabaseManagement::GetInstance().GetStorage().remove<WishlistedMovie>(userId, movieId);
+		DatabaseManagement::GetInstance().GetStorage().commit();
+	}
+	catch (std::exception e) {
+		DatabaseManagement::GetInstance().GetStorage().rollback();
+		throw e;
+	}
 }

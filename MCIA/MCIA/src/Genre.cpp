@@ -2,7 +2,8 @@
 #include "../include/DatabaseManagement.h"
 
 Genre::Genre(const std::string& name)
-	:m_name(name)
+	: m_name(name)
+	, m_id(0)
 {}
 
 Genre::Genre(const uint16_t id, const std::string& name)
@@ -45,7 +46,7 @@ void Genre::ParseGenres()
 		std::string genre = "";
 		for (int i = 0; i < name.size(); i++)
 		{
-			if (name[i] == '|')
+			if (name[i] == '|' || i == name.size() - 1)
 			{
 				Genre g(id, genre);
 				auto genres = storage.select(columns(&Genre::GetName));
@@ -65,25 +66,6 @@ void Genre::ParseGenres()
 				i++;
 			}
 			genre.push_back(name[i]);
-			if (i == name.size() - 1)
-			{
-				Genre g(id, genre);
-				auto genres = storage.select(columns(&Genre::GetName));
-				for (auto& genreName : genres)
-				{
-					if (get<0>(genreName) == genre)
-					{
-						OK = 1;
-					}
-				}
-				if (OK == 0)
-				{
-					DatabaseManagement::GetInstance().InsertElement(g);
-					id++;
-				}
-				genre = "";
-				i++;
-			}
 		}
 		count++;
 		if (count % 1000 == 0)

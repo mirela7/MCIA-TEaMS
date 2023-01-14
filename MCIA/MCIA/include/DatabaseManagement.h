@@ -14,7 +14,7 @@
 #include "MovieIntermediary.h"
 #include "Genre.h"
 #include "WatchedMovie.h"
-#include "WishList.h"
+#include "WishlistedMovie.h"
 #include "MovieGenre.h"
 
 /* Others */
@@ -66,10 +66,7 @@ namespace {
                 &Movie::SetTitle)
             , make_column("release_year",
                 &Movie::GetReleaseYear,
-                &Movie::SetReleaseYear)
-            , make_column("rating",
-                &Movie::GetRating,
-                &Movie::SetRating));
+                &Movie::SetReleaseYear));
         return el;
     }
 
@@ -126,14 +123,14 @@ namespace {
     {
         static auto el = make_table("wishlist"
             , make_column("user_id",
-                &WishList::GetUserId,
-                &WishList::SetUserId,
-                foreign_key(&WishList::GetUserId).references(&User::GetId))
+                &WishlistedMovie::GetUserId,
+                &WishlistedMovie::SetUserId,
+                foreign_key(&WishlistedMovie::GetUserId).references(&User::GetId))
             , make_column("movie_id",
-                &WishList::GetMovieId,
-                &WishList::SetMovieId,
-                foreign_key(&WishList::GetMovieId).references(&Movie::GetId))
-            , primary_key(&WishList::GetUserId, &WishList::GetMovieId)
+                &WishlistedMovie::GetMovieId,
+                &WishlistedMovie::SetMovieId,
+                foreign_key(&WishlistedMovie::GetMovieId).references(&Movie::GetId))
+            , primary_key(&WishlistedMovie::GetUserId, &WishlistedMovie::GetMovieId)
         );
 
         return el;
@@ -169,6 +166,9 @@ public:
     template<typename T>
     T GetElementById(const int32_t id, bool throwIfNotFound = false);
 
+    template<class T>
+    OperationStatus IdExists(const int id);
+
     template<typename TEntity, typename TValue>
     TEntity GetElementByColumnValue(TValue (TEntity::*getter)() const, TValue value, bool throwIfNotFound = true);
 
@@ -194,6 +194,7 @@ int32_t DatabaseManagement::InsertElement(const T& el)
     }
     catch (std::exception e) {
         std::cout << e.what();
+        return -1;
     }
 }
 
@@ -209,6 +210,15 @@ inline T DatabaseManagement::GetElementById(const int32_t id, bool throwIfNotFou
     };
 }
 
+template<class T>
+inline OperationStatus DatabaseManagement::IdExists(const int id)
+{
+    auto search_element = m_storage.get_all<T>(where(c(&T::GetId) == id));
+    if (!search_element.size())
+        return OperationStatus::DB_INVALID_ID;
+    return OperationStatus::SUCCESS;
+}
+
 template<typename TEntity, typename TValue>
 inline TEntity DatabaseManagement::GetElementByColumnValue(TValue(TEntity::* getter)() const, TValue value, bool throwIfNotFound)
 {
@@ -222,7 +232,7 @@ inline TEntity DatabaseManagement::GetElementByColumnValue(TValue(TEntity::* get
 template<class TEntity, class sqlite_expression>
 inline DBPage<TEntity> DatabaseManagement::PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters)
 {
-    int totalPages = std::ceil(m_storage.count<TEntity>(where(filters)) * 1.0 / nmbRowsPerPage);
+    int totalPages = (int) std::ceil(m_storage.count<TEntity>(where(filters)) * 1.0 / nmbRowsPerPage);
     auto result = m_storage.get_all<TEntity>(where(filters), limit(nmbRowsPerPage, offset(idxOfPage * nmbRowsPerPage)));
     return DBPage<TEntity>(result, totalPages, idxOfPage);
 }

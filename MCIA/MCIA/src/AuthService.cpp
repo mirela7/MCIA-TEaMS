@@ -1,6 +1,7 @@
 #include "../include/AuthService.h"
 #include <sstream>
 #include <exception>
+#include "../include/MovieService.h"
 
 std::unique_ptr<User> AuthService::m_connectedUser = nullptr;
 
@@ -16,7 +17,7 @@ void AuthService::RegisterUser(User& user)
 		throw CodedException(pw_valid.GetCode(), "password");
 	if (ExistsUserWithUsername(user.GetName()))
 		throw CodedException("username", "A user with this username already exists.");
-	int insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
+	uint16_t insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
 	m_connectedUser = std::make_unique<User>(user);
 	m_connectedUser->SetId(insertedUserId);
 }
@@ -32,55 +33,50 @@ void AuthService::RegisterUserProcess(User& user)
 		throw e;
 	}
 
-	std::cout << "Welcome, " << user.GetName() << "! Please rate some movies first: \n\n";
 	std::ifstream f;
-	f.open("Questions.txt");
+	f.open(PATH_QUESTIONS_FILE.c_str());
 	if (f.fail() || f.bad()) {
 		DatabaseManagement::GetInstance().GetStorage().rollback();
-		throw std::runtime_error("[ResFileNotOpen] An error occured. Please try again later.\n");
+		throw CodedException(OperationStatus::Code::RES_NOT_FOUND, "An error occured. Please try again later.");
 	}
+
+	std::cout << "Welcome, " << user.GetName() << "! Please rate some movies first: \n\n";
 	uint32_t id_movie;
-	std::string genre, srating;
+	std::string srating;
 	float rating;
-	
-	while (f >> id_movie && f >> genre)
+
+	while (f >> id_movie)
 	{
-		auto movie = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(where(c(&Movie::GetId) == id_movie));
 		std::cout << "For the movie\n";
-		std::cout << movie[0].GetTitle() << " with the most relevant genres: " << genre <<"\n";
-		std::cout << "Please enter the rating between 1 and 5: \n";
+		MovieService ms;
+		MovieInformationDisplayer movieInfo = ms.GetMovieInformations(id_movie);
+		std::cout << movieInfo << '\n';
+
+		std::cout << PLEASE_ENTER_RATING;
 		//This checks if the rating for the movie to add in watched list table is valid or out of range.
 		while (true)
 		{
 			std::cin >> srating;
-			try
-			{
+			try {
 				size_t maximumRatingValueLenght = 3;
 				if (srating.size() <= maximumRatingValueLenght)
 				{
 					rating = std::stof(srating);
 					if (rating < 1.0f || rating > 5.0f)
-					{
-						std::cout << "\nOut of range rating.\n";
-						std::cout << "Please enter a valid rating value: \n";
-					}
+						std::cout << OUT_OF_RANGE_RATING;
 					else
 						break;
 				}
 				else
-				{
-					std::cout << "\nOut of range rating.\n";
-					std::cout << "Please enter a valid rating value: ";
-				}
+					std::cout << OUT_OF_RANGE_RATING;
 			}
 			catch (std::invalid_argument e)
 			{
-				std::cout << "\nOut of range rating.\n";
-				std::cout << "Please enter a valid rating value: ";
+				std::cout << OUT_OF_RANGE_RATING;
 			}
 		}
 
-		WatchedMovie watchedMovie(m_connectedUser->GetId(),id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
+		WatchedMovie watchedMovie(m_connectedUser->GetId(), id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
 		try {
 			DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
 		}
@@ -88,10 +84,12 @@ void AuthService::RegisterUserProcess(User& user)
 			std::cout << e.what();
 			DatabaseManagement::GetInstance().GetStorage().rollback();
 		}
+		system("CLS");
 	}
 	DatabaseManagement::GetInstance().GetStorage().commit();
 	f.close();
 }
+
 
 void AuthService::LoginUser(User& user)
 {
@@ -108,7 +106,7 @@ void AuthService::StartAuthProcess()
 	std::string name, pw;
 	auto& dbm = DatabaseManagement::GetInstance();
 
-	std::cout << "Please login before entering the application.\n";
+	std::cout << PLEASE_LOGIN;
 
 	while (true)
 	{
@@ -140,8 +138,10 @@ void AuthService::StartAuthProcess()
 			if (isRegistering) {
 				if (e.GetMessage() == "username")
 					std::cout << validate.UsernameErrorMessage(e.GetCode());
-				else std::cout << validate.PasswordErrorMessage(e.GetCode());
-				std::cout << "\n\nPlease retry:\n";
+				else if (e.GetMessage() == "password")
+					std::cout << validate.PasswordErrorMessage(e.GetCode());
+				else std::cout << e.what();
+				std::cout << PLEASE_RETRY;
 			}
 			else std::cout << e.what() << "\n\n";
 		}
@@ -163,7 +163,7 @@ void AuthService::LogOut()
 	StartAuthProcess();
 }	
 
-int AuthService::GetConnectedUserId() // TODO: throw exception if user isnt connected
+uint16_t AuthService::GetConnectedUserId() // TODO: throw exception if user isnt connected
 {
 	return m_connectedUser->GetId();
 }
