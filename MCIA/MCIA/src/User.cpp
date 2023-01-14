@@ -86,32 +86,3 @@ std::ostream& operator<<(std::ostream& g, const User& u)
 {
 	return g << u.m_id << " " << u.m_name;
 }
-
-void User::StartPopulatingRecommendedMovies() {
-    auto getRecommendedMoviesTask = [&](){
-		std::lock_guard<std::mutex> lockGuard{ m_mutexUpdateMovies };
-        //std::this_thread::sleep_for(std::chrono::seconds(5));
-        std::cout<<"recom"<<std::this_thread::get_id()<<"\n";
-        return RecomSystem::GetInstance().GetRecommendedMovies(GetId(), 100, 10);
-    };
-    m_recommendedMoviesFuture = std::async(std::launch::async, getRecommendedMoviesTask);
-}
-
-
-std::vector<uint16_t> User::GetRecommendedMovies() {
-    //either return the result, or wait for the thread to finish
-    if(m_recommendedMovies.empty())
-        m_recommendedMovies = std::move(m_recommendedMoviesFuture.get());
-    return m_recommendedMovies;
-}
-
-void User::StartUpdatingMovie(const uint32_t movieId, const float rating) {
-    auto updateRecommendedMoviesTask = [=](){
-        std::lock_guard<std::mutex> lockGuard{m_mutexUpdateMovies};
-        std::cout<<"starting to update "<<std::this_thread::get_id()<<"\n";
-        RecomSystem::GetInstance().UpdateModelByUserReview(GetId(), movieId, rating);
-        std::cout<<"finished updating "<<std::this_thread::get_id()<<"\n";
-    };
-    std::thread updateThread{updateRecommendedMoviesTask};
-	updateThread.detach();
-}

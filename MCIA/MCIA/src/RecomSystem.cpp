@@ -11,9 +11,10 @@
 const char* RecomSystem::RecomLogParser::k_pathToLogFile = "../../../../RecomSystem/logs/train_logs.txt";
 
 std::vector<uint16_t> RecomSystem::GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend) {
-    std::vector<uint16_t> res;
 
-    PyObjectWrapper result{PyObject_CallFunction(m_recommendFunction, "iii", userId, batchSize, numMoviesToRecommend)};
+   std::vector<uint16_t> res;
+
+    PyObject* result = PyObject_CallFunction(m_recommendFunction, "iii", userId, batchSize, numMoviesToRecommend);
     if(PyList_Check(result)){
         // okay, it's a list
         for (Py_ssize_t i = 0; i < PyList_Size(result); ++i) {
@@ -23,14 +24,23 @@ std::vector<uint16_t> RecomSystem::GetRecommendedMovies(int userId, int batchSiz
         }
     }
 
+
     return res;
 }
 
 void RecomSystem::UpdateModelByUserReview(int userId, int movieId, float rating) {
     PyObjectWrapper result{PyObject_CallFunction(m_updateValuesForTrainFunction, "iif", userId, movieId, rating)};
+    
+}
 
-    if (RecomLogParser::toHours(RecomLogParser::getTimeSinceLastTrain()) > 2.0)
-        std::cout << "I shall start training;";
+void RecomSystem::RetrainModel()
+{
+    PyObjectWrapper trainModel{ PyObject_CallNoArgs(m_retrainModel) };
+}
+
+bool RecomSystem::HasToRetrain()
+{
+    return RecomLogParser::toHours(RecomLogParser::getTimeSinceLastTrain()) > k_nmbHoursBetweenTrains;
 }
 
 RecomSystem::RecomSystem()
@@ -38,14 +48,14 @@ RecomSystem::RecomSystem()
     Py_Initialize();
 
     //surpress tensorflow warnings:
-    PyRun_SimpleString("import os");
-    PyRun_SimpleString("os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'");
+    //PyRun_SimpleString("import os");
+    //PyRun_SimpleString("os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'");
 
     m_moduleName.SetPyObj(PyUnicode_FromString(k_moduleName));
     m_module.SetPyObj(PyImport_Import(m_moduleName));
     m_moduleDict.SetPyObj(PyModule_GetDict(m_module));
     m_recommendFunction.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_recommendFunctionName));
-    m_retrainModel.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_updateModelFunctionName));
+    m_retrainModel.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_retrainModelFunctionName));
     m_updateValuesForTrainFunction.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_updateValuesForTrainFunctionName));
 
     if(!m_module)
@@ -58,12 +68,14 @@ RecomSystem::RecomSystem()
         std::cout<<"Function " << k_updateValuesForTrainFunctionName << " does not exist!";
     }
     if(!m_retrainModel){
-        std::cout<<"Function " << k_updateModelFunctionName << " does not exist!";
+        std::cout<<"Function " << k_retrainModelFunctionName << " does not exist!";
     }
+
+    //Py_Finalize();
 }
 
 RecomSystem::~RecomSystem() {
-    Py_Finalize();
+    //Py_Finalize();
 }
 
 RecomSystem &RecomSystem::GetInstance() {
@@ -94,11 +106,11 @@ int RecomSystem::RecomLogParser::getTimeSinceLastTrain()
     std::tm lastTrainTM{}; // last train time
 
     // get last line from log file
-    char* buff = new char[78];
-    char* lastLine = new char[80];
+    char* buff = new char[200];
+    char* lastLine = new char[205];
 
-    while (f.getline(buff, 78)) {
-        strcpy_s(lastLine, 78, buff);
+    while (f.getline(buff, 200)) {
+        strcpy_s(lastLine, 200, buff);
     }
 
     // get last train time

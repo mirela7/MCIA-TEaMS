@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 
-#include "User.h"
+#include "ConnectedUser.h"
 #include "DatabaseManagement.h"
 #include "DBValidation.h"
 
@@ -29,6 +29,6 @@ protected:
 	const std::string PLEASE_RETRY = "\n\nPlease retry:\n";
 
 private:
-	static std::unique_ptr<User> m_connectedUser;
+	static std::unique_ptr<ConnectedUser> m_connectedUser;
 };
 

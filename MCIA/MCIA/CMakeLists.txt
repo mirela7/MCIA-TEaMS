@@ -31,9 +31,11 @@ set(BACKEND_SOURCES
 		src/PyObjectWrapper.cpp
 		src/RecomSystem.cpp
 		src/User.cpp
+		src/UserRecomService.cpp
 		src/WatchedMovie.cpp
 		src/WatchedMovieDisplayer.cpp
 		src/WishlistedMovie.cpp
+		src/ConnectedUser.cpp
 		src/WishlistedMovieDisplayer.cpp)
 
 add_executable (MCIA 

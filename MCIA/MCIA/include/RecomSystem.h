@@ -17,6 +17,8 @@ public:
 
     std::vector<uint16_t> GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend);
     void UpdateModelByUserReview(int userId, int movieId, float rating);
+    void RetrainModel();
+    bool HasToRetrain();
     ~RecomSystem();
 
 private:
@@ -46,7 +48,9 @@ private:
     const char* k_moduleName = "RecomSystemRatingBased"; //TODO: naming ref
     const char* k_recommendFunctionName="recommend_movies";
     const char* k_updateValuesForTrainFunctionName="train_for_user";
-    const char* k_updateModelFunctionName="retrain_last_values";
+    const char* k_retrainModelFunctionName="retrain_last_values";
+
+    const double k_nmbHoursBetweenTrains = 2.0;
 };
 
 

@@ -1,4 +1,5 @@
 #include "../include/MovieService.h"
+#include "../include/AuthService.h"
 
 DBPage<WatchedMovieDisplayer> MovieService::GetWatchedMoviesOfUser(const uint16_t userId, const int page, const int nmbRowsPerPage)
 {
@@ -87,6 +88,7 @@ MovieInformationDisplayer MovieService::GetMovieInformations(const uint32_t id)
 void MovieService::AddMovieToWatchlist(const uint16_t userId, const uint32_t movieId, const float rating)
 {
 	WatchedMovie watchedMovie(userId, movieId, rating);
+	AuthService::UpdateRecomMoviesForCurrentUser(movieId, rating);
 	DatabaseManagement::GetInstance().GetStorage().replace<WatchedMovie>(watchedMovie);
 }
 

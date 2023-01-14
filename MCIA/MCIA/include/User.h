@@ -19,14 +19,11 @@ public:
 	std::string GetName() const;
 	std::string GetPassword() const;
 	uint16_t GetId() const;
-    std::vector<uint16_t> GetRecommendedMovies();
 
     void SetName(const std::string& name);
 	void SetPassword(const std::string& password);
 	void SetId(uint16_t id);
 
-    void StartPopulatingRecommendedMovies();
-    void StartUpdatingMovie(const uint32_t movieId, const float rating);
 
 	User& operator=(const User& user);
 	User& operator=(User&& other) noexcept;
@@ -39,10 +36,5 @@ private:
 	uint16_t m_id;
 	std::string m_name;
 	std::string m_password;
-	
-	std::future<std::vector<uint16_t>> m_recommendedMoviesFuture;
-	std::vector<uint16_t> m_recommendedMovies;
-
-    std::mutex m_mutexUpdateMovies;
 };
 
