@@ -10,7 +10,7 @@ TEST(DBPageTests, DefaultConstructor) {
 }
 
 TEST(DBPageTests, Constructor) {
-	Movie inserted(1, "Title", 2000, 5.0);
+	Movie inserted(1, "Title", 2000);
 	std::vector<Movie> mv;
 	mv.emplace_back(inserted);
 
@@ -22,7 +22,7 @@ TEST(DBPageTests, Constructor) {
 }
 
 TEST(DBPageTests, GetterResults) {
-	Movie inserted(1, "Title", 2000, 5.0);
+	Movie inserted(1, "Title", 2000);
 	std::vector<Movie> mv;
 	mv.emplace_back(inserted);
 	

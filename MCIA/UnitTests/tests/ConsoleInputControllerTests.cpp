@@ -48,13 +48,13 @@ void gatherMovieIdInvalidId(const std::vector<T>& page)
 	ConsoleInputController cic;
 
 	/* expects invalidId due to id not in page or in db */
-	std::string userInput("0 y 1 4");
+	std::string userInput("-1 y 1 4");
 	std::string expectedOutput;
 	expectedOutput.append(cic.OUT_PICK_ID);
 	expectedOutput.append(cic.OUT_ID_NOT_IN_PAGE_CONFIRM);
 	expectedOutput.append(cic.OUT_ASK_VALID_ID);
 
-	std::istringstream inputStream(userInput);
+	std::istringstream inputStream(userInput);  
 	std::ostringstream outputStream;
 
 	int validId = cic.gatherMovieIdFromUser(page, true, outputStream, inputStream);
@@ -70,7 +70,7 @@ TEST(ConsoleInputControllerTests, GatherMovieIdSizeInpage_General) {
 
 TEST(ConsoleInputControllerTests, GatherMovieIdSizeInpage_Specialized) {
 	std::vector<Movie> moviesInPage;
-	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+	moviesInPage.emplace_back(1, "TestTitle", 2000);
 	gatherMovieIdSizeInpage(moviesInPage);
 }
 
@@ -82,7 +82,7 @@ TEST(ConsoleInputControllerTests, GatherMovieIdlStoiNotPage_General) {
 
 TEST(ConsoleInputControllerTests, GatherMovieIdStoiNotPage_Specialized) {
 	std::vector<Movie> moviesInPage;
-	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+	moviesInPage.emplace_back(1, "TestTitle", 2000);
 	gatherMovieIdStoiNotPage(moviesInPage);
 }
 
@@ -95,13 +95,13 @@ TEST(ConsoleInputControllerTests, GatherMovieIdInvalidId_General) {
 
 TEST(ConsoleInputControllerTests, GatherMovieIdInvalidId_Specialized) {
 	std::vector<Movie> moviesInPage;
-	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+	moviesInPage.emplace_back(1, "TestTitle", 2000);
 	gatherMovieIdInvalidId(moviesInPage);
 }
 
 TEST(ConsoleInputControllerTests, GatherMovieRatingInfo) {
 	std::vector<Movie> moviesInPage;
-	moviesInPage.emplace_back(1, "TestTitle", 2000, 5.0);
+	moviesInPage.emplace_back(1, "TestTitle", 2000);
 	ConsoleInputController cic;
 
 	/* input valid id from start; 

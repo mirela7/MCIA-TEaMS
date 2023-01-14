@@ -66,10 +66,7 @@ namespace {
                 &Movie::SetTitle)
             , make_column("release_year",
                 &Movie::GetReleaseYear,
-                &Movie::SetReleaseYear)
-            , make_column("rating",
-                &Movie::GetRating,
-                &Movie::SetRating));
+                &Movie::SetReleaseYear));
         return el;
     }
 
