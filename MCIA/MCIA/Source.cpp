@@ -286,15 +286,6 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 	}
 }
 
-void recommendToUser()
-{
-	MovieService ms;
-	std::vector<uint32_t> mvIdsTest{ 1, 5, 10, 20 };
-	auto page = ms.GetMovieListFromListOfIndices(mvIdsTest, 1);
-	std::cout << page;
-}
-
-
 int main()
 {
 	char ch;
@@ -308,6 +299,7 @@ int main()
 	system("CLS");
 	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
 
+	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	while (true)
 	{
 		std::cout << "Please choose what to do : \n \
@@ -355,7 +347,7 @@ Enter an option: ";
         case 'r': {
 
             std::vector<uint32_t> moviesId = AuthService::GetRecommendedMoviesForCurrentUser();
-			auto moviesPage = ms.GetMovieListFromListOfIndices(moviesId, 0);
+			auto moviesPage = ms.ParseRecommendedMovies(connectedUserId, moviesId, 0);
             //std::cout << "[" << " ";
             //for (auto &id: moviesId)
             //    std::cout << id << " ";
