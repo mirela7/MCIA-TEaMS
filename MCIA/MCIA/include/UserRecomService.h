@@ -15,7 +15,7 @@ public:
     ~UserRecomService();
 
 public:
-    std::vector<uint16_t> GetRecommendedMovies();
+    std::vector<uint32_t> GetRecommendedMovies();
     void StartPopulatingRecommendedMovies();
     void StartUpdatingMovie(const uint32_t movieId, const float rating);
     void RetrainModel();
@@ -26,8 +26,8 @@ private:
 private:
     uint32_t m_currentUserId;
 
-    std::future<std::vector<uint16_t>> m_recommendedMoviesFuture;
-    std::vector<uint16_t> m_recommendedMovies;
+    std::future<std::vector<uint32_t>> m_recommendedMoviesFuture;
+    std::vector<uint32_t> m_recommendedMovies;
     std::mutex m_mutexUpdateMovies;
 
     std::ofstream m_logOutput;

@@ -17,7 +17,7 @@ public:
 	bool ExistsUserWithUsername(const std::string& username);
 	static uint16_t GetConnectedUserId();
 	static std::string GetConnectedUserName();
-    static std::vector<uint16_t> GetRecommendedMoviesForCurrentUser();
+    static std::vector<uint32_t> GetRecommendedMoviesForCurrentUser();
     static void UpdateRecomMoviesForCurrentUser(uint32_t movieId, float rating);
     void StartAuthProcess();
 

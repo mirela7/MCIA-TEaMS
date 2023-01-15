@@ -11,9 +11,9 @@
 const char* RecomSystem::RecomLogParser::k_pathToLogFile = "../../../../RecomSystem/logs/train_logs.txt";
 RecomSystem* RecomSystem::m_recomSystem = nullptr;
 
-std::vector<uint16_t> RecomSystem::GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend) {
+std::vector<uint32_t> RecomSystem::GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend) {
 
-   std::vector<uint16_t> res;
+   std::vector<uint32_t> res;
 
     PyObject* result = PyObject_CallFunction(m_recomFunction, "iii", userId, batchSize, numMoviesToRecommend);
     PyErr_Print();

@@ -24,7 +24,7 @@ void UserRecomService::StartPopulatingRecommendedMovies() {
 }
 
 
-std::vector<uint16_t> UserRecomService::GetRecommendedMovies() {
+std::vector<uint32_t> UserRecomService::GetRecommendedMovies() {
     if (m_recommendedMovies.empty()) {
         m_recommendedMovies = m_recommendedMoviesFuture.get();
     }

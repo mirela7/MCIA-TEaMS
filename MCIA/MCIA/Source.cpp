@@ -266,6 +266,7 @@ int main()
 	DBValidation validate;
 	ConsoleInputController consoleInputController;
 	AuthService authService;
+	MovieService ms;
 	authService.StartAuthProcess();
 	system("CLS");
 	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
@@ -315,11 +316,12 @@ Enter an option: ";
 			break;
         case 'r': {
 
-            auto moviesId = AuthService::GetRecommendedMoviesForCurrentUser();
-            std::cout << "[" << " ";
-            for (auto &id: moviesId)
-                std::cout << id << " ";
-            std::cout << "]" << " ";
+            std::vector<uint32_t> moviesId = AuthService::GetRecommendedMoviesForCurrentUser();
+			auto moviesPage = ms.GetMovieListFromListOfIndices(moviesId, 0);
+            //std::cout << "[" << " ";
+            //for (auto &id: moviesId)
+            //    std::cout << id << " ";
+            std::cout << moviesPage;
             break;
         }
 		default:

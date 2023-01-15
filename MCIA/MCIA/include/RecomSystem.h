@@ -23,7 +23,7 @@ public:
     static RecomSystem& GetInstance(bool forTrain = false);
     static void DestroyInstance();
 
-    std::vector<uint16_t> GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend);
+    std::vector<uint32_t> GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend);
     void UpdateModelByUserReview(int userId, int movieId, float rating);
     void RetrainModel();
     static bool HasToRetrain();

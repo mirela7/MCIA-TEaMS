@@ -178,7 +178,7 @@ std::string AuthService::GetConnectedUserName()
 	return m_connectedUser->GetUser().GetName();
 }
 
-std::vector<uint16_t> AuthService::GetRecommendedMoviesForCurrentUser() {
+std::vector<uint32_t> AuthService::GetRecommendedMoviesForCurrentUser() {
     return m_connectedUser->GetRecomService().GetRecommendedMovies();
 }
 
