@@ -16,10 +16,10 @@ public:
 	std::pair<uint32_t, float> gatherMovieRatingInfo(const std::vector<T>& displayedPage, const bool& allowMovieNotInPage = true, std::ostream& out = std::cout, std::istream& in = std::cin) const;
 
 public:
-	const std::string OUT_PICK_ID = "Please enter the id of the movie you want to pick: ";
+	const std::string OUT_PICK_ID = "Please enter the id of the movie you want to pick or [q] to quit: ";
 	const std::string OUT_ASK_VALID_ID = "Please enter a valid id, or press [q] to quit: ";
 	const std::string OUT_ID_NOT_IN_PAGE_CONFIRM = "This id doesn't appear to be on this page. Are you sure you want to proceed?\n [y]/[n]: ";
-	const std::string OUT_ID_NOT_IN_PAGE_NOT_ALLOWED = "This id doesn't appear to be on this page.\nPlease choose one that is displayed above: ";
+	const std::string OUT_ID_NOT_IN_PAGE_NOT_ALLOWED = "This id doesn't appear to be on this page.\nPlease choose one that is displayed above, or press [q] to quit: ";
 	const std::string OUT_PICK_RATING = "Please enter the rating between 1 and 5: ";
 	const std::string OUT_RATING_OUT_OF_RANGE = "Out of range rating.\nPlease enter a valid rating value: ";
 };

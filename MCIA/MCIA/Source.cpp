@@ -64,6 +64,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 				}
 				try {
 					ms.AddMovieToWatchlist(connectedUserId, movieIdRating.first, movieIdRating.second);
+					system("CLS");
 					std::cout << "Movie rating saved.\n";
 				}
 				catch (std::exception e) {
@@ -117,7 +118,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 void displayWatchedList(const ConsoleInputController& consoleInputController)
 {
 	auto showInstructions = [](){
-		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [d] remove movie from watchedlist\n [i] info about movie\n [x] back to menu\n";
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [i] info about movie\n [x] back to menu\n";
 		std::cout << "Input character: ";
 	};
 	MovieService ms;
@@ -146,31 +147,13 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 			wantedPage = std::min(wantedPage, result.GetNmbPages() - 1);
 			wantedPage = std::max(wantedPage, 0);
 			break;
-		case 'd':
+		case 'i':
 			{
-				if(result.IsPageEmpty()) {
-					system("CLS");
-					std::cout << "You cannot delete from an empty list.\n";
-					break;
-				}
 				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
 				if (movieId == UINT32_MAX) {
 					system("CLS");
 					break;
 				}
-				try {
-					ms.RemoveMovieFromWatchlist(connectedUserId, movieId);
-				}
-				catch (std::exception e) {
-					std::cout << e.what();
-				}
-				system("CLS");
-			}
-			break;
-		case 'i':
-			{
-				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
-				
 				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
 				std::cout << movieInfo << '\n';
 				showInstructions();
