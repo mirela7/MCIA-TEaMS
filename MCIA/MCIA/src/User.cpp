@@ -1,4 +1,7 @@
 #include "../include/User.h"
+#include "../include/RecomSystem.h"
+#include <thread>
+#include <iostream>
 
 User::User(const uint16_t& id, const std::string& name, const std::string& password)
 	: m_id(id)

@@ -2,8 +2,9 @@
 #include <sstream>
 #include <exception>
 #include "../include/MovieService.h"
+#include "../include/RecomSystem.h"
 
-std::unique_ptr<User> AuthService::m_connectedUser = nullptr;
+std::unique_ptr<ConnectedUser> AuthService::m_connectedUser = nullptr;
 
 
 void AuthService::RegisterUser(User& user)
@@ -18,8 +19,8 @@ void AuthService::RegisterUser(User& user)
 	if (ExistsUserWithUsername(user.GetName()))
 		throw CodedException("username", "A user with this username already exists.");
 	uint16_t insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
-	m_connectedUser = std::make_unique<User>(user);
-	m_connectedUser->SetId(insertedUserId);
+	m_connectedUser = std::make_unique<ConnectedUser>(user);
+	m_connectedUser->GetUser().SetId(insertedUserId);
 }
 
 void AuthService::RegisterUserProcess(User& user)
@@ -76,7 +77,7 @@ void AuthService::RegisterUserProcess(User& user)
 			}
 		}
 
-		WatchedMovie watchedMovie(m_connectedUser->GetId(), id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
+		WatchedMovie watchedMovie(m_connectedUser->GetUser().GetId(), id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
 		try {
 			DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
 		}
@@ -95,7 +96,8 @@ void AuthService::LoginUser(User& user)
 {
 	if (user.GetPassword() != DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()).GetPassword())
 		throw CodedException(OperationStatus::Code::DB_USER_INVALID_PASSWORD, "Incorrect password.");
-	m_connectedUser = std::make_unique<User>(DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()));
+	m_connectedUser = std::make_unique<ConnectedUser>(DatabaseManagement::GetInstance().GetElementByColumnValue(&User::GetName, user.GetName()));
+    m_connectedUser->GetRecomService().StartPopulatingRecommendedMovies();
 }
 
 void AuthService::StartAuthProcess()
@@ -114,6 +116,10 @@ void AuthService::StartAuthProcess()
 		std::cout << "Password: ";
 		std::cin >> pw;
 
+		if (name == "x") {
+			exit(0);
+		}
+			
 		User user(name, pw);
 		isRegistering = false;
 
@@ -164,10 +170,18 @@ void AuthService::LogOut()
 
 uint16_t AuthService::GetConnectedUserId() // TODO: throw exception if user isnt connected
 {
-	return m_connectedUser->GetId();
+	return m_connectedUser->GetUser().GetId();
 }
 
 std::string AuthService::GetConnectedUserName()
 {
-	return m_connectedUser->GetName();
+	return m_connectedUser->GetUser().GetName();
+}
+
+std::vector<uint32_t> AuthService::GetRecommendedMoviesForCurrentUser() {
+    return m_connectedUser->GetRecomService().GetRecommendedMovies();
+}
+
+void AuthService::UpdateRecomMoviesForCurrentUser(uint32_t movieId, float rating) {
+    m_connectedUser->GetRecomService().StartUpdatingMovie(movieId, rating);
 }

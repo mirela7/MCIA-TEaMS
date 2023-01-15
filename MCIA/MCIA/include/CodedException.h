@@ -18,5 +18,6 @@ public:
 
 protected:
 	OperationStatus::Code m_code;
+    std::string m_message;
 };
 

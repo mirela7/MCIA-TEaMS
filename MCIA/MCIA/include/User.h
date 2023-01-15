@@ -3,6 +3,8 @@
 #include <string>
 #include <cstdint>
 #include <fstream>
+#include <vector>
+#include <future>
 
 
 class User
@@ -18,9 +20,10 @@ public:
 	std::string GetPassword() const;
 	uint16_t GetId() const;
 
-	void SetName(const std::string& name);
+    void SetName(const std::string& name);
 	void SetPassword(const std::string& password);
 	void SetId(uint16_t id);
+
 
 	User& operator=(const User& user);
 	User& operator=(User&& other) noexcept;
@@ -33,7 +36,5 @@ private:
 	uint16_t m_id;
 	std::string m_name;
 	std::string m_password;
-	
-	
 };
 

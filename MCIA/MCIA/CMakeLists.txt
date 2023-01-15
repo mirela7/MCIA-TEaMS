@@ -7,21 +7,10 @@ cmake_minimum_required (VERSION 3.8)
 
 find_package(SqliteOrm REQUIRED)
 
-# set(CMAKE_PREFIX_PATH $CONDA_PREFIX)
-# find_package (PythonLibs REQUIRED)
-# message(WARNING ${PYTHON_LIBRARIES})
-
-set(wanted_path_source "${CMAKE_CURRENT_SOURCE_DIR}")
-cmake_path(GET wanted_path_source PARENT_PATH PARENT_DIRS)
-cmake_path(GET PARENT_DIRS PARENT_PATH base_folder)
-message(WARNING ${base_folder})
-
-# set($ENV{PYTHONHOME} "C:\\Users\\sorana\\.conda\\envs\\recomsys")
-# set($ENV{PYTHONPATH} "C:\\Users\\sorana\\.conda\\envs\\recomsys;${base_folder}\\RecomSystem")
-# set($ENV{PYTHON_INCLUDE_DIR} "C:\\Users\\sorana\\.conda\\envs\\recomsys\\include")
-# set($ENV{PYTHON_LIBRARY} "C:\\Users\\sorana\\.conda\\envs\\recomsys\\libs")
-
-
+set(CMAKE_PREFIX_PATH $CONDA_PREFIX)
+find_package (PythonLibs REQUIRED)
+message(STATUS "Found python libraries: ${PYTHON_LIBRARIES}")
+message(STATUS "Found python includeDirs: ${PYTHON_INCLUDE_DIRS}")
 
 set(BACKEND_SOURCES
 		include/NamedAsciiChars.h
@@ -39,10 +28,14 @@ set(BACKEND_SOURCES
 		src/MovieIntermediary.cpp
 		src/OperationStatus.cpp
 		src/OperationStatusToMessage.cpp
+		src/PyObjectWrapper.cpp
+		src/RecomSystem.cpp
 		src/User.cpp
+		src/UserRecomService.cpp
 		src/WatchedMovie.cpp
 		src/WatchedMovieDisplayer.cpp
 		src/WishlistedMovie.cpp
+		src/ConnectedUser.cpp
 		src/WishlistedMovieDisplayer.cpp)
 
 add_executable (MCIA 
@@ -60,24 +53,19 @@ endif()
 set(wanted_path "${CMAKE_CURRENT_BINARY_DIR}")
 cmake_path(GET wanted_path PARENT_PATH PARENT_DIR)
 message("Where to look for Validator: ${PARENT_DIR}")
+
 # link libraries
 target_link_libraries(MCIA
         PRIVATE sqlite_orm::sqlite_orm
 		PUBLIC Validator
-		# PUBLIC ${PYTHON_LIBRARIES}
+		PUBLIC ${PYTHON_LIBRARIES}
         )
-
-#target_link_directories(MCIA
-#		PRIVATE ${PYTHON_LIBRARIES})
 
 target_link_libraries(MCIALib
         PRIVATE sqlite_orm::sqlite_orm
 		PUBLIC Validator
-		# PRIVATE ${PYTHON_LIBRARIES}
+		PRIVATE ${PYTHON_LIBRARIES}
         )
 
-# target_link_directories(MCIALib
-#		PRIVATE ${PYTHON_LIBRARIES})
-
-target_include_directories(MCIALib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/)
-# target_include_directories(MCIA PRIVATE ${PYTHON_INCLUDE_DIRS})
+target_include_directories(MCIALib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/ PRIVATE ${PYTHON_INCLUDE_DIRS})
+target_include_directories(MCIA PRIVATE ${PYTHON_INCLUDE_DIRS})

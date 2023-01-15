@@ -11,8 +11,12 @@
 #include "include/OperationStatus.h"
 #include "include/MovieService.h"
 #include "include/ConsoleInputController.h"
-#include <stdlib.h>
-//#include <Python.h>
+#include "include/RecomSystem.h"
+#include <cstdlib>
+#include <thread>
+#include <future>
+#include <cstdlib>
+#include <Python.h>
 
 using namespace sqlite_orm;
 
@@ -256,23 +260,17 @@ void recommendToUser()
 
 int main()
 {
-	/*Py_Initialize();
-	PyRun_SimpleString("import os");
-	PyRun_SimpleString("print(\"PYTHONPATH:\", os.environ.get('PYTHONPATH'))");
-    PyRun_SimpleString("import data_import");
-    PyRun_SimpleString("data_import.test_function()");
-	PyRun_SimpleString("print('Hello din acest fisier')");
-
-	Py_Finalize();*/
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
 	DBValidation validate;
 	ConsoleInputController consoleInputController;
 	AuthService authService;
+	MovieService ms;
 	authService.StartAuthProcess();
 	system("CLS");
 	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
+
 	while (true)
 	{
 		std::cout << "Please choose what to do : \n \
@@ -310,15 +308,22 @@ Enter an option: ";
 		case 'v':
 			displayWatchedList(consoleInputController);
 			break;
-		case 'r':
-			recommendToUser();
-			break;
 		case 'w':
 			displayWishList(consoleInputController);
 			break;
 		case 'x':
 			authService.LogOut();
 			break;
+        case 'r': {
+
+            std::vector<uint32_t> moviesId = AuthService::GetRecommendedMoviesForCurrentUser();
+			auto moviesPage = ms.GetMovieListFromListOfIndices(moviesId, 0);
+            //std::cout << "[" << " ";
+            //for (auto &id: moviesId)
+            //    std::cout << id << " ";
+            std::cout << moviesPage;
+            break;
+        }
 		default:
 			std::cout << "Invalid option.\n";
 			break;

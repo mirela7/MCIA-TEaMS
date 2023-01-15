@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 
-#include "User.h"
+#include "ConnectedUser.h"
 #include "DatabaseManagement.h"
 #include "DBValidation.h"
 
@@ -17,7 +17,9 @@ public:
 	bool ExistsUserWithUsername(const std::string& username);
 	static uint16_t GetConnectedUserId();
 	static std::string GetConnectedUserName();
-	void StartAuthProcess();
+    static std::vector<uint32_t> GetRecommendedMoviesForCurrentUser();
+    static void UpdateRecomMoviesForCurrentUser(uint32_t movieId, float rating);
+    void StartAuthProcess();
 
 protected:
 	const std::string PATH_QUESTIONS_FILE = "..\\..\\..\\MCIA\\resources\\Questions.txt";
@@ -27,6 +29,6 @@ protected:
 	const std::string PLEASE_RETRY = "\n\nPlease retry:\n";
 
 private:
-	static std::unique_ptr<User> m_connectedUser;
+	static std::unique_ptr<ConnectedUser> m_connectedUser;
 };
 
