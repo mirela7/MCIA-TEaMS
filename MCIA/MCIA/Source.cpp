@@ -42,24 +42,24 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 		switch (ch)
 		{
 		case 'b':
-			//system("CLS");
+			system("CLS");
 			wantedPage = std::max(wantedPage - 1, 0);
 			break;
 		case 'n':
-			//system("CLS");
+			system("CLS");
 			wantedPage = std::min(wantedPage + 1, result.GetNmbPages() - 1);
 			break;
 		case 'j':
 			std::cout << "Choose page number: ";
 			std::cin >> wantedPage;
-			//system("CLS");
+			system("CLS");
 			wantedPage = std::min(wantedPage, result.GetNmbPages() - 1);
 			wantedPage = std::max(wantedPage, 0);
 			break;
 		case 'r':
 			{
 				std::pair<int, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults());
-				//system("CLS");
+				system("CLS");
 				try {
 					ms.AddMovieToWatchlist(connectedUserId, movieIdRating.first, movieIdRating.second);
 					std::cout << "Movie rating saved.\n";
@@ -83,7 +83,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
 				try {
 					ms.AddMovieToWishlist(connectedUserId, movieId);
-					//system("CLS");
+					system("CLS");
 					std::cout << "Movie added to wishlist.\n";
 				}
 				catch (std::exception e) {
@@ -92,7 +92,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			}
 			break;
 		case 'x':
-			//system("CLS");
+			system("CLS");
 			return;
 		default:
 			std::cout << "Input character: ";
@@ -122,17 +122,17 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 		switch (ch)
 		{
 		case 'b':
-			//system("CLS");
+			system("CLS");
 			wantedPage = std::max(wantedPage - 1, 0);
 			break;
 		case 'n':
-			//system("CLS");
+			system("CLS");
 			wantedPage = std::min(wantedPage + 1, result.GetNmbPages() - 1);
 			break;
 		case 'j':
 			std::cout << "Choose page number: ";
 			std::cin >> wantedPage;
-			//system("CLS");
+			system("CLS");
 			wantedPage = std::min(wantedPage, result.GetNmbPages() - 1);
 			wantedPage = std::max(wantedPage, 0);
 			break;
@@ -145,7 +145,7 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 				catch (std::exception e) {
 					std::cout << e.what();
 				}
-				//system("CLS");
+				system("CLS");
 			}
 			break;
 		case 'i':
@@ -158,7 +158,7 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 			}
 			break;
 		case 'x':
-			//system("CLS");
+			system("CLS");
 			return;
 		default:
 			std::cout << "Input character: ";
@@ -188,17 +188,17 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 		switch (ch)
 		{
 		case 'b':
-			//system("CLS");
+			system("CLS");
 			wantedPage = std::max(wantedPage - 1, 0);
 			break;
 		case 'n':
-			//system("CLS");
+			system("CLS");
 			wantedPage = std::min(wantedPage + 1, result.GetNmbPages() - 1);
 			break;
 		case 'j':
 			std::cout << "Choose page number: ";
 			std::cin >> wantedPage;
-			//system("CLS");
+			system("CLS");
 			wantedPage = std::min(wantedPage, result.GetNmbPages() - 1);
 			wantedPage = std::max(wantedPage, 0);
 			break;
@@ -211,7 +211,7 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 				catch (std::exception e) {
 					std::cout << e.what();
 				}
-				//system("CLS");
+				system("CLS");
 			}
 			break;
 		case 'i':
@@ -228,7 +228,7 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 			std::pair<int, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults(), false);
 			try {
 				ms.MoveMovieFromWishlistToWatched(connectedUserId, movieIdRating.first, movieIdRating.second);
-				//system("CLS");
+				system("CLS");
 				std::cout << "Movie rating saved.\n";
 			}
 			catch (std::exception e) {
@@ -237,7 +237,7 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 		}
 		break;
 		case 'x':
-			//system("CLS");
+			system("CLS");
 			return;
 		default:
 			std::cout << "Input character: ";
@@ -260,8 +260,6 @@ void recommendToUser()
 
 int main()
 {
-	
-    std::cout<<"source"<<std::this_thread::get_id()<<"\n";
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
@@ -269,7 +267,7 @@ int main()
 	ConsoleInputController consoleInputController;
 	AuthService authService;
 	authService.StartAuthProcess();
-	//system("CLS");
+	system("CLS");
 	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
 
 	while (true)
@@ -283,7 +281,7 @@ int main()
 [x] log out.\n\
 Enter an option: ";
 		std::cin >> ch;
-		//system("CLS");
+		system("CLS");
 		switch (ch) {
 		case 'a':
 		case 's':
@@ -295,7 +293,7 @@ Enter an option: ";
 					isSearching = true;
 					std::cout << "Please enter a movie name: ";
 					std::cin >> movieName;
-					//system("CLS");
+					system("CLS");
 				}
 				std::string query = "%" + movieName + "%";
 				auto allFilter = c(&Movie::GetId) >= 0;

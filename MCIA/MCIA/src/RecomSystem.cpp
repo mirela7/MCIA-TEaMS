@@ -60,8 +60,8 @@ RecomSystem::RecomSystem(bool forTrain)
     Py_Initialize();
 
     //surpress tensorflow warnings:
-    //PyRun_SimpleString("import os");
-    //PyRun_SimpleString("os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'");
+    PyRun_SimpleString("import os");
+    PyRun_SimpleString("os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'");
     if (forTrain) {
         InitOnlyRetrain();
         return;

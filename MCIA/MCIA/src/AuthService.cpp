@@ -117,7 +117,6 @@ void AuthService::StartAuthProcess()
 		std::cin >> pw;
 
 		if (name == "x") {
-			RecomSystem::DestroyInstance();
 			exit(0);
 		}
 			

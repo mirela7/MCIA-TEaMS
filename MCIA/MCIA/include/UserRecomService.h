@@ -5,11 +5,14 @@
 #ifndef MCIA_USERRECOMSERVICE_H
 #define MCIA_USERRECOMSERVICE_H
 #include <future>
+#include <fstream>
 #include <vector>
+#include <sstream>
+
 class UserRecomService {
-protected:
 public:
     UserRecomService(uint32_t userId);
+    ~UserRecomService();
 
 public:
     std::vector<uint16_t> GetRecommendedMovies();
@@ -18,12 +21,19 @@ public:
     void RetrainModel();
 
 private:
+    inline void WriteIntoLog(const std::string& content, bool append = true);
+
+private:
     uint32_t m_currentUserId;
 
     std::future<std::vector<uint16_t>> m_recommendedMoviesFuture;
     std::vector<uint16_t> m_recommendedMovies;
-
     std::mutex m_mutexUpdateMovies;
+
+    std::ofstream m_logOutput;
+    std::ostringstream m_helperStream;
+
+    const std::string k_pathToLog = "../../../../MCIA/MCIA/app_logs/logs.txt";
 };
 
 
