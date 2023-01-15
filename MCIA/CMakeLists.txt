@@ -8,11 +8,12 @@ enable_testing()
 
 set(CMAKE_CXX_STANDARD 14)
 message(STATUS "Compiler: ${CMAKE_CXX_COMPILER}")
+# set(PROFILING_FLAGS " -ftime-trace ")
 # set(COVERAGE_FLAGS " -coverage -fprofile-arcs -ftest-coverage")
 # SET(LCOV_COVERAGE_LINK_FLAGS " -lgcov --coverage")
 
-# string(APPEND CMAKE_C_FLAGS "${COVERAGE_FLAGS}")
-# string(APPEND CMAKE_CXX_FLAGS "${COVERAGE_FLAGS}")
+# string(APPEND CMAKE_C_FLAGS "${PROFILING_FLAGS}")
+# string(APPEND CMAKE_CXX_FLAGS "${PROFILING_FLAGS}")
 # SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${LCOV_COVERAGE_LINK_FLAGS}")
 
 # Include sub-projects.
