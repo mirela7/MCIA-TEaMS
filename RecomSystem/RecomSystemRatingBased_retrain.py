@@ -28,10 +28,9 @@ def retrain_last_values():
     train_file.close()
 
     # reset data
-    f = open('../../../../RecomSystem/data/new_data.csv', "w+")
-    writer = csv.writer(f)
-    writer.writerow(['userId', 'movieId', 'round'])
-    f.close()
+    with open('../../../../RecomSystem/data/new_data.csv', 'w+', newline='') as fd:
+        writer = csv.writer(fd)
+        writer.writerow(['userId', 'movieId', 'rating'])
 
     # with open('../../../../RecomSystem/logs/train_logs.txt', 'a') as file:
     #     file.write('Loading model started %s.' % datetime.now())
