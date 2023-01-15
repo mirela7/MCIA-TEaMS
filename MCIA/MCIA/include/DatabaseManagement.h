@@ -163,8 +163,8 @@ public:
     template<typename T>
     int32_t InsertElement(const T& el);
 
-    template<typename T>
-    T GetElementById(const int32_t id, bool throwIfNotFound = false);
+    template<typename T, typename T2>
+    T GetElementById(const T2& id);
 
     template<class T>
     OperationStatus IdExists(const int id);
@@ -198,15 +198,14 @@ int32_t DatabaseManagement::InsertElement(const T& el)
     }
 }
 
-template<typename T>
-inline T DatabaseManagement::GetElementById(const int32_t id, bool throwIfNotFound)
+template<typename T, typename T2>
+inline T DatabaseManagement::GetElementById(const T2& id)
 {
     try {
         return m_storage.get<T>(id);
     }
     catch (std::system_error e) {
-        if (throwIfNotFound) throw e;
-        return nullptr;
+        throw e;
     };
 }
 

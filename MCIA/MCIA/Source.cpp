@@ -20,7 +20,6 @@
 
 using namespace sqlite_orm;
 
-const int kNmbRows = 10;
 
 template<typename T>
 void displayTable(T filter, const ConsoleInputController& consoleInputController) 
@@ -32,7 +31,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 
 	char ch;
 	int wantedPage = 0;
-	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
+	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, DBPage<Movie>::DEFAULT_ROWS_NUMBER_PER_PAGE, filter);
 	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	MovieService ms;
 	std::cout << result;
@@ -98,7 +97,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			std::cout << "Input character: ";
 			continue;
 		}
-		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
+		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, DBPage<Movie>::DEFAULT_ROWS_NUMBER_PER_PAGE, filter);
 		std::cout << result;
 		showInstructions();
 	}
@@ -114,7 +113,7 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 	char ch;
 	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	int wantedPage = 0;
-	auto result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
+	auto result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, DBPage<WatchedMovieDisplayer>::DEFAULT_ROWS_NUMBER_PER_PAGE);
 	std::cout << result;
 	showInstructions();
 	while (std::cin >> ch)
@@ -164,7 +163,7 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 			std::cout << "Input character: ";
 			continue;
 		}
-		result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
+		result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, DBPage<WatchedMovieDisplayer>::DEFAULT_ROWS_NUMBER_PER_PAGE);
 		std::cout << result;
 		showInstructions();
 	}
@@ -180,7 +179,7 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 	char ch;
 	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	int wantedPage = 0;
-	auto result = ms.GetWishListOfUser(connectedUserId, wantedPage, kNmbRows);
+	auto result = ms.GetWishListOfUser(connectedUserId, wantedPage, DBPage<WishlistedMovieDisplayer>::DEFAULT_ROWS_NUMBER_PER_PAGE);
 	std::cout << result;
 	showInstructions();
 	while (std::cin >> ch)
@@ -243,7 +242,7 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 			std::cout << "Input character: ";
 			continue;
 		}
-		result = ms.GetWishListOfUser(connectedUserId, wantedPage, kNmbRows);
+		result = ms.GetWishListOfUser(connectedUserId, wantedPage, DBPage<WishlistedMovieDisplayer>::DEFAULT_ROWS_NUMBER_PER_PAGE);
 		std::cout << result;
 		showInstructions();
 	}

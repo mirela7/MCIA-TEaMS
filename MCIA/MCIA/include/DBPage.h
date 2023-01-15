@@ -51,6 +51,7 @@ public:
 
 public:
 	static const uint8_t NMB_PAGES_VALUE_NOT_NUMBERED = -1;
+	static const uint8_t DEFAULT_ROWS_NUMBER_PER_PAGE = 10;
 private:
 	std::vector<TEntity> m_results;
 	int m_nmbPages;
