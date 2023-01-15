@@ -25,7 +25,7 @@ template<typename T>
 void displayTable(T filter, const ConsoleInputController& consoleInputController) 
 {
 	auto showInstructions = []() {
-		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie (add to watchedlist)\n [w] add to wishlist\n [i] info about movie\n [x] back to menu\n";
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist\n [i] info about movie\n [x] back to menu\n";
 		std::cout << "Input character: ";
 	};
 
