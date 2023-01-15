@@ -2,6 +2,7 @@
 #include <sstream>
 #include <exception>
 #include "../include/MovieService.h"
+#include "../include/RecomSystem.h"
 
 std::unique_ptr<ConnectedUser> AuthService::m_connectedUser = nullptr;
 
@@ -115,6 +116,11 @@ void AuthService::StartAuthProcess()
 		std::cout << "Password: ";
 		std::cin >> pw;
 
+		if (name == "x") {
+			RecomSystem::DestroyInstance();
+			exit(0);
+		}
+			
 		User user(name, pw);
 		isRegistering = false;
 

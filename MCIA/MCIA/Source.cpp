@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <thread>
 #include <future>
+#include <cstdlib>
 #include <Python.h>
 
 using namespace sqlite_orm;
@@ -259,6 +260,12 @@ void recommendToUser()
 
 int main()
 {
+
+	std::cout << "App is initializing... please wait";
+	if (RecomSystem::HasToRetrain()) {
+		std::cout << "it has to retrain...";
+		std::system("cmd.exe /c ..\\..\\..\\..\\RecomSystem\\retrain.bat");
+	}
 	/*
 	RecomSystem::GetInstance().RetrainModel();
 	RecomSystem::GetInstance().RetrainModel();

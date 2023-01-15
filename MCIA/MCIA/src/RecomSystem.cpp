@@ -9,12 +9,14 @@
 #include "../include/RecomSystem.h"
 
 const char* RecomSystem::RecomLogParser::k_pathToLogFile = "../../../../RecomSystem/logs/train_logs.txt";
+RecomSystem* RecomSystem::m_recomSystem = nullptr;
 
 std::vector<uint16_t> RecomSystem::GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend) {
 
    std::vector<uint16_t> res;
 
-    PyObject* result = PyObject_CallFunction(m_recommendFunction, "iii", userId, batchSize, numMoviesToRecommend);
+    PyObject* result = PyObject_CallFunction(m_recomFunction, "iii", userId, batchSize, numMoviesToRecommend);
+    PyErr_Print();
     if(PyList_Check(result)){
         // okay, it's a list
         for (Py_ssize_t i = 0; i < PyList_Size(result); ++i) {
@@ -29,60 +31,77 @@ std::vector<uint16_t> RecomSystem::GetRecommendedMovies(int userId, int batchSiz
 }
 
 void RecomSystem::UpdateModelByUserReview(int userId, int movieId, float rating) {
-    PyObjectWrapper result{PyObject_CallFunction(m_updateValuesForTrainFunction, "iif", userId, movieId, rating)};
+    PyObjectWrapper result{PyObject_CallFunction(m_updateFunction, "iif", userId, movieId, rating)};
     
 }
 
 void RecomSystem::RetrainModel()
 {
-    PyObjectWrapper trainModel{ PyObject_CallNoArgs(m_retrainModel) };
+    PyObjectWrapper trainModel{ PyObject_CallNoArgs(m_retrainFunction) };
+    PyErr_Print();
 }
 
 bool RecomSystem::HasToRetrain()
 {
-    return RecomLogParser::toHours(RecomLogParser::getTimeSinceLastTrain()) > k_nmbHoursBetweenTrains;
+    return RecomLogParser::toHours(RecomLogParser::getTimeSinceLastTrain()) > 2.0;
 }
 
-RecomSystem::RecomSystem()
+
+void RecomSystem::InitOnlyRetrain()
+{
+    PyObject* retrainModuleName = PyUnicode_FromString(k_retrainModuleName);
+    m_retrainModule.SetPyObj(PyImport_Import(retrainModuleName));
+    PyObject* retrainModuleDict = PyModule_GetDict(m_retrainModule);
+    m_retrainFunction.SetPyObj(PyDict_GetItemString(retrainModuleDict, k_retrainFunctionName));
+}
+
+
+RecomSystem::RecomSystem(bool forTrain)
 {
     Py_Initialize();
 
     //surpress tensorflow warnings:
     //PyRun_SimpleString("import os");
     //PyRun_SimpleString("os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'");
-
-    m_moduleName.SetPyObj(PyUnicode_FromString(k_moduleName));
-    m_module.SetPyObj(PyImport_Import(m_moduleName));
-    m_moduleDict.SetPyObj(PyModule_GetDict(m_module));
-    m_recommendFunction.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_recommendFunctionName));
-    m_retrainModel.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_retrainModelFunctionName));
-    m_updateValuesForTrainFunction.SetPyObj(PyDict_GetItemString(m_moduleDict.GetPyObj(), k_updateValuesForTrainFunctionName));
-
-    if(!m_module)
-        PyErr_Print();
-
-    if(!m_recommendFunction){
-        std::cout<<"Function" << k_recommendFunctionName<<" does not exist!";
+    if (forTrain) {
+        InitOnlyRetrain();
+        return;
     }
-    if(!m_updateValuesForTrainFunction){
-        std::cout<<"Function " << k_updateValuesForTrainFunctionName << " does not exist!";
-    }
-    if(!m_retrainModel){
-        std::cout<<"Function " << k_retrainModelFunctionName << " does not exist!";
-    }
+    PyObject* recomModuleName = PyUnicode_FromString(k_recomModuleName);
+    PyObject* updateModuleName = PyUnicode_FromString(k_updateModuleName);
+
+    m_recomModule.SetPyObj(PyImport_Import(recomModuleName));
+    m_updateModule.SetPyObj(PyImport_Import(updateModuleName));
+    
+    PyObject* recomModuleDict = PyModule_GetDict(m_recomModule);
+    PyObject* updateModuleDict = PyModule_GetDict(m_updateModule);
+    
+    m_recomFunction.SetPyObj(PyDict_GetItemString(recomModuleDict, k_recommendFunctionName));
+    m_updateFunction.SetPyObj(PyDict_GetItemString(updateModuleDict, k_updateFunctionName));
+    
+    if(!m_recomFunction || !m_updateFunction){
+        std::cout<<"Function does not exist!";
+    } 
 
     //Py_Finalize();
+}
+
+RecomSystem& RecomSystem::GetInstance(bool forTrain)
+{
+    if (m_recomSystem == nullptr)
+        m_recomSystem = new RecomSystem(forTrain);
+    return *m_recomSystem;
+}
+
+void RecomSystem::DestroyInstance()
+{
+    Py_FinalizeEx();
+    delete m_recomSystem;
+    m_recomSystem = nullptr;
 }
 
 RecomSystem::~RecomSystem() {
-    //Py_Finalize();
 }
-
-RecomSystem &RecomSystem::GetInstance() {
-    static RecomSystem recomSystem;
-    return recomSystem;
-}
-
 std::string RecomSystem::RecomLogParser::getLastTrainingDate(char line[])
 {
     std::string posInDay; // %H:%M:%S
@@ -135,6 +154,7 @@ int RecomSystem::RecomLogParser::getTimeSinceLastTrain()
     }
     return timeSinceLastTrain;
 }
+
 
 double RecomSystem::RecomLogParser::toHours(int epochTime)
 {

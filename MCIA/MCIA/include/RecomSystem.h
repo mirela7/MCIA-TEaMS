@@ -7,30 +7,40 @@
 //#include <Python.h>
 #include "../include/PyObjectWrapper.h"
 #include <vector>
+#include <unordered_map>
 #include <cstdint>
 
 class RecomSystem {
 public:
+    enum TYPE {
+        RECOM,
+        RETRAIN,
+        UPDATE_VALUES
+    };
+    RecomSystem(bool forTrain=false);
     RecomSystem(RecomSystem&) = delete;
 
-    static RecomSystem& GetInstance();
+    static RecomSystem& GetInstance(bool forTrain = false);
+    static void DestroyInstance();
 
     std::vector<uint16_t> GetRecommendedMovies(int userId, int batchSize, int numMoviesToRecommend);
     void UpdateModelByUserReview(int userId, int movieId, float rating);
     void RetrainModel();
-    bool HasToRetrain();
+    static bool HasToRetrain();
     ~RecomSystem();
 
 private:
-    RecomSystem();
+    void InitOnlyRetrain();
 
-    PyObjectWrapper m_moduleName; // the module name
-    PyObjectWrapper m_module; // the module
-    PyObjectWrapper m_moduleDict; // the module dictionary
+private:
 
-    PyObjectWrapper m_recommendFunction; // the function from the module : recommend_movies
-    PyObjectWrapper m_updateValuesForTrainFunction; // the function that updates the data for train : train_for_user
-    PyObjectWrapper m_retrainModel; // the function that retrains the model : retrain_last_values
+    PyObjectWrapper m_recomModule; // the module
+    PyObjectWrapper m_updateModule; // the module
+    PyObjectWrapper m_retrainModule; // the module dictionary
+
+    PyObjectWrapper m_recomFunction;
+    PyObjectWrapper m_updateFunction;
+    PyObjectWrapper m_retrainFunction;
 
 private:
     
@@ -45,12 +55,16 @@ private:
 
 
 private:
-    const char* k_moduleName = "RecomSystemRatingBased"; //TODO: naming ref
+    const char* k_recomModuleName = "RecomSystemRatingBased_recom"; //TODO: naming ref
+    const char* k_retrainModuleName = "RecomSystemRatingBased_retrain"; //TODO: naming ref
+    const char* k_updateModuleName = "RecomSystemRatingBased_update"; //TODO: naming ref
     const char* k_recommendFunctionName="recommend_movies";
-    const char* k_updateValuesForTrainFunctionName="train_for_user";
-    const char* k_retrainModelFunctionName="retrain_last_values";
+    const char* k_updateFunctionName="train_for_user";
+    const char* k_retrainFunctionName="retrain_last_values";
 
     const double k_nmbHoursBetweenTrains = 2.0;
+
+    static RecomSystem* m_recomSystem;
 };
 
 
