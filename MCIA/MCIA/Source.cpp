@@ -260,19 +260,6 @@ void recommendToUser()
 
 int main()
 {
-
-	std::cout << "App is initializing... please wait";
-	if (RecomSystem::HasToRetrain()) {
-		std::cout << "it has to retrain...";
-		std::system("cmd.exe /c ..\\..\\..\\..\\RecomSystem\\retrain.bat");
-	}
-	/*
-	RecomSystem::GetInstance().RetrainModel();
-	RecomSystem::GetInstance().RetrainModel();
-	auto vec1 = RecomSystem::GetInstance().GetRecommendedMovies(1, 10, 10);
-	auto vec2 = RecomSystem::GetInstance().GetRecommendedMovies(1, 10, 10);
-	std::cout << vec1.size();
-	std::cout << vec2.size();*/
 	
     std::cout<<"source"<<std::this_thread::get_id()<<"\n";
 	char ch;

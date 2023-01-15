@@ -34,16 +34,18 @@ void UserRecomService::StartUpdatingMovie(const uint32_t movieId, const float ra
     };
     std::thread updateThread{updateRecommendedMoviesTask};
     updateThread.detach();
+
+    if (RecomSystem::HasToRetrain())
+        RetrainModel();
 }
 
 void UserRecomService::RetrainModel()
 {
     auto retrainModel = [&]() {
-        //std::lock_guard<std::mutex> lockGuard{ m_mutexUpdateMovies };
+        std::lock_guard<std::mutex> lockGuard{ m_mutexUpdateMovies };
         std::cout << "starting to retrain " << std::this_thread::get_id() << "\n";
         std::cout << "done initializing on thread " << std::this_thread::get_id()<<"\n";
         RecomSystem::GetInstance().RetrainModel();
-        //std::this_thread::sleep_for(std::chrono::seconds(20));
         std::cout << "finished retraining " << std::this_thread::get_id() << "\n";
     };
     std::thread retrainThread{ retrainModel };

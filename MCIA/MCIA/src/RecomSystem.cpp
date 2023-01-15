@@ -37,8 +37,7 @@ void RecomSystem::UpdateModelByUserReview(int userId, int movieId, float rating)
 
 void RecomSystem::RetrainModel()
 {
-    PyObjectWrapper trainModel{ PyObject_CallNoArgs(m_retrainFunction) };
-    PyErr_Print();
+    std::system("cmd.exe /c ..\\..\\..\\..\\RecomSystem\\retrain.bat");
 }
 
 bool RecomSystem::HasToRetrain()
