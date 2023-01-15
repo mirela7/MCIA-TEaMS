@@ -41,7 +41,7 @@ def retrain_last_values():
     model.fit(x=(np.array(userIds), np.array(movieIds)), y=np.array(ratings), verbose=1)
     if hasToLog: print('trained complete model. start saving')
     model.save('../../../../RecomSystem/saved_model/train600')
-    # TODO: FORCE COPY OVER INITIAL FOLDER
+
     if hasToLog: print('model saved. saving in logs')
 
     with open('../../../../RecomSystem/logs/train_logs.txt', 'a') as file:
