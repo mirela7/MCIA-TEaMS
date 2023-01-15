@@ -48,10 +48,10 @@ bool RecomSystem::HasToRetrain()
 
 void RecomSystem::InitOnlyRetrain()
 {
-    PyObject* retrainModuleName = PyUnicode_FromString(k_retrainModuleName);
+    PyObject* retrainModuleName = PyUnicode_FromString(RETRAIN_MODULE_NAME);
     m_retrainModule.SetPyObj(PyImport_Import(retrainModuleName));
     PyObject* retrainModuleDict = PyModule_GetDict(m_retrainModule);
-    m_retrainFunction.SetPyObj(PyDict_GetItemString(retrainModuleDict, k_retrainFunctionName));
+    m_retrainFunction.SetPyObj(PyDict_GetItemString(retrainModuleDict, RETRAIN_FUNCTION_NAME));
 }
 
 
@@ -66,8 +66,8 @@ RecomSystem::RecomSystem(bool forTrain)
         InitOnlyRetrain();
         return;
     }
-    PyObject* recomModuleName = PyUnicode_FromString(k_recomModuleName);
-    PyObject* updateModuleName = PyUnicode_FromString(k_updateModuleName);
+    PyObject* recomModuleName = PyUnicode_FromString(RECOM_MODULE_NAME);
+    PyObject* updateModuleName = PyUnicode_FromString(UPDATE_MODULE_NAME);
 
     m_recomModule.SetPyObj(PyImport_Import(recomModuleName));
     PyErr_Print();
@@ -76,8 +76,8 @@ RecomSystem::RecomSystem(bool forTrain)
     PyObject* recomModuleDict = PyModule_GetDict(m_recomModule);
     PyObject* updateModuleDict = PyModule_GetDict(m_updateModule);
     
-    m_recomFunction.SetPyObj(PyDict_GetItemString(recomModuleDict, k_recommendFunctionName));
-    m_updateFunction.SetPyObj(PyDict_GetItemString(updateModuleDict, k_updateFunctionName));
+    m_recomFunction.SetPyObj(PyDict_GetItemString(recomModuleDict, RECOM_FUNCTION_NAME));
+    m_updateFunction.SetPyObj(PyDict_GetItemString(updateModuleDict, UPDATE_FUNCTION_NAME));
     
     if(!m_recomFunction || !m_updateFunction){
         std::cout<<"Function does not exist!";
@@ -101,6 +101,12 @@ void RecomSystem::DestroyInstance()
 }
 
 RecomSystem::~RecomSystem() {
+    delete[] RECOM_MODULE_NAME;
+    delete[] RETRAIN_MODULE_NAME;
+    delete[] UPDATE_MODULE_NAME;
+    delete[] RECOM_FUNCTION_NAME;
+    delete[] RETRAIN_FUNCTION_NAME;
+    delete[] UPDATE_FUNCTION_NAME;
 }
 std::string RecomSystem::RecomLogParser::getLastTrainingDate(char line[])
 {

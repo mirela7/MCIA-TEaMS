@@ -1,6 +1,7 @@
 import heapq
 import tensorflow
 import numpy as np
+import random
 hasToLog=False
 
 def recommend_movies(user_id, batch_size, num_movie_recom):
@@ -16,7 +17,7 @@ def recommend_movies(user_id, batch_size, num_movie_recom):
     if hasToLog: print('loaded')
     # the pool of movies from which we recommend
     # TODO: select random movies from available pool
-    batch_movies = [x for x in range(batch_size)]
+    batch_movies = random.sample(range(0,1000), batch_size)
 
     map_item_scores = {}
     # users needed for predictions
@@ -25,8 +26,7 @@ def recommend_movies(user_id, batch_size, num_movie_recom):
     if hasToLog: print('clearing session')
     if hasToLog: print('cleared session')
     for x in range(batch_size):
-        map_item_scores[x] = predictions[x]
-
+        map_item_scores[batch_movies[x]] = predictions[x]
     ranklist = heapq.nlargest(num_movie_recom, map_item_scores, map_item_scores.get)
     return ranklist
 

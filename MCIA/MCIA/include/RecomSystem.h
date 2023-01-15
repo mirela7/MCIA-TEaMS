@@ -17,7 +17,7 @@ public:
         RETRAIN,
         UPDATE_VALUES
     };
-    RecomSystem(bool forTrain=false);
+    RecomSystem(bool forTrain = false);
     RecomSystem(RecomSystem&) = delete;
 
     static RecomSystem& GetInstance(bool forTrain = false);
@@ -55,14 +55,14 @@ private:
 
 
 private:
-    const char* k_recomModuleName = "RecomSystemRatingBased_recom"; //TODO: naming ref
-    const char* k_retrainModuleName = "RecomSystemRatingBased_retrain"; //TODO: naming ref
-    const char* k_updateModuleName = "RecomSystemRatingBased_update"; //TODO: naming ref
-    const char* k_recommendFunctionName="recommend_movies";
-    const char* k_updateFunctionName="train_for_user";
-    const char* k_retrainFunctionName="retrain_last_values";
+    const char* RECOM_MODULE_NAME = "RecomSystemRatingBased_recom"; //TODO: naming ref
+    const char* RETRAIN_MODULE_NAME = "RecomSystemRatingBased_retrain"; //TODO: naming ref
+    const char* UPDATE_MODULE_NAME = "RecomSystemRatingBased_update"; //TODO: naming ref
+    const char* RECOM_FUNCTION_NAME="recommend_movies";
+    const char* RETRAIN_FUNCTION_NAME="retrain_last_values";
+    const char* UPDATE_FUNCTION_NAME="train_for_user";
 
-    const double k_nmbHoursBetweenTrains = 2.0;
+    const double NMB_MAX_HOURS_BETWEEN_TRAINS = 2.0;
 
     static RecomSystem* m_recomSystem;
 };

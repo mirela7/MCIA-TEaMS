@@ -20,19 +20,18 @@
 
 using namespace sqlite_orm;
 
-const int kNmbRows = 10;
 
 template<typename T>
 void displayTable(T filter, const ConsoleInputController& consoleInputController) 
 {
 	auto showInstructions = []() {
-		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie (add to watchedlist)\n [w] add to wishlist\n [i] info about movie\n [x] back to menu\n";
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [r] rate movie\n [w] add to wishlist\n [i] info about movie\n [x] back to menu\n";
 		std::cout << "Input character: ";
 	};
 
 	char ch;
 	int wantedPage = 0;
-	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
+	auto result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, DBPage<Movie>::DEFAULT_ROWS_NUMBER_PER_PAGE, filter);
 	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	MovieService ms;
 	std::cout << result;
@@ -58,10 +57,14 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			break;
 		case 'r':
 			{
-				std::pair<int, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults());
-				system("CLS");
+				std::pair<uint32_t, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults());
+				if (movieIdRating.first == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				try {
 					ms.AddMovieToWatchlist(connectedUserId, movieIdRating.first, movieIdRating.second);
+					system("CLS");
 					std::cout << "Movie rating saved.\n";
 				}
 				catch (std::exception e) {
@@ -71,7 +74,11 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			break;
 		case 'i':
 			{
-				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				if (movieId == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
 				std::cout << movieInfo << '\n';
 				showInstructions();
@@ -80,7 +87,11 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			break;
 		case 'w':
 			{
-				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				if (movieId == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				try {
 					ms.AddMovieToWishlist(connectedUserId, movieId);
 					system("CLS");
@@ -98,7 +109,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			std::cout << "Input character: ";
 			continue;
 		}
-		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
+		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, DBPage<Movie>::DEFAULT_ROWS_NUMBER_PER_PAGE, filter);
 		std::cout << result;
 		showInstructions();
 	}
@@ -107,14 +118,14 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 void displayWatchedList(const ConsoleInputController& consoleInputController)
 {
 	auto showInstructions = [](){
-		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [d] remove movie from watchedlist\n [i] info about movie\n [x] back to menu\n";
+		std::cout << "Navigate table using [b] (back), [n] (next), [j] (jump to page).\nOther options:\n [i] info about movie\n [x] back to menu\n";
 		std::cout << "Input character: ";
 	};
 	MovieService ms;
 	char ch;
 	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	int wantedPage = 0;
-	auto result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
+	auto result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, DBPage<WatchedMovieDisplayer>::DEFAULT_ROWS_NUMBER_PER_PAGE);
 	std::cout << result;
 	showInstructions();
 	while (std::cin >> ch)
@@ -136,21 +147,13 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 			wantedPage = std::min(wantedPage, result.GetNmbPages() - 1);
 			wantedPage = std::max(wantedPage, 0);
 			break;
-		case 'd':
-			{
-				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
-				try {
-					ms.RemoveMovieFromWatchlist(connectedUserId, movieId);
-				}
-				catch (std::exception e) {
-					std::cout << e.what();
-				}
-				system("CLS");
-			}
-			break;
 		case 'i':
 			{
 				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
+				if (movieId == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
 				std::cout << movieInfo << '\n';
 				showInstructions();
@@ -164,7 +167,7 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 			std::cout << "Input character: ";
 			continue;
 		}
-		result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, kNmbRows);
+		result = ms.GetWatchedMoviesOfUser(connectedUserId, wantedPage, DBPage<WatchedMovieDisplayer>::DEFAULT_ROWS_NUMBER_PER_PAGE);
 		std::cout << result;
 		showInstructions();
 	}
@@ -180,7 +183,7 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 	char ch;
 	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	int wantedPage = 0;
-	auto result = ms.GetWishListOfUser(connectedUserId, wantedPage, kNmbRows);
+	auto result = ms.GetWishListOfUser(connectedUserId, wantedPage, DBPage<WishlistedMovieDisplayer>::DEFAULT_ROWS_NUMBER_PER_PAGE);
 	std::cout << result;
 	showInstructions();
 	while (std::cin >> ch)
@@ -204,7 +207,16 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 			break;
 		case 'd':
 			{
+				if (result.IsPageEmpty()) {
+					system("CLS");
+					std::cout << "You cannot delete from an empty list.\n";
+					break;
+				}
 				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
+				if (movieId == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				try {
 					ms.RemoveMovieFromWishlist(connectedUserId, movieId);
 				}
@@ -216,7 +228,11 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 			break;
 		case 'i':
 			{
-				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
+				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
+				if (movieId == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
 				std::cout << movieInfo << '\n';
 				showInstructions();
@@ -225,7 +241,11 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 			break;
 		case 'r':
 		{
-			std::pair<int, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults(), false);
+			std::pair<uint32_t, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults(), false);
+			if (movieIdRating.first == UINT32_MAX) {
+				system("CLS");
+				break;
+			}
 			try {
 				ms.MoveMovieFromWishlistToWatched(connectedUserId, movieIdRating.first, movieIdRating.second);
 				system("CLS");
@@ -243,20 +263,11 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 			std::cout << "Input character: ";
 			continue;
 		}
-		result = ms.GetWishListOfUser(connectedUserId, wantedPage, kNmbRows);
+		result = ms.GetWishListOfUser(connectedUserId, wantedPage, DBPage<WishlistedMovieDisplayer>::DEFAULT_ROWS_NUMBER_PER_PAGE);
 		std::cout << result;
 		showInstructions();
 	}
 }
-
-void recommendToUser()
-{
-	MovieService ms;
-	std::vector<uint32_t> mvIdsTest{ 1, 5, 10, 20 };
-	auto page = ms.GetMovieListFromListOfIndices(mvIdsTest, 1);
-	std::cout << page;
-}
-
 
 int main()
 {
@@ -271,6 +282,7 @@ int main()
 	system("CLS");
 	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
 
+	uint16_t connectedUserId = AuthService::GetConnectedUserId();
 	while (true)
 	{
 		std::cout << "Please choose what to do : \n \
@@ -279,6 +291,7 @@ int main()
 [v] my watched list\n \
 [w] my wishlist\n \
 [r] recommend me something\n \
+[q] quit\n \
 [x] log out.\n\
 Enter an option: ";
 		std::cin >> ch;
@@ -317,13 +330,15 @@ Enter an option: ";
         case 'r': {
 
             std::vector<uint32_t> moviesId = AuthService::GetRecommendedMoviesForCurrentUser();
-			auto moviesPage = ms.GetMovieListFromListOfIndices(moviesId, 0);
+			auto moviesPage = ms.ParseRecommendedMovies(connectedUserId, moviesId, 0);
             //std::cout << "[" << " ";
             //for (auto &id: moviesId)
             //    std::cout << id << " ";
             std::cout << moviesPage;
             break;
         }
+		case 'q':
+			return 0;
 		default:
 			std::cout << "Invalid option.\n";
 			break;

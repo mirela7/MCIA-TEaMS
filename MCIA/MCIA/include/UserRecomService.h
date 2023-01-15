@@ -21,7 +21,8 @@ public:
     void RetrainModel();
     void SetCurrentUserId(const uint32_t& userId);
 private:
-    inline void WriteIntoLog(const std::string& content, bool append = true);
+    const uint16_t BATCH_SIZE = 100;
+    const uint16_t NMB_RECOMMENDED_MOVIES = 30;
 
 private:
     uint32_t m_currentUserId;
@@ -33,7 +34,6 @@ private:
     std::ofstream m_logOutput;
     std::ostringstream m_helperStream;
 
-    const std::string k_pathToLog = "../../../../MCIA/MCIA/app_logs/logs.txt";
 };
 
 

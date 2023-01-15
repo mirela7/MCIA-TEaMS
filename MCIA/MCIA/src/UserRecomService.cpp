@@ -5,20 +5,13 @@
 #include "../include/RecomSystem.h"
 #include <iostream>
 
-inline void UserRecomService::WriteIntoLog(const std::string& content, bool append) {
-    if (append)
-        m_logOutput.open(k_pathToLog, std::ios_base::app);
-    else m_logOutput.open(k_pathToLog);
-    m_logOutput << content;
-    m_logOutput.close();
-}
 
 void UserRecomService::StartPopulatingRecommendedMovies() {
     auto getRecommendedMoviesTask = [&]() {
         
         std::lock_guard<std::mutex> lockGuard{ m_mutexUpdateMovies };
-        //std::cout <<"started recom"<<std::this_thread::get_id()<<"\n";
-        return RecomSystem::GetInstance().GetRecommendedMovies(m_currentUserId, 100, 10);
+        //m_logOutput <<"started recom"<<std::this_thread::get_id()<<"\n";
+        return RecomSystem::GetInstance().GetRecommendedMovies(m_currentUserId, BATCH_SIZE, NMB_RECOMMENDED_MOVIES);
     };
     m_recommendedMoviesFuture = std::async(std::launch::async, getRecommendedMoviesTask);
 }

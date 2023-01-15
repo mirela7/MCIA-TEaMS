@@ -1,6 +1,6 @@
 #include "../include/OperationStatusToMessage.h"
 
-const std::map<OperationStatus::Code, std::string> OperationStatusToMessage::m_codeToMessage = {
+const std::unordered_map<OperationStatus::Code, std::string> OperationStatusToMessage::m_codeToMessage = {
 		{OperationStatus::Code::F_BLANK,
 			"Field % cannot be left blank."},
 		{OperationStatus::Code::F_SIZE,

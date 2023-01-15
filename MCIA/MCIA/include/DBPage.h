@@ -14,6 +14,7 @@ public:
 	std::vector<TEntity> GetResults() const;
 	int GetNmbPages() const;
 	int GetNmbCurrentPage() const;
+	bool IsPageEmpty() const;
 
 	friend std::ostream& operator<<(std::ostream& out, const DBPage<TEntity>& page)
 	{
@@ -51,6 +52,7 @@ public:
 
 public:
 	static const uint8_t NMB_PAGES_VALUE_NOT_NUMBERED = -1;
+	static const uint8_t DEFAULT_ROWS_NUMBER_PER_PAGE = 10;
 private:
 	std::vector<TEntity> m_results;
 	int m_nmbPages;
@@ -92,4 +94,10 @@ template<class TEntity>
 int DBPage<TEntity>::GetNmbCurrentPage() const
 {
 	return m_nmbCurrPage;
+}
+
+template<class TEntity>
+bool DBPage<TEntity>::IsPageEmpty() const
+{
+	return m_nmbPages == 0 && m_results.size() == 0;
 }

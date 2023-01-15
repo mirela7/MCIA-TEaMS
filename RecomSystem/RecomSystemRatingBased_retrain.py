@@ -38,7 +38,7 @@ def retrain_last_values():
     with open('../../../../RecomSystem/logs/train_logs.txt', 'a') as file:
         file.write('Train started %s' % datetime.now())
     if hasToLog: print('TRAIN STARTED:')
-    model.fit(x=(np.array(userIds), np.array(movieIds)), y=np.array(ratings), verbose=1)
+    model.fit(x=(np.array(userIds), np.array(movieIds)), y=np.array(ratings), verbose=0)
     if hasToLog: print('trained complete model. start saving')
     model.save('../../../../RecomSystem/saved_model/train600')
 

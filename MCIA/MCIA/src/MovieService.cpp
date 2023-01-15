@@ -56,12 +56,19 @@ DBPage<WishlistedMovieDisplayer> MovieService::GetWishListOfUser(const uint16_t 
 	return DBPage<WishlistedMovieDisplayer>(simplifiedPageResults, totalPages, page);
 }
 
-DBPage<Movie> MovieService::GetMovieListFromListOfIndices(const std::vector<uint32_t>& movieIds, const int page)
+DBPage<Movie> MovieService::ParseRecommendedMovies(uint16_t userId, const std::vector<uint32_t>& movieIds, const int page)
 {
-	auto movieVector = DatabaseManagement::GetInstance().GetStorage().get_all<Movie>(
-		where(in(&Movie::GetId, movieIds))
-	);
-	return DBPage<Movie>(movieVector, DBPage<Movie>::NMB_PAGES_VALUE_NOT_NUMBERED, page);
+	std::vector<uint32_t> watchedMoviesIds = GetAllWatchedMoviesIdsOfUser(userId);
+	std::vector<Movie> recommendedMovies;
+	for (const uint32_t& recommendedMovieId : movieIds)
+	{
+		if (!std::any_of(watchedMoviesIds.begin(), watchedMoviesIds.end(), [&recommendedMovieId](const uint32_t watchedMovieId) {
+			return watchedMovieId == recommendedMovieId; } )) {
+			Movie movie = DatabaseManagement::GetInstance().GetElementById<Movie>(recommendedMovieId);
+			recommendedMovies.push_back(std::move(movie));
+		}
+	}
+	return DBPage<Movie>(recommendedMovies, DBPage<Movie>::NMB_PAGES_VALUE_NOT_NUMBERED, page);
 }
 
 MovieInformationDisplayer MovieService::GetMovieInformations(const uint32_t id)
@@ -121,4 +128,20 @@ void MovieService::MoveMovieFromWishlistToWatched(const uint16_t userId, const u
 		DatabaseManagement::GetInstance().GetStorage().rollback();
 		throw e;
 	}
+}
+
+std::vector<uint32_t> MovieService::GetAllWatchedMoviesIdsOfUser(const uint16_t userId)
+{
+	auto watchedMovies = DatabaseManagement::GetInstance().GetStorage().select(
+		columns(&WatchedMovie::GetMovieId),
+		left_join<Movie>(on(c(&Movie::GetId) == &WatchedMovie::GetMovieId)),
+		where(c(&WatchedMovie::GetUserId) == userId)
+	);
+	std::vector<uint32_t> watchedMoviestIds;
+	for (auto& movieTuple : watchedMovies) {
+		watchedMoviestIds.emplace_back(
+			std::move(std::get<0>(movieTuple))
+		);
+	}
+	return watchedMoviestIds;
 }
