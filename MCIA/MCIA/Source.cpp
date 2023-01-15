@@ -269,6 +269,82 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 	}
 }
 
+void displayRecommendedMovies(const ConsoleInputController& consoleInputController)
+{
+	char ch;
+	MovieService ms;
+	std::vector<uint32_t> moviesId = AuthService::GetRecommendedMoviesForCurrentUser();
+	uint16_t connectedUserId = AuthService::GetConnectedUserId();
+	auto moviesPage = ms.ParseRecommendedMovies(connectedUserId, moviesId, 0);
+	std::cout << moviesPage;
+	auto showInstructions = []() {
+		std::cout << "Pick an option:\n [i] info about movie\n [r] rate movie\n [w] add to wishlist\n [x] back to menu\n";
+		std::cout << "Input character: ";
+	};
+	showInstructions();
+	while (std::cin >> ch)
+	{
+		switch (ch)
+		{
+		case 'r':
+		{
+			std::pair<uint32_t, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(moviesPage.GetResults(), false);
+			if (movieIdRating.first == UINT32_MAX) {
+				system("CLS");
+				break;
+			}
+			try {
+				ms.AddMovieToWatchlist(connectedUserId, movieIdRating.first, movieIdRating.second);
+				system("CLS");
+				std::cout << "Movie rating saved.\n";
+			}
+			catch (std::exception e) {
+				std::cout << e.what();
+			}
+		}
+		break;
+		case 'i':
+		{
+			uint32_t movieId = consoleInputController.gatherMovieIdFromUser(moviesPage.GetResults(), false);
+			if (movieId == UINT32_MAX) {
+				system("CLS");
+				break;
+			}
+			MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
+			std::cout << movieInfo << '\n';
+			showInstructions();
+			continue;
+		}
+		break;
+		case 'w':
+		{
+			uint32_t movieId = consoleInputController.gatherMovieIdFromUser(moviesPage.GetResults(), false);
+			if (movieId == UINT32_MAX) {
+				system("CLS");
+				break;
+			}
+			try {
+				ms.AddMovieToWishlist(connectedUserId, movieId);
+				system("CLS");
+				std::cout << "Movie added to wishlist.\n";
+			}
+			catch (std::exception e) {
+				std::cout << e.what();
+			}
+		}
+		break;
+		case 'x':
+			system("CLS");
+			return;
+		default:
+			std::cout << "Input character: ";
+			continue;
+		}
+		std::cout << moviesPage;
+		showInstructions();
+	}
+}
+
 int main()
 {
 	char ch;
@@ -277,7 +353,6 @@ int main()
 	DBValidation validate;
 	ConsoleInputController consoleInputController;
 	AuthService authService;
-	MovieService ms;
 	authService.StartAuthProcess();
 	system("CLS");
 	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
@@ -328,13 +403,7 @@ Enter an option: ";
 			authService.LogOut();
 			break;
         case 'r': {
-
-            std::vector<uint32_t> moviesId = AuthService::GetRecommendedMoviesForCurrentUser();
-			auto moviesPage = ms.ParseRecommendedMovies(connectedUserId, moviesId, 0);
-            //std::cout << "[" << " ";
-            //for (auto &id: moviesId)
-            //    std::cout << id << " ";
-            std::cout << moviesPage;
+			displayRecommendedMovies(consoleInputController);
             break;
         }
 		case 'q':
