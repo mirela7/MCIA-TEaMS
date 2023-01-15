@@ -2,13 +2,15 @@
 #include <cstring>
 
 CodedException::CodedException(const char* code, const char* message)
-	:exception(std::string("[" + std::string(code) + "]" + message).c_str())
+	:exception(/*std::string("[" + std::string(code) + "]" + message).c_str()*/)
+    , m_message(std::string("[" + std::string(code) + "]" + message))
 {
 	m_code = OperationStatus::StringToCode(code);
 }
 
 CodedException::CodedException(const OperationStatus::Code code, const std::string& message)
-	:exception(std::string("[" + OperationStatus::CodeToString(code) + "]" + message).c_str())
+	:exception(/*std::string("[" + OperationStatus::CodeToString(code) + "]" + message).c_str()*/)
+    , m_message(std::string("[" +  OperationStatus::CodeToString(code) + "]" + message))
 {
 	m_code = code;
 }
@@ -37,5 +39,6 @@ CodedException::~CodedException() noexcept
 
 const char* CodedException::what() const noexcept
 {
-	return exception::what();
+    return m_message.c_str();
+	//return exception::what();
 }
