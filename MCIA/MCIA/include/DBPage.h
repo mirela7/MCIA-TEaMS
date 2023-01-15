@@ -14,6 +14,7 @@ public:
 	std::vector<TEntity> GetResults() const;
 	int GetNmbPages() const;
 	int GetNmbCurrentPage() const;
+	bool IsPageEmpty() const;
 
 	friend std::ostream& operator<<(std::ostream& out, const DBPage<TEntity>& page)
 	{
@@ -93,4 +94,10 @@ template<class TEntity>
 int DBPage<TEntity>::GetNmbCurrentPage() const
 {
 	return m_nmbCurrPage;
+}
+
+template<class TEntity>
+bool DBPage<TEntity>::IsPageEmpty() const
+{
+	return m_nmbPages == 0 && m_results.size() == 0;
 }

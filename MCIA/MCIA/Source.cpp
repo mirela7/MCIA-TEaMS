@@ -57,8 +57,11 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			break;
 		case 'r':
 			{
-				std::pair<int, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults());
-				system("CLS");
+				std::pair<uint32_t, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults());
+				if (movieIdRating.first == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				try {
 					ms.AddMovieToWatchlist(connectedUserId, movieIdRating.first, movieIdRating.second);
 					std::cout << "Movie rating saved.\n";
@@ -70,7 +73,11 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			break;
 		case 'i':
 			{
-				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				if (movieId == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
 				std::cout << movieInfo << '\n';
 				showInstructions();
@@ -79,7 +86,11 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			break;
 		case 'w':
 			{
-				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults());
+				if (movieId == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				try {
 					ms.AddMovieToWishlist(connectedUserId, movieId);
 					system("CLS");
@@ -137,7 +148,16 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 			break;
 		case 'd':
 			{
+				if(result.IsPageEmpty()) {
+					system("CLS");
+					std::cout << "You cannot delete from an empty list.\n";
+					break;
+				}
 				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
+				if (movieId == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				try {
 					ms.RemoveMovieFromWatchlist(connectedUserId, movieId);
 				}
@@ -150,6 +170,7 @@ void displayWatchedList(const ConsoleInputController& consoleInputController)
 		case 'i':
 			{
 				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
+				
 				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
 				std::cout << movieInfo << '\n';
 				showInstructions();
@@ -203,7 +224,16 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 			break;
 		case 'd':
 			{
+				if (result.IsPageEmpty()) {
+					system("CLS");
+					std::cout << "You cannot delete from an empty list.\n";
+					break;
+				}
 				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
+				if (movieId == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				try {
 					ms.RemoveMovieFromWishlist(connectedUserId, movieId);
 				}
@@ -215,7 +245,11 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 			break;
 		case 'i':
 			{
-				int movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
+				uint32_t movieId = consoleInputController.gatherMovieIdFromUser(result.GetResults(), false);
+				if (movieId == UINT32_MAX) {
+					system("CLS");
+					break;
+				}
 				MovieInformationDisplayer movieInfo = ms.GetMovieInformations(movieId);
 				std::cout << movieInfo << '\n';
 				showInstructions();
@@ -224,7 +258,11 @@ void displayWishList(const ConsoleInputController& consoleInputController)
 			break;
 		case 'r':
 		{
-			std::pair<int, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults(), false);
+			std::pair<uint32_t, float> movieIdRating = consoleInputController.gatherMovieRatingInfo(result.GetResults(), false);
+			if (movieIdRating.first == UINT32_MAX) {
+				system("CLS");
+				break;
+			}
 			try {
 				ms.MoveMovieFromWishlistToWatched(connectedUserId, movieIdRating.first, movieIdRating.second);
 				system("CLS");
@@ -278,6 +316,7 @@ int main()
 [v] my watched list\n \
 [w] my wishlist\n \
 [r] recommend me something\n \
+[q] quit\n \
 [x] log out.\n\
 Enter an option: ";
 		std::cin >> ch;
@@ -323,6 +362,8 @@ Enter an option: ";
             std::cout << moviesPage;
             break;
         }
+		case 'q':
+			return 0;
 		default:
 			std::cout << "Invalid option.\n";
 			break;
