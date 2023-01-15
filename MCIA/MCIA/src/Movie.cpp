@@ -75,8 +75,8 @@ void Movie::ParseMovieData()
 	auto allMovies = storage.select(columns(&MovieIntermediary::GetId, &MovieIntermediary::GetTitle, &MovieIntermediary::GetGenre));
 
 	std::cout << allMovies.size() << '\n';
-	int movie_counter = 0;
 	uint32_t id = 0;
+	uint32_t old_id = 0;
 	for (auto& tpl : allMovies)
 	{
 		std::string title = get<1>(tpl);
@@ -85,16 +85,19 @@ void Movie::ParseMovieData()
 			sreleaseYear.push_back(title[index]);
 		try {
 			int releaseYear = std::stoi(sreleaseYear);
-			Movie m(std::get<0>(tpl), std::get<1>(tpl), releaseYear);
+			std::string new_title = "";
+			for (int i = 0; i < title.size() - 6; i++)
+				new_title.push_back(title[i]);
+			Movie m(id++, new_title, releaseYear);
 			DatabaseManagement::GetInstance().GetStorage().replace(m);
 		}
 		catch (std::invalid_argument e)
 		{
-			Movie m(std::get<0>(tpl), std::get<1>(tpl), -1);
+			Movie m(id++, std::get<1>(tpl), -1);
 			DatabaseManagement::GetInstance().GetStorage().replace(m);
 		}
-		id = get<0>(tpl);
-		std::cout << id << '\n';
+		old_id = get<0>(tpl);
+		std::cout << old_id << id << '\n';
 		//movie_counter++;
 		//std::cout << movie_counter << '\n';
 	}

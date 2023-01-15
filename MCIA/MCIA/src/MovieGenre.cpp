@@ -32,10 +32,10 @@ void MovieGenre::LinkGenreMovie()
 	auto& storage = DatabaseManagement::GetInstance().GetStorage();
 	auto moviesGenres = storage.select(columns(&MovieIntermediary::GetId, &MovieIntermediary::GetGenre));
 	auto genres = storage.select(columns(&Genre::GetId, &Genre::GetName));
-	int count = 0;
+//	int count = 0;
+	uint16_t movieId = 0;
 	for (auto& tpl : moviesGenres)
 	{
-		uint32_t movieId = get<0>(tpl);
 		std::string name = get<1>(tpl);
 		std::string genre = "";
 		for (int i = 0; i < name.size(); i++)
@@ -48,13 +48,7 @@ void MovieGenre::LinkGenreMovie()
 					{
 						uint16_t genreId = get<0>(genreData);
 						MovieGenre element(movieId, genreId);
-						try {
-							DatabaseManagement::GetInstance().GetStorage().replace(element);
-						}
-						catch (std::exception e)
-						{
-							std::cout << e.what();
-						}
+						DatabaseManagement::GetInstance().GetStorage().replace(element);
 						break;
 					}
 				}
@@ -74,9 +68,12 @@ void MovieGenre::LinkGenreMovie()
 						break;
 					}
 				}
+				genre = "";
+				i++;
 			}
 		}
-		count++;
-		std::cout << count << '\n';
+		movieId++;
+//		count++;
+		std::cout << movieId << '\n';
 	}
 }
