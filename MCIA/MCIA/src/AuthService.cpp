@@ -19,8 +19,10 @@ void AuthService::RegisterUser(User& user)
 	if (ExistsUserWithUsername(user.GetName()))
 		throw CodedException("username", "A user with this username already exists.");
 	uint16_t insertedUserId = DatabaseManagement::GetInstance().InsertElement(user);
+	user.SetId(insertedUserId);
 	m_connectedUser = std::make_unique<ConnectedUser>(user);
-	m_connectedUser->GetUser().SetId(insertedUserId);
+	
+	//m_connectedUser->GetRecomService().SetCurrentUserId(insertedUserId);
 }
 
 void AuthService::RegisterUserProcess(User& user)
@@ -77,9 +79,10 @@ void AuthService::RegisterUserProcess(User& user)
 			}
 		}
 
-		WatchedMovie watchedMovie(m_connectedUser->GetUser().GetId(), id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
+		//WatchedMovie watchedMovie(m_connectedUser->GetUser().GetId(), id_movie, rating);// (static_cast<uint16_t>(user_id), static_cast<uint16_t>(movie_id), static_cast<uint8_t>(rating));
 		try {
-			DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
+			ms.AddMovieToWatchlist(m_connectedUser->GetUser().GetId(), id_movie, rating);
+			//DatabaseManagement::GetInstance().GetStorage().replace(watchedMovie);
 		}
 		catch (std::exception e) {
 			std::cout << e.what();
@@ -89,6 +92,7 @@ void AuthService::RegisterUserProcess(User& user)
 	}
 	DatabaseManagement::GetInstance().GetStorage().commit();
 	f.close();
+	LogOut();
 }
 
 

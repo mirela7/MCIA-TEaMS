@@ -16,3 +16,7 @@ UserRecomService &ConnectedUser::GetRecomService() {
     return m_recomService;
 }
 
+void ConnectedUser::SetUserRecomServiceId(const uint16_t& userId)
+{
+    m_recomService.SetCurrentUserId(userId);
+}

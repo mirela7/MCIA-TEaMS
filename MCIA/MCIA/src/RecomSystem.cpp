@@ -70,6 +70,7 @@ RecomSystem::RecomSystem(bool forTrain)
     PyObject* updateModuleName = PyUnicode_FromString(k_updateModuleName);
 
     m_recomModule.SetPyObj(PyImport_Import(recomModuleName));
+    PyErr_Print();
     m_updateModule.SetPyObj(PyImport_Import(updateModuleName));
     
     PyObject* recomModuleDict = PyModule_GetDict(m_recomModule);

@@ -19,7 +19,7 @@ public:
     void StartPopulatingRecommendedMovies();
     void StartUpdatingMovie(const uint32_t movieId, const float rating);
     void RetrainModel();
-
+    void SetCurrentUserId(const uint32_t& userId);
 private:
     inline void WriteIntoLog(const std::string& content, bool append = true);
 
