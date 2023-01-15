@@ -176,7 +176,7 @@ public:
     TEntity GetElementByColumnValue(TValue (TEntity::*getter)() const, TValue value, bool throwIfNotFound = true);
 
     template<class TEntity, class sqlite_expression>
-    DBPage<TEntity> PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters);
+    DBPage<TEntity> PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters, const int precalculatedTotalPages = -1);
 
 private:
     DatabaseManagement() = default;
@@ -233,9 +233,12 @@ inline TEntity DatabaseManagement::GetElementByColumnValue(TValue(TEntity::* get
 }
 
 template<class TEntity, class sqlite_expression>
-inline DBPage<TEntity> DatabaseManagement::PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters)
+inline DBPage<TEntity> DatabaseManagement::PagedSelect(const int idxOfPage, const int nmbRowsPerPage, sqlite_expression filters, const int precalculatedTotalPages)
 {
-    int totalPages = (int) std::ceil(m_storage.count<TEntity>(where(filters)) * 1.0 / nmbRowsPerPage);
+    int totalPages = 0;
+    if (precalculatedTotalPages < 0)
+        totalPages = (int)std::ceil(m_storage.count<TEntity>(where(filters)) * 1.0 / nmbRowsPerPage);
+    else totalPages = precalculatedTotalPages;
     auto result = m_storage.get_all<TEntity>(where(filters), limit(nmbRowsPerPage, offset(idxOfPage * nmbRowsPerPage)));
     return DBPage<TEntity>(result, totalPages, idxOfPage);
 }

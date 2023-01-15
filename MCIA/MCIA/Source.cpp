@@ -94,7 +94,7 @@ void displayTable(T filter, const ConsoleInputController& consoleInputController
 			std::cout << "Input character: ";
 			continue;
 		}
-		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter);
+		result = DatabaseManagement::GetInstance().PagedSelect<Movie>(wantedPage, kNmbRows, filter, result.GetNmbPages());
 		std::cout << result;
 		showInstructions();
 	}
@@ -253,17 +253,8 @@ void recommendToUser()
 	std::cout << page;
 }
 
-
 int main()
 {
-	/*Py_Initialize();
-	PyRun_SimpleString("import os");
-	PyRun_SimpleString("print(\"PYTHONPATH:\", os.environ.get('PYTHONPATH'))");
-    PyRun_SimpleString("import data_import");
-    PyRun_SimpleString("data_import.test_function()");
-	PyRun_SimpleString("print('Hello din acest fisier')");
-
-	Py_Finalize();*/
 	char ch;
 	bool isSearching = false;
 	std::string movieName;
@@ -272,6 +263,7 @@ int main()
 	AuthService authService;
 	authService.StartAuthProcess();
 	system("CLS");
+
 	std::cout << "Welcome, " << AuthService::GetConnectedUserName() << "!\n\n";
 	while (true)
 	{
@@ -282,31 +274,32 @@ int main()
 [w] my wishlist\n \
 [r] recommend me something\n \
 [x] log out.\n\
+[q] quit application\n\
 Enter an option: ";
 		std::cin >> ch;
 		system("CLS");
 		switch (ch) {
 		case 'a':
 		case 's':
-			{ //<-- temporary solution, this scope should be removed
-				if (ch == 'a') {
-					isSearching = false;
-				}
-				else {
-					isSearching = true;
-					std::cout << "Please enter a movie name: ";
-					std::cin >> movieName;
-					system("CLS");
-				}
-				std::string query = "%" + movieName + "%";
-				auto allFilter = c(&Movie::GetId) >= 0;
-				auto movieNameFilter = like(&Movie::GetTitle, query);
-
-				if (isSearching)
-					displayTable(movieNameFilter, consoleInputController);
-				else displayTable(allFilter, consoleInputController);
+		{ //<-- temporary solution, this scope should be removed
+			if (ch == 'a') {
+				isSearching = false;
 			}
-			break;
+			else {
+				isSearching = true;
+				std::cout << "Please enter a movie name: ";
+				std::cin >> movieName;
+				system("CLS");
+			}
+			std::string query = "%" + movieName + "%";
+			auto allFilter = c(&Movie::GetId) >= 0;
+			auto movieNameFilter = like(&Movie::GetTitle, query);
+
+			if (isSearching)
+				displayTable(movieNameFilter, consoleInputController);
+			else displayTable(allFilter, consoleInputController);
+		}
+		break;
 		case 'v':
 			displayWatchedList(consoleInputController);
 			break;
@@ -319,11 +312,13 @@ Enter an option: ";
 		case 'x':
 			authService.LogOut();
 			break;
+		case 'q':
+			return 0;
 		default:
 			std::cout << "Invalid option.\n";
 			break;
 		}
 	}
-	
+
 	return 0;
 }
