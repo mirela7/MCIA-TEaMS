@@ -41,9 +41,9 @@ void UserRecomService::StartUpdatingMovie(const uint32_t movieId, const float ra
     auto updateRecommendedMoviesTask = [=]() {
         
         std::lock_guard<std::mutex> lockGuard{m_mutexUpdateMovies};
-        //m_logOutput <<"starting to update "<<std::this_thread::get_id()<<"\n";
+        //std::cout << "starting to update " << std::this_thread::get_id() << "\n";
         RecomSystem::GetInstance().UpdateModelByUserReview(m_currentUserId, movieId, rating);
-        //m_logOutput <<"finished updating "<<std::this_thread::get_id()<<"\n";
+        //std::cout <<"finished update "<<std::this_thread::get_id()<<"\n";
         //m_logOutput.close();
 
     };
@@ -58,15 +58,22 @@ void UserRecomService::RetrainModel()
 {
     auto retrainModel = [&]() {
         std::lock_guard<std::mutex> lockGuard{ m_mutexUpdateMovies };
+        //std::cout << "starting to retrain " << std::this_thread::get_id() << "\n";
         /*m_logOutput.open(k_pathToLog);
         m_logOutput << "starting to retrain " << std::this_thread::get_id() << "\n";
         m_logOutput << "done initializing on thread " << std::this_thread::get_id()<<"\n";*/
         // in the case the first check was performed while the retraining thread was running
         if (RecomSystem::HasToRetrain())
             RecomSystem::GetInstance().RetrainModel();
+        //std::cout << "ended to retrain " << std::this_thread::get_id() << "\n";
         /*m_logOutput << "finished retraining " << std::this_thread::get_id() << "\n";
         m_logOutput.close();*/
     };
     std::thread retrainThread{ retrainModel };
     retrainThread.detach();
+}
+
+void UserRecomService::SetCurrentUserId(const uint32_t& userId)
+{
+    m_currentUserId = userId;
 }

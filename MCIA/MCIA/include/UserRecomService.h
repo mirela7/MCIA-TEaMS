@@ -19,7 +19,7 @@ public:
     void StartPopulatingRecommendedMovies();
     void StartUpdatingMovie(const uint32_t movieId, const float rating);
     void RetrainModel();
-
+    void SetCurrentUserId(const uint32_t& userId);
 private:
     const uint16_t BATCH_SIZE = 100;
     const uint16_t NMB_RECOMMENDED_MOVIES = 30;

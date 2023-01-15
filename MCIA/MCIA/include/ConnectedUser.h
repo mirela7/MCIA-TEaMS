@@ -13,6 +13,7 @@ public:
 
     User &GetUser();
     UserRecomService &GetRecomService();
+    void SetUserRecomServiceId(const uint16_t& userId);
 
 private:
     User m_connectedUser;
